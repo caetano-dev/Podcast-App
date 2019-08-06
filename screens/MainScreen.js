@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { ScrollView, Image, Text, View, Dimensions } from "react-native";
+import {
+  ScrollView,
+  Image,
+  Text,
+  StyleSheet,
+  View,
+  Dimensions
+} from "react-native";
+
+import Logo from "./Logo";
 
 export default class MainScreen extends Component {
   render() {
@@ -12,17 +21,31 @@ export default class MainScreen extends Component {
             style={{
               backgroundColor: "#55765D",
               flex: 1,
-              width: screenWidth,
-              justifyContent: "center",
-              alignItems: "center"
+              width: screenWidth
             }}
           >
             <Image
-              source={require("../assets/Logo.png")}
-              style={StyleSheet.icon}
+              source={require("../assets/settings.png")}
+              style={styles.setting}
             />
-            <Text>screen 1</Text>
+            <Logo />
           </View>
+
+          {/*sheet 2 */}
+          <View
+            style={{
+              backgroundColor: "#55765D",
+              flex: 1,
+              width: screenWidth,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Text>screen 2</Text>
+          </View>
+
+          {/*sheet 3 */}
+
           <View
             style={{
               backgroundColor: "#55765D",
@@ -33,19 +56,7 @@ export default class MainScreen extends Component {
               alignItems: "center"
             }}
           >
-            <Text>screen 1</Text>
-          </View>
-          <View
-            style={{
-              backgroundColor: "#55765D",
-
-              flex: 1,
-              width: screenWidth,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Text>screen 1</Text>
+            <Text>screen 3</Text>
           </View>
         </ScrollView>
       </View>
@@ -54,9 +65,5 @@ export default class MainScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  icon: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  }
+  setting: { height: 25, width: 25, marginTop: 30, marginLeft: 500 }
 });
