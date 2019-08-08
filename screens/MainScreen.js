@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import {
   ScrollView,
   Image,
-  Text,
   StyleSheet,
   View,
-  Dimensions
+  Dimensions,
+  Text,
+  Button
 } from "react-native";
 
 import Logo from "./Logo";
@@ -13,10 +14,11 @@ import Logo from "./Logo";
 export default class MainScreen extends Component {
   render() {
     let screenWidth = Dimensions.get("window").width;
+
     return (
       <View>
         <ScrollView horizontal={true} pagingEnabled={true}>
-          {/*sheet 1 */}
+          {/*sheet 1 //////////////////////////////////////*/}
           <View
             style={{
               backgroundColor: "#55765D",
@@ -24,14 +26,44 @@ export default class MainScreen extends Component {
               width: screenWidth
             }}
           >
-            <Image
-              source={require("../assets/settings.png")}
-              style={styles.setting}
-            />
+            <View style={styles.settingdiv}>
+              <Image
+                source={require("../assets/settings.png")}
+                style={styles.setting}
+              />
+            </View>
             <Logo />
+            <View style={styles.newContent}>
+              <Text h1 style={{ fontSize: 30 }}>
+                Latest Episode
+              </Text>
+              <View style={styles.content}>
+                <View>
+                  <Text style={{ fontSize: 20 }}>title</Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      position: "absolute",
+                      top: 0,
+                      right: 20
+                    }}
+                  >
+                    EP.
+                  </Text>
+                </View>
+                <Text style={{ fontSize: 30, alignSelf: "center" }}>
+                  Description
+                </Text>
+              </View>
+              <View>
+                <Image
+                  source={require("../assets/playbutton.png")}
+                  style={styles.homePlay}
+                />
+              </View>
+            </View>
           </View>
-
-          {/*sheet 2 */}
+          {/*sheet 2 ///////////////////////////////////////*/}
           <View
             style={{
               backgroundColor: "#55765D",
@@ -43,9 +75,7 @@ export default class MainScreen extends Component {
           >
             <Text>screen 2</Text>
           </View>
-
-          {/*sheet 3 */}
-
+          {/*sheet 3 ////////////////////////////////////////*/}
           <View
             style={{
               backgroundColor: "#55765D",
@@ -65,5 +95,31 @@ export default class MainScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  setting: { height: 25, width: 25, marginTop: 30, marginLeft: 500 }
+  settingdiv: { alignSelf: "flex-end", paddingRight: 25 },
+  setting: { height: 25, width: 25, marginTop: 50 },
+  latestContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 300,
+    backgroundColor: "#55765D"
+  },
+  newContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 500
+  },
+
+  content: {
+    margin: 15,
+    borderStyle: "solid",
+    borderColor: "rgba(73, 90, 76, 0.5)",
+    borderRadius: 30,
+    borderWidth: 5,
+    padding: 10,
+    width: 300,
+    backgroundColor: "rgba(73, 90, 76, 0.5)"
+  },
+  homePlay: {
+    height: 50,
+    width: 150  }
 });
