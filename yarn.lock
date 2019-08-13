@@ -9241,6 +9241,18 @@ react-native-keyboard-aware-scroll-view@0.8.0:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
+react-native-svg-uri@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-svg-uri/-/react-native-svg-uri-1.2.3.tgz#2f67f30564068a0fee68a751845332a5185a1aab"
+  integrity sha1-L2fzBWQGig/uaKdRhFMypRhaGqs=
+  dependencies:
+    xmldom "^0.1.22"
+
+react-native-svg@^9.6.2:
+  version "9.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.6.2.tgz#e29b626f115230e0f0f3693887f36e60b5b01408"
+  integrity sha512-TwTEkGTe2aRh1VBemFIuc6bCvPmlVUAd2kk4HmZLuxyBDAzEAbWYFsvDSkGd9mZ06ghx1gDg+c0hrH3y0q/eDA==
+
 react-native-vector-icons@6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-6.1.0.tgz#770a3f8ced692d75deb3afbb9829195ceed1eedd"
@@ -11832,7 +11844,7 @@ xmldoc@^0.4.0:
   dependencies:
     sax "~1.1.1"
 
-xmldom@0.1.27, xmldom@0.1.x:
+xmldom@0.1.27, xmldom@0.1.x, xmldom@^0.1.22:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
   integrity sha1-1QH5ezvbQDr4757MIFcxh6rawOk=

@@ -23,6 +23,41 @@ export default class MainScreen extends Component {
             style={{
               backgroundColor: "#55765D",
               flex: 1,
+              width: screenWidth,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Text>Reflex Logo</Text>
+            <View style={styles.shopCont}>
+              <ScrollView>
+                <View style={styles.shopScroll}>
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                  <View style={styles.shopNew} />
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+
+          {/*sheet 2 ///////////////////////////////////////*/}
+          <View
+            style={{
+              backgroundColor: "#55765D",
+              flex: 1,
               width: screenWidth
             }}
           >
@@ -48,7 +83,7 @@ export default class MainScreen extends Component {
                       right: 20
                     }}
                   >
-                    EP.
+                    EP. #
                   </Text>
                 </View>
                 <Text style={{ fontSize: 30, alignSelf: "center" }}>
@@ -63,18 +98,7 @@ export default class MainScreen extends Component {
               </View>
             </View>
           </View>
-          {/*sheet 2 ///////////////////////////////////////*/}
-          <View
-            style={{
-              backgroundColor: "#55765D",
-              flex: 1,
-              width: screenWidth,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Text>screen 2</Text>
-          </View>
+
           {/*sheet 3 ////////////////////////////////////////*/}
           <View
             style={{
@@ -121,5 +145,31 @@ const styles = StyleSheet.create({
   },
   homePlay: {
     height: 50,
-    width: 150  }
+    width: 150
+  },
+  shopCont: {
+    margin: 5,
+    borderStyle: "solid",
+    borderColor: "rgba(73, 90, 76, 0.5)",
+    borderRadius: 30,
+    borderWidth: 5,
+    width: 350,
+    height: 525,
+    backgroundColor: "rgba(73, 90, 76, 0.5)"
+  },
+  shopNew: {
+    margin: 9,
+    borderStyle: "solid",
+    borderColor: "rgba(73, 90, 76, 0.9)",
+    backgroundColor: "rgba(73, 90, 76, 0.9)",
+    borderRadius: 30,
+    borderWidth: 5,
+    width: 100,
+    height: 125
+  },
+  shopScroll: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly"
+  }
 });
