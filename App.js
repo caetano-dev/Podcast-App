@@ -3,6 +3,10 @@ import { StyleSheet, View } from "react-native";
 
 import MainScreen from "./screens/MainScreen";
 
+{
+  /*current branch is BackEnd*/
+}
+
 export default function App() {
   return (
     <View style={styles.container}>
