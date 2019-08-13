@@ -9,7 +9,10 @@ import {
   Button
 } from "react-native";
 
+import Smlogo from "./SmLogo";
 import Logo from "./Logo";
+import PrevEP from "./components/PrevEP";
+import OGLogo from "./Reflex-Logo";
 
 export default class MainScreen extends Component {
   render() {
@@ -28,14 +31,10 @@ export default class MainScreen extends Component {
               alignItems: "center"
             }}
           >
-            <Text>Reflex Logo</Text>
-            <View style={styles.shopCont}>
+            <OGLogo />
+            <View style={styles.Cont}>
               <ScrollView>
-                <View style={styles.shopScroll}>
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
+                <View style={styles.Scroll}>
                   <View style={styles.shopNew} />
                   <View style={styles.shopNew} />
                   <View style={styles.shopNew} />
@@ -52,7 +51,6 @@ export default class MainScreen extends Component {
               </ScrollView>
             </View>
           </View>
-
           {/*sheet 2 ///////////////////////////////////////*/}
           <View
             style={{
@@ -110,7 +108,35 @@ export default class MainScreen extends Component {
               alignItems: "center"
             }}
           >
-            <Text>screen 3</Text>
+            <Smlogo />
+
+            <View style={styles.Cont}>
+              <Text style={{ alignSelf: "center", paddingTop: 20 }}>
+                previous episodes
+              </Text>
+              <ScrollView>
+                <View style={styles.Scroll}>
+                  <View style={styles.prevEP}>
+                    <PrevEP />
+                  </View>
+                  <View style={styles.prevEP}>
+                    <PrevEP />
+                  </View>
+                  <View style={styles.prevEP}>
+                    <PrevEP />
+                  </View>
+                  <View style={styles.prevEP}>
+                    <PrevEP />
+                  </View>
+                  <View style={styles.prevEP}>
+                    <PrevEP />
+                  </View>
+                  <View style={styles.prevEP}>
+                    <PrevEP />
+                  </View>
+                </View>
+              </ScrollView>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -147,7 +173,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150
   },
-  shopCont: {
+  Cont: {
     margin: 5,
     borderStyle: "solid",
     borderColor: "rgba(73, 90, 76, 0.5)",
@@ -167,9 +193,17 @@ const styles = StyleSheet.create({
     width: 100,
     height: 125
   },
-  shopScroll: {
+  Scroll: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-evenly"
+  },
+  prevEP: {
+    margin: 10,
+    borderRadius: 30,
+    borderWidth: 5,
+    width: 300,
+    height: 100,
+    backgroundColor: "rgba(73, 90, 76, 0.9)"
   }
 });
