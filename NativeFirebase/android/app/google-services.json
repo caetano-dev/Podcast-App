@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "354277042339",
+    "firebase_url": "https://podcast-68ac0.firebaseio.com",
+    "project_id": "podcast-68ac0",
+    "storage_bucket": "podcast-68ac0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354277042339:android:194756cdca579584c57716",
+        "android_client_info": {
+          "package_name": "com.nativefirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354277042339-4he64hsa39bb56659d60mg5u33d0fc5a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcwbcm4nnltpinzRyj36-m39ccmsv2Jpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354277042339-4he64hsa39bb56659d60mg5u33d0fc5a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
