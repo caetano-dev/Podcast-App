@@ -11,7 +11,7 @@ import {
 
 import Smlogo from "./SmLogo";
 import Logo from "./Logo";
-import PrevEP from "./components/PrevEP";
+import PrevEP from "./components/Episodes/PrevEP";
 import OGLogo from "./Reflex-Logo";
 
 export default class MainScreen extends Component {
@@ -21,37 +21,48 @@ export default class MainScreen extends Component {
     return (
       <View>
         <ScrollView horizontal={true} pagingEnabled={true}>
-          {/*sheet 1 //////////////////////////////////////*/}
+          {/*screen 2 ////////////////////////////////////////*/}
           <View
             style={{
               backgroundColor: "#55765D",
+
               flex: 1,
               width: screenWidth,
               justifyContent: "center",
               alignItems: "center"
             }}
           >
-            <OGLogo />
+            <Smlogo />
+
             <View style={styles.Cont}>
+              <Text style={{ alignSelf: "center", paddingTop: 20 }}>
+                Previous Episodes
+              </Text>
               <ScrollView>
                 <View style={styles.Scroll}>
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
-                  <View style={styles.shopNew} />
+                  <View>
+                    <PrevEP />
+                  </View>
+                  <View>
+                    <PrevEP />
+                  </View>
+                  <View>
+                    <PrevEP />
+                  </View>
+                  <View>
+                    <PrevEP />
+                  </View>
+                  <View>
+                    <PrevEP />
+                  </View>
+                  <View>
+                    <PrevEP />
+                  </View>
                 </View>
               </ScrollView>
             </View>
           </View>
-          {/*sheet 2 ///////////////////////////////////////*/}
+          {/*screen 1 ///////////////////////////////////////*/}
           <View
             style={{
               backgroundColor: "#55765D",
@@ -94,48 +105,6 @@ export default class MainScreen extends Component {
                   style={styles.homePlay}
                 />
               </View>
-            </View>
-          </View>
-
-          {/*sheet 3 ////////////////////////////////////////*/}
-          <View
-            style={{
-              backgroundColor: "#55765D",
-
-              flex: 1,
-              width: screenWidth,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Smlogo />
-
-            <View style={styles.Cont}>
-              <Text style={{ alignSelf: "center", paddingTop: 20 }}>
-                previous episodes
-              </Text>
-              <ScrollView>
-                <View style={styles.Scroll}>
-                  <View style={styles.prevEP}>
-                    <PrevEP />
-                  </View>
-                  <View style={styles.prevEP}>
-                    <PrevEP />
-                  </View>
-                  <View style={styles.prevEP}>
-                    <PrevEP />
-                  </View>
-                  <View style={styles.prevEP}>
-                    <PrevEP />
-                  </View>
-                  <View style={styles.prevEP}>
-                    <PrevEP />
-                  </View>
-                  <View style={styles.prevEP}>
-                    <PrevEP />
-                  </View>
-                </View>
-              </ScrollView>
             </View>
           </View>
         </ScrollView>
@@ -197,13 +166,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-evenly"
-  },
-  prevEP: {
-    margin: 10,
-    borderRadius: 30,
-    borderWidth: 5,
-    width: 300,
-    height: 100,
-    backgroundColor: "rgba(73, 90, 76, 0.9)"
   }
 });
