@@ -11,109 +11,89 @@ import {
 
 import Smlogo from "./SmLogo";
 import Logo from "./Logo";
-import PrevEP from "./components/Episodes/PrevEP";
-import { EpConsumer } from "../context/episodes/EpisodeContext";
+
+import EpisodeList from "./components/Episodes/EpisodeList";
 
 export default class MainScreen extends Component {
   render() {
     let screenWidth = Dimensions.get("window").width;
 
     return (
-      <EpConsumer>
-        {context => (
-          <View>
-            <ScrollView horizontal={true} pagingEnabled={true}>
-              {/*screen 2 ////////////////////////////////////////*/}
-              <View
-                style={{
-                  backgroundColor: "#55765D",
+      <View>
+        <ScrollView horizontal={true} pagingEnabled={true}>
+          {/*screen 2 ////////////////////////////////////////*/}
+          <View
+            style={{
+              backgroundColor: "#55765D",
 
-                  flex: 1,
-                  width: screenWidth,
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <Smlogo />
+              flex: 1,
+              width: screenWidth,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Smlogo />
 
-                <View style={styles.Cont}>
-                  <Text style={{ alignSelf: "center", paddingTop: 20 }}>
-                    Previous Episodes
-                    {context.name}
-                  </Text>
-                  <ScrollView>
-                    <View style={styles.Scroll}>
-                      <View>
-                        <PrevEP />
-                      </View>
-                      <View>
-                        <PrevEP />
-                      </View>
-                      <View>
-                        <PrevEP />
-                      </View>
-                      <View>
-                        <PrevEP />
-                      </View>
-                      <View>
-                        <PrevEP />
-                      </View>
-                      <View>
-                        <PrevEP />
-                      </View>
-                    </View>
-                  </ScrollView>
-                </View>
-              </View>
-              {/*screen 1 ///////////////////////////////////////*/}
-              <View
-                style={{
-                  backgroundColor: "#55765D",
-                  flex: 1,
-                  width: screenWidth
-                }}
-              >
-                <View style={styles.settingdiv}>
-                  <Image
-                    source={require("../assets/settings.png")}
-                    style={styles.setting}
-                  />
-                </View>
-                <Logo />
-                <View style={styles.newContent}>
-                  <Text h1 style={{ fontSize: 30 }}>
-                    Latest Episode
-                  </Text>
-                  <View style={styles.content}>
-                    <View>
-                      <Text style={{ fontSize: 20 }}>title</Text>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          position: "absolute",
-                          top: 0,
-                          right: 20
-                        }}
-                      >
-                        EP. #
-                      </Text>
-                    </View>
-                    <Text style={{ fontSize: 30, alignSelf: "center" }}>
-                      Description
-                    </Text>
-                  </View>
+            <View style={styles.Cont}>
+              <Text style={{ alignSelf: "center", paddingTop: 20 }}>
+                Previous Episodes
+              </Text>
+              <ScrollView>
+                <View style={styles.Scroll}>
                   <View>
-                    <Image
-                      source={require("../assets/playbutton.png")}
-                      style={styles.homePlay}
-                    />
+                    <EpisodeList />
                   </View>
                 </View>
-              </View>
-            </ScrollView>
+              </ScrollView>
+            </View>
           </View>
-        )}
-      </EpConsumer>
+          {/*screen 1 ///////////////////////////////////////*/}
+          <View
+            style={{
+              backgroundColor: "#55765D",
+              flex: 1,
+              width: screenWidth
+            }}
+          >
+            <View style={styles.settingdiv}>
+              <Image
+                source={require("../assets/settings.png")}
+                style={styles.setting}
+              />
+            </View>
+            <Logo />
+            <View style={styles.newContent}>
+              <Text h1 style={{ fontSize: 30 }}>
+                Latest Episode
+              </Text>
+              <View style={styles.content}>
+                <View>
+                  <Text style={{ fontSize: 20 }}>title</Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      position: "absolute",
+                      top: 0,
+                      right: 20
+                    }}
+                  >
+                    EP. #
+                  </Text>
+                </View>
+                <Text style={{ fontSize: 30, alignSelf: "center" }}>
+                  Description
+                </Text>
+              </View>
+              <View>
+                <Image
+                  source={require("../assets/playbutton.png")}
+                  style={styles.homePlay}
+                />
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }
