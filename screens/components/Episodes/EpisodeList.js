@@ -1,11 +1,10 @@
-// this page should be like the "page" page in the react webpage
-// should take episodes and map them through prevEP
-import React, { Fragment } from "react";
+import React, { Fragment, Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
 
-import Episode from "./Episode";
 import firebase from "firebase";
 import "@firebase/firestore";
+import { initFirestorter, Collection } from "firestorter";
+import { observer } from "mobx-react";
 
 // Firebase Init
 const firebaseConfig = {
@@ -19,35 +18,64 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+// init firestorter
+initFirestorter({ firebase: firebase });
 
-const dbh = firebase.firestore();
+//Define collection
+const episodes = new Collection("episodes");
 
-export default class EpisodeList extends React.Component {
-  state = {
-    episodes: []
-  };
-  componentDidMount() {
-    dbh
-      .collection("episodes")
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          title = doc.data().name;
-          id = doc.data().id;
-          url = doc.data().url;
-          date = doc.data().date;
-          docID = doc.id;
-          this.setState({ episodes: [title, id, url, date, docID] });
-        });
-      });
+//wrap component with mobx observer pattern
+const Episodes = observer(
+  class Episodes extends Component {
+    render() {
+      return (
+        <Fragment>
+          {episodes.docs.reverse().map(doc => (
+            <EpisodeItem key={doc.id} doc={doc} />
+          ))}
+        </Fragment>
+      );
+    }
   }
-  render() {
-    return (
-      <Fragment>
-        {episodes.map(episode => (
-          <Episode key={episode.docID} episode={episode} />
-        ))}
-      </Fragment>
-    );
+);
+
+const EpisodeItem = observer(({ doc }) => {
+  const { name, id } = doc.data;
+  return (
+    <View style={styles.prevEP}>
+      <View style={styles.cont}>
+        <View>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.id}>Ep.{id}</Text>
+        </View>
+      </View>
+    </View>
+  );
+});
+
+export default Episodes;
+
+const styles = StyleSheet.create({
+  prevEP: {
+    margin: 10,
+    borderRadius: 30,
+    borderWidth: 5,
+    width: 300,
+    height: 100,
+    backgroundColor: "rgba(73, 90, 76, 0.9)"
+  },
+  cont: {
+    flexDirection: "row"
+  },
+  title: {
+    fontSize: 20,
+    position: "absolute",
+    top: 0,
+    left: 15
+  },
+  id: {
+    position: "absolute",
+    top: 0,
+    left: 230
   }
-}
+});

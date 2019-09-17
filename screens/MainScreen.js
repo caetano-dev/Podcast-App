@@ -12,7 +12,7 @@ import {
 import Smlogo from "./SmLogo";
 import Logo from "./Logo";
 
-import EpisodeList from "./components/Episodes/EpisodeList";
+import Episodes from "./components/Episodes/EpisodeList";
 
 export default class MainScreen extends Component {
   render() {
@@ -40,9 +40,7 @@ export default class MainScreen extends Component {
               </Text>
               <ScrollView>
                 <View style={styles.Scroll}>
-                  <View>
-                    <EpisodeList />
-                  </View>
+                  <Episodes />
                 </View>
               </ScrollView>
             </View>
