@@ -35,7 +35,9 @@ export default class MainScreen extends Component {
             <Smlogo />
 
             <View style={styles.Cont}>
-              <Text style={{ alignSelf: "center", paddingTop: 20 }}>
+              <Text
+                style={{ alignSelf: "center", paddingTop: 20, fontSize: 20 }}
+              >
                 Previous Episodes
               </Text>
               <ScrollView>

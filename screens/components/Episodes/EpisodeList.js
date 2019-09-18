@@ -1,5 +1,11 @@
 import React, { Fragment, Component } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TouchableHighlight
+} from "react-native";
 
 import firebase from "firebase";
 import "@firebase/firestore";
@@ -40,13 +46,20 @@ const Episodes = observer(
 );
 
 const EpisodeItem = observer(({ doc }) => {
-  const { name, id } = doc.data;
+  const { name, id, date } = doc.data;
   return (
     <View style={styles.prevEP}>
       <View style={styles.cont}>
         <View>
           <Text style={styles.title}>{name}</Text>
           <Text style={styles.id}>Ep.{id}</Text>
+          <Text style={styles.date}>{date}</Text>
+          <TouchableHighlight>
+            <Image
+              source={require("../../../assets/smPlay.png")}
+              style={styles.playbutton}
+            />
+          </TouchableHighlight>
         </View>
       </View>
     </View>
@@ -56,6 +69,13 @@ const EpisodeItem = observer(({ doc }) => {
 export default Episodes;
 
 const styles = StyleSheet.create({
+  playbutton: {
+    height: 20,
+    width: 20,
+    position: "absolute",
+    top: 50,
+    left: 230
+  },
   prevEP: {
     margin: 10,
     borderRadius: 30,
@@ -67,6 +87,12 @@ const styles = StyleSheet.create({
   cont: {
     flexDirection: "row"
   },
+  date: {
+    fontSize: 15,
+    position: "absolute",
+    top: 60,
+    left: 15
+  },
   title: {
     fontSize: 20,
     position: "absolute",
@@ -74,8 +100,9 @@ const styles = StyleSheet.create({
     left: 15
   },
   id: {
+    fontSize: 15,
     position: "absolute",
-    top: 0,
+    top: 3,
     left: 230
   }
 });
