@@ -4,9 +4,12 @@ import {
   StyleSheet,
   View,
   Image,
-  TouchableHighlight
+  TouchableWithoutFeedback
 } from "react-native";
 
+//audio
+import { Audio } from "expo-av";
+//firebase
 import firebase from "firebase";
 import "@firebase/firestore";
 import { initFirestorter, Collection } from "firestorter";
@@ -46,7 +49,20 @@ const Episodes = observer(
 );
 
 const EpisodeItem = observer(({ doc }) => {
-  const { name, id, date } = doc.data;
+  const { name, id, date, url } = doc.data;
+  //audio player from article audio = note
+  handleAudio = async url => {
+    const soundObject = new Audio.Sound();
+    try {
+      await soundObject.loadAsync({ uri: url }, (downloadFirst = true));
+
+      await soundObject.playAsync();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // figure out how to load the audio data
+  // add seek element & download to local storage
   return (
     <View style={styles.prevEP}>
       <View style={styles.cont}>
@@ -54,12 +70,13 @@ const EpisodeItem = observer(({ doc }) => {
           <Text style={styles.title}>{name}</Text>
           <Text style={styles.id}>Ep.{id}</Text>
           <Text style={styles.date}>{date}</Text>
-          <TouchableHighlight>
+
+          <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
             <Image
               source={require("../../../assets/smPlay.png")}
               style={styles.playbutton}
             />
-          </TouchableHighlight>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     </View>
@@ -70,8 +87,8 @@ export default Episodes;
 
 const styles = StyleSheet.create({
   playbutton: {
-    height: 20,
-    width: 20,
+    height: 30,
+    width: 30,
     position: "absolute",
     top: 50,
     left: 230
@@ -100,7 +117,7 @@ const styles = StyleSheet.create({
     left: 15
   },
   id: {
-    fontSize: 15,
+    fontSize: 17,
     position: "absolute",
     top: 3,
     left: 230
