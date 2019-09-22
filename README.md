@@ -1,6 +1,6 @@
-# React-Native
+# React Native Podcasting App
 <h3>React Native &amp; Firebase Podcast App</h3>
-
+<p>the app as it stands currently represents a minimum viable product</p>
 This app uses React Native as a client side solution with Google Firebase' Firestore & Database
 
 <h2> Why use Firebase as a backend solution? </h2>
