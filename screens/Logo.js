@@ -17,7 +17,7 @@ const Logo = () => {
 
 const styles = StyleSheet.create({
   icon: {
-    height: 130,
+    height: 140,
     width: 350,
     marginTop: 70
   }
