@@ -15,6 +15,8 @@ import "@firebase/firestore";
 import { initFirestorter, Collection } from "firestorter";
 import { observer } from "mobx-react";
 
+import { Ionicons } from "@expo/vector-ico";
+
 // Firebase Init
 const firebaseConfig = {
   apiKey: "AIzaSyAITLDmtIK2ZyEjwYfGZkKqYHab5CnVHXo",

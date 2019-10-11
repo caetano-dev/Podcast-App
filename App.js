@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import MainScreen from "./screens/MainScreen";
 
-{
-  /*current branch is BackEnd*/
-}
-
 export default class App extends Component {
-  // load data from firestore
-
   render() {
     return (
       <View style={styles.container}>

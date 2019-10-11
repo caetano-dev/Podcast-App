@@ -7,6 +7,14 @@ import Logo from "./Logo";
 import { Episodes, Latest } from "./components/Episodes/EpisodeList";
 
 export default class MainScreen extends Component {
+  state = {
+    isPlaying: false,
+    playbackInstance: null,
+    currentIndex: 0,
+    volume: 1.0,
+    isBuffering: false
+  };
+
   render() {
     let screenWidth = Dimensions.get("window").width;
 
