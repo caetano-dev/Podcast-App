@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, Component, useContext } from "react";
 import {
   Text,
   StyleSheet,
@@ -9,6 +9,8 @@ import {
 
 //audio
 import { Audio } from "expo-av";
+import { Ionicons } from "@expo/vector-icons";
+
 //firebase
 import firebase from "firebase";
 import "@firebase/firestore";
@@ -30,10 +32,30 @@ firebase.initializeApp(firebaseConfig);
 // init firestorter
 initFirestorter({ firebase: firebase });
 
+//context
+import PlayerContext from "../../../context/player/PlayerContext";
+const {
+  isPlaying,
+  playbackInstance,
+  currentIndex,
+  volume,
+  isBuffering
+} = PlayerContext;
 //Define collection
 const episodes = new Collection("episodes");
+const latestep = new Collection("episodes");
 
-//wrap component with mobx observer pattern
+handlePlayPause = async () => {
+  const { isPlaying, playbackInstance } = this.state;
+  isPlaying
+    ? await playbackInstance.pauseAsync()
+    : await playbackInstance.playAsync();
+
+  this.setState({
+    isPlaying: !isPlaying
+  });
+};
+
 const Episodes = observer(
   class Episodes extends Component {
     render() {
@@ -72,8 +94,10 @@ const EpisodeItem = observer(({ doc }) => {
           <Text style={styles.date}>{date}</Text>
 
           <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
-            <Image
-              source={require("../../../assets/smPlay.png")}
+            <Ionicons
+              name="ios-play-circle"
+              size={32}
+              color="black"
               style={styles.playbutton}
             />
           </TouchableWithoutFeedback>
@@ -82,8 +106,6 @@ const EpisodeItem = observer(({ doc }) => {
     </View>
   );
 });
-
-const latestep = new Collection("episodes");
 
 const Latest = observer(
   class Latest extends Component {
@@ -106,8 +128,14 @@ const LatestEpisode = observer(({ doc }) => {
   handleAudio = async url => {
     const soundObject = new Audio.Sound();
     try {
+      //edit to allow play pause function
       await soundObject.loadAsync({ uri: url }, (downloadFirst = true));
-      await soundObject.playAsync();
+      isPlaying
+        ? await soundObject.pauseAsync()
+        : await soundObject.playAsync();
+      this.setState({
+        isPlaying: !isPlaying
+      });
     } catch (error) {
       console.log(error);
     }
@@ -128,10 +156,21 @@ const LatestEpisode = observer(({ doc }) => {
         <Text style={{ fontSize: 15, alignSelf: "baseline" }}> {date} </Text>
       </View>
       <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
-        <Image
-          source={require("../../../assets/playbutton.png")}
-          style={styles.homePlay}
-        />
+        {isPlaying ? (
+          <Ionicons
+            name="ios-pause"
+            size={60}
+            color="black"
+            style={styles.homePlay}
+          />
+        ) : (
+          <Ionicons
+            name="ios-play-circle"
+            size={60}
+            color="black"
+            style={styles.homePlay}
+          />
+        )}
       </TouchableWithoutFeedback>
     </View>
   );
@@ -164,11 +203,9 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   playbutton: {
-    height: 30,
-    width: 30,
     position: "absolute",
     top: 50,
-    left: 230
+    left: 260
   },
   prevEP: {
     margin: 10,
@@ -209,7 +246,6 @@ const styles = StyleSheet.create({
     height: 525
   },
   homePlay: {
-    height: 50,
-    width: 150
+    alignSelf: "center"
   }
 });

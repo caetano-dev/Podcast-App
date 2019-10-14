@@ -1,18 +1,32 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import MainScreen from "./screens/MainScreen";
+import { Audio } from "expo-av";
 
-{
-  /*current branch is BackEnd*/
-}
+import PlayerState from "./context/player/PlayerState";
 
-export default class App extends Component {
-  // load data from firestore
-
+export default class App extends React.Component {
+  async componentDidMount() {
+    try {
+      await Audio.setAudioModeAsync({
+        staysActiveInBackground: true,
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        shouldDuckAndroid: true,
+        playThroughEarpieceAndroid: false
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
-        <MainScreen />
+        <PlayerState>
+          <MainScreen />
+        </PlayerState>
       </View>
     );
   }
