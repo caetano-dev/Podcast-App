@@ -1,4 +1,4 @@
-import React, { Fragment, Component, useContext } from "react";
+import React, { Fragment, Component, useContext, useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -16,6 +16,7 @@ import firebase from "firebase";
 import "@firebase/firestore";
 import { initFirestorter, Collection } from "firestorter";
 import { observer } from "mobx-react";
+import PlayerContext from "../../../context/player/PlayerContext";
 
 // Firebase Init
 const firebaseConfig = {
@@ -29,18 +30,11 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const EpRef = db.collection("episodes");
 // init firestorter
 initFirestorter({ firebase: firebase });
 
-//context
-import PlayerContext from "../../../context/player/PlayerContext";
-const {
-  isPlaying,
-  playbackInstance,
-  currentIndex,
-  volume,
-  isBuffering
-} = PlayerContext;
 //Define collection
 const episodes = new Collection("episodes");
 const latestep = new Collection("episodes");
@@ -50,10 +44,6 @@ handlePlayPause = async () => {
   isPlaying
     ? await playbackInstance.pauseAsync()
     : await playbackInstance.playAsync();
-
-  this.setState({
-    isPlaying: !isPlaying
-  });
 };
 
 const Episodes = observer(
@@ -124,27 +114,40 @@ const Latest = observer(
 
 const LatestEpisode = observer(({ doc }) => {
   const { name, id, date, url, description } = doc.data;
+  //initial state
+  console.log(`isPlaying = ${state.isPlaying}`);
+  const soundObject = new Audio.Sound();
   //audio player from article audio = note
-  handleAudio = async url => {
-    const soundObject = new Audio.Sound();
+  handlePlay = async url => {
     try {
-      //edit to allow play pause function
-      await soundObject.loadAsync({ uri: url }, (downloadFirst = true));
-      isPlaying
-        ? await soundObject.pauseAsync()
-        : await soundObject.playAsync();
-      this.setState({
-        isPlaying: !isPlaying
-      });
+      let loaded = 0;
+      if (loaded > 0) {
+        await soundObject.playAsync();
+      } else {
+        await soundObject.loadAsync({ uri: url });
+        loaded = 1;
+        console.log(loaded);
+        await soundObject.playAsync();
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  handlePause = async url => {
+    try {
+      await soundObject.pauseAsync();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.newContent}>
       <Text h1 style={{ fontSize: 30 }}>
         Latest Episode
       </Text>
+
       <View style={styles.content}>
         <View style={styles.overflow}>
           <View>
@@ -155,23 +158,28 @@ const LatestEpisode = observer(({ doc }) => {
         <Text style={styles.description}>{description}</Text>
         <Text style={{ fontSize: 15, alignSelf: "baseline" }}> {date} </Text>
       </View>
-      <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
-        {isPlaying ? (
-          <Ionicons
-            name="ios-pause"
-            size={60}
-            color="black"
-            style={styles.homePlay}
-          />
-        ) : (
-          <Ionicons
-            name="ios-play-circle"
-            size={60}
-            color="black"
-            style={styles.homePlay}
-          />
-        )}
-      </TouchableWithoutFeedback>
+      <View style={styles.audioControls}>
+        <Fragment>
+          <TouchableWithoutFeedback onPress={() => this.handlePause(url)}>
+            <Ionicons
+              name="ios-pause"
+              size={60}
+              color="black"
+              style={styles.homePause}
+            />
+          </TouchableWithoutFeedback>
+        </Fragment>
+        <Fragment>
+          <TouchableWithoutFeedback onPress={() => this.handlePlay(url)}>
+            <Ionicons
+              name="ios-play-circle"
+              size={60}
+              color="black"
+              style={styles.homePlay}
+            />
+          </TouchableWithoutFeedback>
+        </Fragment>
+      </View>
     </View>
   );
 });
@@ -246,6 +254,11 @@ const styles = StyleSheet.create({
     height: 525
   },
   homePlay: {
-    alignSelf: "center"
+    alignSelf: "center",
+    left: 20
+  },
+  homePause: {
+    right: 60,
+    top: 62
   }
 });
