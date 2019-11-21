@@ -9,7 +9,7 @@ const SmLogo = () => {
         alignItems: "center"
       }}
     >
-      <Image source={require("../assets/Logo.png")} style={styles.icon} />
+      <Image source={require("../../assets/Logo.png")} style={styles.icon} />
     </View>
   );
 };

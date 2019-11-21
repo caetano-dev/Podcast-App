@@ -11,27 +11,13 @@ import {
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
 
-//firebase
+//used firebase proper b/c firestorter wont accept the global firebase file at root
 import firebase from "firebase";
-import "@firebase/firestore";
+//firebase
 import { initFirestorter, Collection } from "firestorter";
 import { observer } from "mobx-react";
-import PlayerContext from "../../../context/player/PlayerContext";
+import "@firebase/firestore";
 
-// Firebase Init
-const firebaseConfig = {
-  apiKey: "AIzaSyAITLDmtIK2ZyEjwYfGZkKqYHab5CnVHXo",
-  authDomain: "podcast-68ac0.firebaseapp.com",
-  databaseURL: "https://podcast-68ac0.firebaseio.com",
-  projectId: "podcast-68ac0",
-  storageBucket: "podcast-68ac0.appspot.com",
-  messagingSenderId: "354277042339",
-  appId: "1:354277042339:web:fb61eba51d8dfa2fc57716"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const EpRef = db.collection("episodes");
 // init firestorter
 initFirestorter({ firebase: firebase });
 
@@ -115,7 +101,7 @@ const Latest = observer(
 const LatestEpisode = observer(({ doc }) => {
   const { name, id, date, url, description } = doc.data;
   //initial state
-  console.log(`isPlaying = ${state.isPlaying}`);
+  console.log(`isPlaying = ${this.state.isPlaying}`);
   const soundObject = new Audio.Sound();
   //audio player from article audio = note
   handlePlay = async url => {

@@ -3,15 +3,7 @@ import { Image, StyleSheet, View } from "react-native";
 
 const Logo = () => {
   return (
-    <View
-      style={{
-        backgroundColor: "#55765D",
-        flex: 1,
-        alignItems: "center"
-      }}
-    >
-      <Image source={require("../assets/Logo.png")} style={styles.icon} />
-    </View>
+    <Image source={require("../../assets/Logo.png")} style={styles.icon} />
   );
 };
 
@@ -19,7 +11,8 @@ const styles = StyleSheet.create({
   icon: {
     height: 140,
     width: 350,
-    marginTop: 70
+    marginTop: 30,
+    alignSelf: "center"
   }
 });
 
