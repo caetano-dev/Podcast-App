@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, memo } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,8 +15,6 @@ import { initFirestorter, Collection } from "firestorter";
 import { observer } from "mobx-react";
 import { ScrollView } from "react-native-gesture-handler";
 
-// init firestorter
-initFirestorter({ firebase: firebase });
 const episodes = new Collection("episodes");
 
 const Previous = observer(
@@ -92,7 +90,7 @@ const EpisodeItem = observer(({ doc }) => {
   );
 });
 
-export default Previous;
+export default memo(Previous);
 
 const styles = StyleSheet.create({
   scrollCont: {
