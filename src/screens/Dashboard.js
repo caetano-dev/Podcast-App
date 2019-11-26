@@ -1,4 +1,4 @@
-import React, { Component, Fragment, memo } from "react";
+import React, { Component, useState, Fragment, memo } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -25,8 +25,6 @@ import { observer } from "mobx-react";
 initFirestorter({ firebase: firebase });
 const latestEP = new Collection("episodes");
 
-const db = firebase.firestore();
-
 const Dashboard = observer(
   class Dashboard extends Component {
     constructor(props) {
@@ -36,16 +34,9 @@ const Dashboard = observer(
         playbackInstance: null,
         currentIndex: 0,
         volume: 1.0,
-        isBuffering: true,
-        id: 0,
-        url: null,
-        date: null,
-        name: "Name",
-        desc: "Description"
+        isBuffering: true
       };
     }
-
-    componentDidMount() {}
 
     render() {
       latestEP.query = ref => ref.orderBy("id", "desc").limit(1);
@@ -86,8 +77,11 @@ const Dashboard = observer(
 const DashboardItem = observer(({ doc }) => {
   const { name, id, date, url, description } = doc.data;
 
+  const [isPlaying, setIsPlaying] = useState(false);
+
   handleAudio = async url => {
     const soundObject = new Audio.Sound();
+    setIsPlaying(!isPlaying);
     try {
       await soundObject.loadAsync({ uri: url });
       await soundObject.playAsync();
@@ -118,7 +112,11 @@ const DashboardItem = observer(({ doc }) => {
       <View style={{ flex: 1 }}>
         <View style={styles.controls}>
           <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
-            <Ionicons name="ios-play-circle" size={70} color="black" />
+            {isPlaying ? (
+              <Ionicons name="ios-pause" size={70} color="black" />
+            ) : (
+              <Ionicons name="ios-play-circle" size={70} color="black" />
+            )}
           </TouchableWithoutFeedback>
         </View>
       </View>
