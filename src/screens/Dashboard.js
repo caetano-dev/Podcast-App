@@ -40,6 +40,9 @@ const Dashboard = observer(
 
     render() {
       latestEP.query = ref => ref.orderBy("id", "desc").limit(1);
+      const Data = observer(({ doc }) => {
+        return <DashboardItem doc={doc} />;
+      });
       return (
         <View style={styles.cont}>
           <View style={styles.logoBTN}>
@@ -65,7 +68,7 @@ const Dashboard = observer(
           {/*Content/////////////////////////////////////////// */}
           <View style={{ flex: 2 }}>
             {latestEP.docs.map(doc => (
-              <DashboardItem key={doc.id} doc={doc} />
+              <Data key={doc.id} doc={doc} />
             ))}
           </View>
         </View>
@@ -74,55 +77,98 @@ const Dashboard = observer(
   }
 );
 
-const DashboardItem = observer(({ doc }) => {
-  const { name, id, date, url, description } = doc.data;
+class DashboardItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isPlaying: false,
+      playbackInstance: null,
+      currentIndex: 0,
+      volume: 1.0,
+      isBuffering: true
+    };
+  }
+  async componentDidMount() {
+    const { isPlaying, volume } = this.state;
 
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  handleAudio = async url => {
-    const soundObject = new Audio.Sound();
-    setIsPlaying(!isPlaying);
     try {
-      await soundObject.loadAsync({ uri: url });
-      await soundObject.playAsync();
-    } catch (error) {
-      console.log(error);
+      const playbackInstance = new Audio.Sound();
+      const source = {
+        uri: this.props.doc.data.url
+      };
+
+      const status = {
+        shouldPlay: isPlaying,
+        volume: volume
+      };
+
+      playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
+      await playbackInstance.loadAsync(source, status, false);
+      this.setState({
+        playbackInstance
+      });
+    } catch (e) {
+      console.log(e);
     }
+  }
+
+  onPlaybackStatusUpdate = status => {
+    this.setState({
+      isBuffering: status.isBuffering
+    });
   };
 
-  return (
-    <Fragment>
-      <View style={styles.newContent}>
-        <Text h1 style={{ fontSize: 30 }}>
-          Latest Episode
-        </Text>
-        <View style={styles.content}>
-          <View>
-            <View>
-              <Text style={styles.titleHome}>{name}</Text>
-              <Text style={styles.id}>EP. {id}</Text>
-            </View>
-          </View>
-          <Text style={styles.description}>{description}</Text>
-          <Text style={{ fontSize: 15, alignSelf: "baseline" }}>{date}</Text>
-        </View>
-      </View>
+  handlePlayPause = async () => {
+    const { isPlaying, playbackInstance } = this.state;
+    console.log(
+      `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`
+    );
+    isPlaying
+      ? await playbackInstance.pauseAsync()
+      : await playbackInstance.playAsync();
 
-      {/* contorls////////////////////////////////////////*/}
-      <View style={{ flex: 1 }}>
-        <View style={styles.controls}>
-          <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
-            {isPlaying ? (
-              <Ionicons name="ios-pause" size={70} color="black" />
-            ) : (
-              <Ionicons name="ios-play-circle" size={70} color="black" />
-            )}
-          </TouchableWithoutFeedback>
+    this.setState({
+      isPlaying: !isPlaying
+    });
+  };
+  render() {
+    const { name, id, date, description } = this.props.doc.data;
+    const { isPlaying } = this.state;
+
+    return (
+      <Fragment>
+        <View style={styles.newContent}>
+          <Text h1 style={{ fontSize: 30 }}>
+            Latest Episode
+          </Text>
+          <View style={styles.content}>
+            <View>
+              <View>
+                <Text style={styles.titleHome}>{name}</Text>
+                <Text style={styles.id}>EP. {id}</Text>
+              </View>
+            </View>
+            <Text style={styles.description}>{description}</Text>
+            <Text style={{ fontSize: 15, alignSelf: "baseline" }}>{date}</Text>
+          </View>
         </View>
-      </View>
-    </Fragment>
-  );
-});
+
+        {/* contorls////////////////////////////////////////*/}
+        <View style={{ flex: 1 }}>
+          <View style={styles.controls}>
+            <TouchableWithoutFeedback onPress={() => this.handlePlayPause()}>
+              {isPlaying ? (
+                <Ionicons name="ios-pause" size={70} color="black" />
+              ) : (
+                <Ionicons name="ios-play-circle" size={70} color="black" />
+              )}
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
+      </Fragment>
+    );
+  }
+}
 
 export default memo(Dashboard);
 
