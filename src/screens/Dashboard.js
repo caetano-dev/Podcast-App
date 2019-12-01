@@ -27,17 +27,6 @@ const latestEP = new Collection("episodes");
 
 const Dashboard = observer(
   class Dashboard extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        isPlaying: false,
-        playbackInstance: null,
-        currentIndex: 0,
-        volume: 1.0,
-        isBuffering: true
-      };
-    }
-
     render() {
       latestEP.query = ref => ref.orderBy("id", "desc").limit(1);
       const Data = observer(({ doc }) => {
@@ -83,7 +72,6 @@ class DashboardItem extends Component {
     this.state = {
       isPlaying: false,
       playbackInstance: null,
-      currentIndex: 0,
       volume: 1.0,
       isBuffering: true
     };
@@ -92,6 +80,15 @@ class DashboardItem extends Component {
     const { isPlaying, volume } = this.state;
 
     try {
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        shouldDuckAndroid: true,
+        staysActiveInBackground: true,
+        playThroughEarpieceAndroid: false
+      });
       const playbackInstance = new Audio.Sound();
       const source = {
         uri: this.props.doc.data.url
