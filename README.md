@@ -1,4 +1,6 @@
 # React Native Podcasting App
+**This app is currently still under development.**
+
 <h3>React Native &amp; Firebase Podcast App</h3>
 <p>The app as it stands currently represents a minimum viable product.</p>
 
