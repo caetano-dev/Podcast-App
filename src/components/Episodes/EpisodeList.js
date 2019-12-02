@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, Component, useContext, useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -9,12 +9,16 @@ import {
 
 //audio
 import { Audio } from "expo-av";
-//firebase
+import { Ionicons } from "@expo/vector-icons";
+
+//used firebase proper b/c firestorter wont accept the global firebase file at root
 import firebase from "firebase";
-import "@firebase/firestore";
+//firebase
 import { initFirestorter, Collection } from "firestorter";
 import { observer } from "mobx-react";
+import "@firebase/firestore";
 
+<<<<<<< HEAD:screens/components/Episodes/EpisodeList.js
 import { Ionicons } from "@expo/vector-ico";
 
 // Firebase Init
@@ -29,13 +33,22 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+=======
+>>>>>>> media-func:src/components/Episodes/EpisodeList.js
 // init firestorter
 initFirestorter({ firebase: firebase });
 
 //Define collection
 const episodes = new Collection("episodes");
+const latestep = new Collection("episodes");
 
-//wrap component with mobx observer pattern
+handlePlayPause = async () => {
+  const { isPlaying, playbackInstance } = this.state;
+  isPlaying
+    ? await playbackInstance.pauseAsync()
+    : await playbackInstance.playAsync();
+};
+
 const Episodes = observer(
   class Episodes extends Component {
     render() {
@@ -74,8 +87,10 @@ const EpisodeItem = observer(({ doc }) => {
           <Text style={styles.date}>{date}</Text>
 
           <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
-            <Image
-              source={require("../../../assets/smPlay.png")}
+            <Ionicons
+              name="ios-play-circle"
+              size={32}
+              color="black"
               style={styles.playbutton}
             />
           </TouchableWithoutFeedback>
@@ -84,8 +99,6 @@ const EpisodeItem = observer(({ doc }) => {
     </View>
   );
 });
-
-const latestep = new Collection("episodes");
 
 const Latest = observer(
   class Latest extends Component {
@@ -104,21 +117,40 @@ const Latest = observer(
 
 const LatestEpisode = observer(({ doc }) => {
   const { name, id, date, url, description } = doc.data;
+  //initial state
+  console.log(`isPlaying = ${this.state.isPlaying}`);
+  const soundObject = new Audio.Sound();
   //audio player from article audio = note
-  handleAudio = async url => {
-    const soundObject = new Audio.Sound();
+  handlePlay = async url => {
     try {
-      await soundObject.loadAsync({ uri: url }, (downloadFirst = true));
-      await soundObject.playAsync();
+      let loaded = 0;
+      if (loaded > 0) {
+        await soundObject.playAsync();
+      } else {
+        await soundObject.loadAsync({ uri: url });
+        loaded = 1;
+        console.log(loaded);
+        await soundObject.playAsync();
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  handlePause = async url => {
+    try {
+      await soundObject.pauseAsync();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.newContent}>
       <Text h1 style={{ fontSize: 30 }}>
         Latest Episode
       </Text>
+
       <View style={styles.content}>
         <View style={styles.overflow}>
           <View>
@@ -129,12 +161,28 @@ const LatestEpisode = observer(({ doc }) => {
         <Text style={styles.description}>{description}</Text>
         <Text style={{ fontSize: 15, alignSelf: "baseline" }}> {date} </Text>
       </View>
-      <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
-        <Image
-          source={require("../../../assets/playbutton.png")}
-          style={styles.homePlay}
-        />
-      </TouchableWithoutFeedback>
+      <View style={styles.audioControls}>
+        <Fragment>
+          <TouchableWithoutFeedback onPress={() => this.handlePause(url)}>
+            <Ionicons
+              name="ios-pause"
+              size={60}
+              color="black"
+              style={styles.homePause}
+            />
+          </TouchableWithoutFeedback>
+        </Fragment>
+        <Fragment>
+          <TouchableWithoutFeedback onPress={() => this.handlePlay(url)}>
+            <Ionicons
+              name="ios-play-circle"
+              size={60}
+              color="black"
+              style={styles.homePlay}
+            />
+          </TouchableWithoutFeedback>
+        </Fragment>
+      </View>
     </View>
   );
 });
@@ -166,11 +214,9 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   playbutton: {
-    height: 30,
-    width: 30,
     position: "absolute",
     top: 50,
-    left: 230
+    left: 260
   },
   prevEP: {
     margin: 10,
@@ -211,7 +257,11 @@ const styles = StyleSheet.create({
     height: 525
   },
   homePlay: {
-    height: 50,
-    width: 150
+    alignSelf: "center",
+    left: 20
+  },
+  homePause: {
+    right: 60,
+    top: 62
   }
 });
