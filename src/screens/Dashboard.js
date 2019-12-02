@@ -1,9 +1,7 @@
-import React, { Component, useState, Fragment, memo } from "react";
+import React, { Component, Fragment, memo } from "react";
 import {
-  ScrollView,
   StyleSheet,
   View,
-  Dimensions,
   Text,
   Button as BButton,
   TouchableWithoutFeedback

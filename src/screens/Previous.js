@@ -2,24 +2,28 @@ import React, { Component, Fragment, memo } from "react";
 import {
   StyleSheet,
   Text,
-  Image,
   View,
-  TextInput,
   Button,
   TouchableWithoutFeedback
 } from "react-native";
 
 import firebase from "firebase";
 import "@firebase/firestore";
-import { initFirestorter, Collection } from "firestorter";
+import { Collection } from "firestorter";
 import { observer } from "mobx-react";
 import { ScrollView } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
+
+import { Audio } from "expo-av";
 
 const episodes = new Collection("episodes");
 
 const Previous = observer(
   class Previous extends Component {
     render() {
+      const Data = observer(({ doc }) => {
+        return <EpisodeItem doc={doc} />;
+      });
       return (
         <View
           style={{
@@ -44,7 +48,7 @@ const Previous = observer(
             <ScrollView>
               <View>
                 {episodes.docs.reverse().map(doc => (
-                  <EpisodeItem key={doc.id} doc={doc} />
+                  <Data key={doc.id} doc={doc} />
                 ))}
               </View>
             </ScrollView>
@@ -55,40 +59,102 @@ const Previous = observer(
   }
 );
 
-const EpisodeItem = observer(({ doc }) => {
-  const { name, id, date, url } = doc.data;
-  //audio player from article audio = note
-  handleAudio = async url => {
-    const soundObject = new Audio.Sound();
+class EpisodeItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isPlaying: false,
+      playbackInstance: null,
+      volume: 1.0,
+      isBuffering: true
+    };
+  }
+  async componentDidMount() {
+    const { isPlaying, volume } = this.state;
+
     try {
-      await soundObject.loadAsync({ uri: url }, (downloadFirst = true));
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        shouldDuckAndroid: true,
+        staysActiveInBackground: true,
+        playThroughEarpieceAndroid: false
+      });
+      const playbackInstance = new Audio.Sound();
+      const source = {
+        uri: this.props.doc.data.url
+      };
+      const status = {
+        shouldPlay: isPlaying,
+        volume: volume
+      };
 
-      await soundObject.playAsync();
-    } catch (error) {
-      console.log(error);
+      playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
+      await playbackInstance.loadAsync(source, status, false);
+      this.setState({
+        playbackInstance
+      });
+    } catch (e) {
+      console.log(e);
     }
-  };
-  // figure out how to load the audio data
-  // add seek element & download to local storage
-  return (
-    <View style={styles.prevEP}>
-      <View style={styles.cont}>
-        <View>
-          <Text style={styles.title}>{name}</Text>
-          <Text style={styles.id}>Ep.{id}</Text>
-          <Text style={styles.date}>{date}</Text>
+  }
 
-          <TouchableWithoutFeedback onPress={() => this.handleAudio(url)}>
-            <Image
-              source={require("../../assets/smPlay.png")}
-              style={styles.playbutton}
-            />
-          </TouchableWithoutFeedback>
+  onPlaybackStatusUpdate = status => {
+    this.setState({
+      isBuffering: status.isBuffering
+    });
+  };
+
+  handlePlayPause = async () => {
+    const { isPlaying, playbackInstance } = this.state;
+    console.log(
+      `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`
+    );
+    isPlaying
+      ? await playbackInstance.pauseAsync()
+      : await playbackInstance.playAsync();
+
+    this.setState({
+      isPlaying: !isPlaying
+    });
+  };
+  render() {
+    const { name, id, date } = this.props.doc.data;
+    const { isPlaying } = this.state;
+
+    return (
+      <View style={styles.prevEP}>
+        <View style={styles.cont}>
+          <View>
+            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.id}>Ep.{id}</Text>
+            <Text style={styles.date}>{date}</Text>
+
+            <TouchableWithoutFeedback onPress={() => this.handlePlayPause()}>
+              {isPlaying ? (
+                <Ionicons
+                  style={styles.playbutton}
+                  name="ios-pause"
+                  size={30}
+                  color="black"
+                />
+              ) : (
+                <Ionicons
+                  style={styles.playbutton}
+                  name="ios-play-circle"
+                  size={30}
+                  color="black"
+                />
+              )}
+            </TouchableWithoutFeedback>
+          </View>
         </View>
       </View>
-    </View>
-  );
-});
+    );
+  }
+}
 
 export default memo(Previous);
 
@@ -129,8 +195,6 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   playbutton: {
-    height: 30,
-    width: 30,
     position: "absolute",
     top: 50,
     left: 230
