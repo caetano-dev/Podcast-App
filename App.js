@@ -1,18 +1,5 @@
 import * as React from "react";
 
-<<<<<<< HEAD
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <MainScreen />
-      </View>
-    );
-=======
-//might use later
-//import { Dimensions } from "react-native";
-//const screenWidth = Dimensions.get("window").width;
-
 import {
   HomeScreen,
   LoginScreen,
@@ -42,7 +29,6 @@ const RootStack = createStackNavigator(
     defaultNavigationOptions: {
       header: null
     }
->>>>>>> media-func
   }
 );
 
