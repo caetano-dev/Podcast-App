@@ -12,7 +12,9 @@ import "@firebase/firestore";
 import { Collection } from "firestorter";
 import { observer } from "mobx-react";
 import { ScrollView } from "react-native-gesture-handler";
+
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { Audio } from "expo-av";
 
@@ -64,28 +66,22 @@ class EpisodeItem extends Component {
     super(props);
     this.state = {
       isPlaying: false,
+      stopAvailable: false,
       playbackInstance: null,
       volume: 1.0,
       isBuffering: true
     };
   }
   async componentDidMount() {
+    console.log("Previous CDM running");
     const { isPlaying, volume } = this.state;
 
     try {
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-        playsInSilentModeIOS: true,
-        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        shouldDuckAndroid: true,
-        staysActiveInBackground: true,
-        playThroughEarpieceAndroid: false
-      });
       const playbackInstance = new Audio.Sound();
       const source = {
         uri: this.props.doc.data.url
       };
+
       const status = {
         shouldPlay: isPlaying,
         volume: volume
@@ -96,6 +92,7 @@ class EpisodeItem extends Component {
       this.setState({
         playbackInstance
       });
+      console.log(this.state.playbackInstance);
     } catch (e) {
       console.log(e);
     }
@@ -108,21 +105,37 @@ class EpisodeItem extends Component {
   };
 
   handlePlayPause = async () => {
-    const { isPlaying, playbackInstance } = this.state;
+    const { isPlaying, playbackInstance, stopAvailable } = this.state;
     console.log(
       `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`
     );
     isPlaying
       ? await playbackInstance.pauseAsync()
-      : await playbackInstance.playAsync();
+      : await playbackInstance
+          .playAsync()
+          .then(this.setState({ stopAvailable: true }));
 
     this.setState({
       isPlaying: !isPlaying
     });
   };
+
+  handleStop = async () => {
+    const { isPlaying, stopAvailable, playbackInstance } = this.state;
+    console.log(
+      `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`
+    );
+    try {
+      await playbackInstance.unloadAsync();
+      this.setState({ isPlaying: false, stopAvailable: false });
+      this.componentDidMount();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
     const { name, id, date } = this.props.doc.data;
-    const { isPlaying } = this.state;
+    const { isPlaying, stopAvailable } = this.state;
 
     return (
       <View style={styles.prevEP}>
@@ -131,6 +144,16 @@ class EpisodeItem extends Component {
             <Text style={styles.title}>{name}</Text>
             <Text style={styles.id}>Ep.{id}</Text>
             <Text style={styles.date}>{date}</Text>
+            {stopAvailable ? (
+              <TouchableWithoutFeedback onPress={() => this.handleStop()}>
+                <MaterialCommunityIcons
+                  style={styles.stop}
+                  name="stop-circle"
+                  size={25}
+                  color="black"
+                />
+              </TouchableWithoutFeedback>
+            ) : null}
 
             <TouchableWithoutFeedback onPress={() => this.handlePlayPause()}>
               {isPlaying ? (
@@ -198,6 +221,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 50,
     left: 230
+  },
+  stop: {
+    position: "absolute",
+    top: 50,
+    left: 175
   },
   prevEP: {
     flex: 2,

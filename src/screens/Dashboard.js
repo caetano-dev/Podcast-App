@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Logo from "../components/LogoM";
 
@@ -69,12 +70,15 @@ class DashboardItem extends Component {
     super(props);
     this.state = {
       isPlaying: false,
+      stopAvailable: false,
       playbackInstance: null,
       volume: 1.0,
       isBuffering: true
     };
   }
   async componentDidMount() {
+    console.log("Dashboard CDM running");
+
     const { isPlaying, volume } = this.state;
 
     try {
@@ -114,21 +118,38 @@ class DashboardItem extends Component {
   };
 
   handlePlayPause = async () => {
-    const { isPlaying, playbackInstance } = this.state;
+    const { isPlaying, playbackInstance, stopAvailable } = this.state;
     console.log(
       `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`
     );
     isPlaying
       ? await playbackInstance.pauseAsync()
-      : await playbackInstance.playAsync();
+      : await playbackInstance
+          .playAsync()
+          .then(this.setState({ stopAvailable: true }));
 
     this.setState({
       isPlaying: !isPlaying
     });
   };
+
+  handleStop = async () => {
+    const { isPlaying, stopAvailable, playbackInstance } = this.state;
+    console.log(
+      `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`
+    );
+    try {
+      await playbackInstance.unloadAsync();
+      this.setState({ isPlaying: false, stopAvailable: false });
+      this.componentDidMount();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     const { name, id, date, description } = this.props.doc.data;
-    const { isPlaying } = this.state;
+    const { isPlaying, stopAvailable } = this.state;
 
     return (
       <Fragment>
@@ -151,6 +172,16 @@ class DashboardItem extends Component {
         {/* contorls////////////////////////////////////////*/}
         <View style={{ flex: 1 }}>
           <View style={styles.controls}>
+            {stopAvailable ? (
+              <TouchableWithoutFeedback onPress={() => this.handleStop()}>
+                <MaterialCommunityIcons
+                  name="stop-circle"
+                  size={70}
+                  color="black"
+                />
+              </TouchableWithoutFeedback>
+            ) : null}
+
             <TouchableWithoutFeedback onPress={() => this.handlePlayPause()}>
               {isPlaying ? (
                 <Ionicons name="ios-pause" size={70} color="black" />
@@ -226,110 +257,3 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly"
   }
 });
-
-{
-  /**
-  componentDidMount() {
-    try {
-      if (this.state.url === null) {
-        db.collection("episodes")
-          .where("id", "==", "6")
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              this.setState({
-                url: doc.data().url,
-                id: doc.data().id,
-                name: doc.data().name,
-                desc: doc.data().description,
-                date: doc.data().date
-              });
-            });
-          });
-      } else {
-        this.loadAudio();
-        Audio.setAudioModeAsync({
-          allowsRecordingIOS: false,
-          interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-          playsInSilentModeIOS: true,
-          interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-          shouldDuckAndroid: true,
-          staysActiveInBackground: true,
-          playThroughEarpieceAndroid: false
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async loadAudio() {
-    const { currentIndex, isPlaying, volume, url } = this.state;
-    try {
-      const playbackInstance = new Audio.Sound();
-      const source = {
-        uri: url
-      };
-      const status = {
-        shouldPlay: isPlaying,
-        volume: volume
-      };
-
-      playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
-      await playbackInstance.loadAsync(source, status, false);
-      console.log(`the current url ${source}`);
-
-      this.setState({
-        playbackInstance
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  onPlaybackStatusUpdate = status => {
-    this.setState({
-      isBuffering: status.isBuffering
-    });
-  };
-
-  handlePlayPause = async () => {
-    const { isPlaying, playbackInstance } = this.state;
-    isPlaying
-      ? await playbackInstance.pauseAsync()
-      : await playbackInstance.playAsync();
-
-    this.setState({
-      isPlaying: !isPlaying
-    });
-  };
-
-  handlePreviousTrack = async () => {
-    let { playbackInstance, currentIndex } = this.state;
-    if (playbackInstance) {
-      await playbackInstance.unloadAsync();
-      currentIndex < audioBookPlaylist.length - 1
-        ? (currentIndex -= 1)
-        : (currentIndex = 0);
-      this.setState({
-        currentIndex
-      });
-      this.loadAudio();
-    }
-  };
-
-  handleNextTrack = async () => {
-    let { playbackInstance, currentIndex } = this.state;
-    if (playbackInstance) {
-      await playbackInstance.unloadAsync();
-      currentIndex < audioBookPlaylist.length - 1
-        ? (currentIndex += 1)
-        : (currentIndex = 0);
-      this.setState({
-        currentIndex
-      });
-      this.loadAudio();
-    }
-  };
- */
-}
