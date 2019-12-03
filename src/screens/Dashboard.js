@@ -200,7 +200,7 @@ export default memo(Dashboard);
 
 const styles = StyleSheet.create({
   cont: {
-    backgroundColor: "#55765D",
+    backgroundColor: "#325F49",
     flex: 1,
     flexDirection: "column"
   },
@@ -228,12 +228,11 @@ const styles = StyleSheet.create({
   content: {
     margin: 15,
     borderStyle: "solid",
-    borderColor: "rgba(73, 90, 76, 0.5)",
     borderRadius: 30,
     borderWidth: 5,
     padding: 10,
     width: 300,
-    backgroundColor: "rgba(73, 90, 76, 0.5)"
+    backgroundColor: "#4C7360"
   },
   newContent: {
     flex: 2,

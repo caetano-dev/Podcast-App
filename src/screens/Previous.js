@@ -30,7 +30,7 @@ const Previous = observer(
         <View
           style={{
             flex: 1,
-            backgroundColor: "#55765D",
+            backgroundColor: "#325F49",
             flexDirection: "column"
           }}
         >
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderRadius: 30,
     borderWidth: 5,
-    borderColor: "rgba(73, 90, 76, 0.5)"
+    borderColor: "#4C7360"
   },
   scroll: {
     flex: 1
