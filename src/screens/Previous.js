@@ -42,17 +42,20 @@ const Previous = observer(
             />
           </View>
 
-          <Text style={{ fontSize: 40, alignSelf: "center" }}>
+          <Text
+            style={{
+              fontSize: 45,
+              alignSelf: "center"
+            }}
+          >
             Previous Episodes
           </Text>
 
           <View style={styles.scrollCont}>
             <ScrollView>
-              <View>
-                {episodes.docs.reverse().map(doc => (
-                  <Data key={doc.id} doc={doc} />
-                ))}
-              </View>
+              {episodes.docs.reverse().map(doc => (
+                <Data key={doc.id} doc={doc} />
+              ))}
             </ScrollView>
           </View>
         </View>
@@ -94,7 +97,7 @@ class EpisodeItem extends Component {
       });
       console.log(this.state.playbackInstance);
     } catch (e) {
-      console.log(e);
+      console.log(`(Previous screen) componentDidMount error => ${e}`);
     }
   }
 
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderRadius: 30,
     borderWidth: 5,
-    borderColor: "#4C7360"
+    backgroundColor: "#4C7373"
   },
   scroll: {
     flex: 1
@@ -233,7 +236,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 5,
     width: 300,
-    height: 100
+    height: 100,
+    backgroundColor: "#BCCBC3"
   },
   cont: {
     flexDirection: "row"

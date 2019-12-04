@@ -154,7 +154,7 @@ class DashboardItem extends Component {
     return (
       <Fragment>
         <View style={styles.newContent}>
-          <Text h1 style={{ fontSize: 30 }}>
+          <Text h1 style={{ fontSize: 35 }}>
             Latest Episode
           </Text>
           <View style={styles.content}>
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     padding: 10,
     width: 300,
-    backgroundColor: "#4C7360"
+    backgroundColor: "#799688"
   },
   newContent: {
     flex: 2,
