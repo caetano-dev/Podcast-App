@@ -5,8 +5,8 @@
 <p>The app as it stands currently represents a minimum viable product.</p>
 
 <p float="left">
-<img src="assets/github preview/1.Dashboard.png" height="450" width="250" />
-<img src="assets/github preview/2.Previous.png" height="450" width="250" />
+<img src="assets/github preview/1.Dashboard.png" height="560" width="330" />
+<img src="assets/github preview/2.Previous.png" height="560" width="330" />
 </p>
 
 <p>This app uses React Native as a client side solution with Google Firebase' Firestore & Storage. </p>
