@@ -15,24 +15,10 @@ import Logo from "../components/LogoM";
 class ArchivePlayer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isPlaying: false,
-      stopAvailable: false,
-      playbackInstance: null,
-      volume: 1.0,
-      isBuffering: true
-    };
   }
   render() {
     const { navigation } = this.props;
 
-    const {
-      isPlaying,
-      stopAvailable,
-      playbackInstance,
-      volume,
-      isBuffering
-    } = this.state;
     return (
       <View style={styles.cont}>
         <View style={styles.logoBTN}>
@@ -75,26 +61,119 @@ class ArchivePlayer extends Component {
           </View>
 
           {/* contorls////////////////////////////////////////*/}
-          <View style={styles.controls}>
-            {stopAvailable ? (
-              <TouchableWithoutFeedback onPress={() => this.handleStop()}>
-                <MaterialCommunityIcons
-                  name="stop-circle"
-                  size={70}
-                  color="black"
-                />
-              </TouchableWithoutFeedback>
-            ) : null}
-
-            <TouchableWithoutFeedback onPress={() => this.handlePlayPause()}>
-              {isPlaying ? (
-                <Ionicons name="ios-pause" size={70} color="black" />
-              ) : (
-                <Ionicons name="ios-play-circle" size={70} color="black" />
-              )}
-            </TouchableWithoutFeedback>
-          </View>
+          <Controls
+            url={this.props.navigation.getParam("url", "default value")}
+          />
         </View>
+      </View>
+    );
+  }
+}
+
+class Controls extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isPlaying: false,
+      stopAvailable: false,
+      playbackInstance: null,
+      volume: 1.0,
+      isBuffering: true
+    };
+  }
+
+  async componentDidMount() {
+    console.log("ArchivePlayer CDM running");
+    console.log(`Audio URL => ${this.props.url}`);
+
+    const { isPlaying, volume } = this.state;
+
+    try {
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        shouldDuckAndroid: true,
+        staysActiveInBackground: true,
+        playThroughEarpieceAndroid: false
+      });
+      const playbackInstance = new Audio.Sound();
+      const source = {
+        uri: this.props.url
+      };
+
+      const status = {
+        shouldPlay: isPlaying,
+        volume: volume
+      };
+
+      playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
+      await playbackInstance.loadAsync(source, status, false);
+      this.setState({
+        playbackInstance
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  onPlaybackStatusUpdate = status => {
+    this.setState({
+      isBuffering: status.isBuffering
+    });
+  };
+
+  handlePlayPause = async () => {
+    const { isPlaying, playbackInstance, stopAvailable } = this.state;
+    console.log(
+      `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`
+    );
+    isPlaying
+      ? await playbackInstance.pauseAsync()
+      : await playbackInstance
+          .playAsync()
+          .then(this.setState({ stopAvailable: true }));
+
+    this.setState({
+      isPlaying: !isPlaying
+    });
+  };
+
+  handleStop = async () => {
+    const { isPlaying, stopAvailable, playbackInstance } = this.state;
+    console.log(
+      `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`
+    );
+    try {
+      await playbackInstance.unloadAsync();
+      this.setState({ isPlaying: false, stopAvailable: false });
+      this.componentDidMount();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  render() {
+    const { isPlaying, stopAvailable } = this.state;
+    return (
+      <View style={styles.controls}>
+        {stopAvailable ? (
+          <TouchableWithoutFeedback onPress={() => this.handleStop()}>
+            <MaterialCommunityIcons
+              name="stop-circle"
+              size={70}
+              color="black"
+            />
+          </TouchableWithoutFeedback>
+        ) : null}
+
+        <TouchableWithoutFeedback onPress={() => this.handlePlayPause()}>
+          {isPlaying ? (
+            <Ionicons name="ios-pause" size={70} color="black" />
+          ) : (
+            <Ionicons name="ios-play-circle" size={70} color="black" />
+          )}
+        </TouchableWithoutFeedback>
       </View>
     );
   }
