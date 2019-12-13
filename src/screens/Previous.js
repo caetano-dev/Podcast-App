@@ -61,7 +61,7 @@ class EpisodeItem extends Component {
   }
 
   render() {
-    const { name, id, date, description } = this.props.doc.data;
+    const { name, id, date, description, url } = this.props.doc.data;
 
     return (
       <TouchableOpacity
@@ -70,7 +70,8 @@ class EpisodeItem extends Component {
             name: name,
             id: id,
             date: date,
-            description: description
+            description: description,
+            url: url
           })
         }
       >
