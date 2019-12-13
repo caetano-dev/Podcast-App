@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     textAlign: "auto",
-    marginRight: 40,
+    marginRight: 75,
     left: 15
   },
   id: {
