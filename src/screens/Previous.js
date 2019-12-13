@@ -1,11 +1,7 @@
 import React, { Component, Fragment, memo } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TouchableWithoutFeedback
-} from "react-native";
+import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+
+import ArchivePlayer from "./ArchivePlayer";
 
 import firebase from "firebase";
 import "@firebase/firestore";
@@ -13,18 +9,13 @@ import { Collection } from "firestorter";
 import { observer } from "mobx-react";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-import { Audio } from "expo-av";
-
 const episodes = new Collection("episodes");
 
 const Previous = observer(
   class Previous extends Component {
     render() {
       const Data = observer(({ doc }) => {
-        return <EpisodeItem doc={doc} />;
+        return <EpisodeItem navigation={this.props.navigation} doc={doc} />;
       });
       return (
         <View
@@ -67,117 +58,32 @@ const Previous = observer(
 class EpisodeItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isPlaying: false,
-      stopAvailable: false,
-      playbackInstance: null,
-      volume: 1.0,
-      isBuffering: true
-    };
-  }
-  async componentDidMount() {
-    console.log("Previous CDM running");
-    const { isPlaying, volume } = this.state;
-
-    try {
-      const playbackInstance = new Audio.Sound();
-      const source = {
-        uri: this.props.doc.data.url
-      };
-
-      const status = {
-        shouldPlay: isPlaying,
-        volume: volume
-      };
-
-      playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
-      await playbackInstance.loadAsync(source, status, false);
-      this.setState({
-        playbackInstance
-      });
-      console.log(this.state.playbackInstance);
-    } catch (e) {
-      console.log(`(Previous screen) componentDidMount error => ${e}`);
-    }
   }
 
-  onPlaybackStatusUpdate = status => {
-    this.setState({
-      isBuffering: status.isBuffering
-    });
-  };
-
-  handlePlayPause = async () => {
-    const { isPlaying, playbackInstance, stopAvailable } = this.state;
-    console.log(
-      `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`
-    );
-    isPlaying
-      ? await playbackInstance.pauseAsync()
-      : await playbackInstance
-          .playAsync()
-          .then(this.setState({ stopAvailable: true }));
-
-    this.setState({
-      isPlaying: !isPlaying
-    });
-  };
-
-  handleStop = async () => {
-    const { isPlaying, stopAvailable, playbackInstance } = this.state;
-    console.log(
-      `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`
-    );
-    try {
-      await playbackInstance.unloadAsync();
-      this.setState({ isPlaying: false, stopAvailable: false });
-      this.componentDidMount();
-    } catch (error) {
-      console.log(error);
-    }
-  };
   render() {
-    const { name, id, date } = this.props.doc.data;
-    const { isPlaying, stopAvailable } = this.state;
+    const { name, id, date, description } = this.props.doc.data;
 
     return (
-      <View style={styles.prevEP}>
-        <View style={styles.cont}>
-          <View>
-            <Text style={styles.title}>{name}</Text>
-            <Text style={styles.id}>Ep.{id}</Text>
-            <Text style={styles.date}>{date}</Text>
-            {stopAvailable ? (
-              <TouchableWithoutFeedback onPress={() => this.handleStop()}>
-                <MaterialCommunityIcons
-                  style={styles.stop}
-                  name="stop-circle"
-                  size={25}
-                  color="black"
-                />
-              </TouchableWithoutFeedback>
-            ) : null}
-
-            <TouchableWithoutFeedback onPress={() => this.handlePlayPause()}>
-              {isPlaying ? (
-                <Ionicons
-                  style={styles.playbutton}
-                  name="ios-pause"
-                  size={30}
-                  color="black"
-                />
-              ) : (
-                <Ionicons
-                  style={styles.playbutton}
-                  name="ios-play-circle"
-                  size={30}
-                  color="black"
-                />
-              )}
-            </TouchableWithoutFeedback>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate("ArchivePlayer", {
+            name: name,
+            id: id,
+            date: date,
+            description: description
+          })
+        }
+      >
+        <View style={styles.prevEP}>
+          <View style={styles.cont}>
+            <View>
+              <Text style={styles.title}>{name}</Text>
+              <Text style={styles.id}>Ep.{id}</Text>
+              <Text style={styles.date}>{date}</Text>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
