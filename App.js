@@ -7,7 +7,8 @@ import {
   ForgotPasswordScreen,
   AuthLoadingScreen,
   Dashboard,
-  Previous
+  Previous,
+  ArchivePlayer
 } from "./src/screens";
 
 // Navigation
@@ -22,7 +23,8 @@ const RootStack = createStackNavigator(
     ForgotPasswordScreen,
     AuthLoadingScreen,
     Dashboard,
-    Previous
+    Previous,
+    ArchivePlayer
   },
   {
     initialRouteName: "AuthLoadingScreen",
