@@ -10,9 +10,7 @@ const Logo = () => {
 const styles = StyleSheet.create({
   icon: {
     height: 140,
-    width: 350,
-    marginTop: 30,
-    alignSelf: "center"
+    width: 350
   }
 });
 

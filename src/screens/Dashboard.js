@@ -3,15 +3,17 @@ import {
   StyleSheet,
   View,
   Text,
-  Button as BButton,
-  TouchableWithoutFeedback
+  Button,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  Image
 } from "react-native";
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Logo from "../components/LogoM";
-
+import Icons from "../components/Icons";
 import { logoutUser } from "../api/auth-api";
 
 //firebase
@@ -33,28 +35,25 @@ const Dashboard = observer(
       });
       return (
         <View style={styles.cont}>
-          <View style={styles.logoBTN}>
-            <View style={{ flex: 1 }}>
-              <Logo />
-            </View>
+          <View style={{ marginVertical: 15, alignSelf: "center" }}>
+            <Logo />
+          </View>
+          {/* Buttons//////////////////////////////////////// */}
+          <View style={styles.buttonGroup}>
+            <Button
+              color="#427389"
+              title="Episode Archive"
+              onPress={() => this.props.navigation.navigate("Previous")}
+            />
+            <Button color="black" title="Logout" onPress={() => logoutUser()} />
+          </View>
 
-            {/* Buttons//////////////////////////////////////// */}
-            <View style={styles.buttonGroup}>
-              <BButton
-                color="#427389"
-                title="Episode Archive"
-                onPress={() => this.props.navigation.navigate("Previous")}
-              />
-              <BButton
-                color="#427389"
-                title="Logout"
-                onPress={() => logoutUser()}
-              />
-            </View>
+          <View style={{ margin: 10 }}>
+            <Icons />
           </View>
 
           {/*Content/////////////////////////////////////////// */}
-          <View style={{ flex: 2 }}>
+          <View style={{ flex: 3 }}>
             {latestEP.docs.map(doc => (
               <Data key={doc.id} doc={doc} />
             ))}
@@ -77,7 +76,9 @@ class DashboardItem extends Component {
     };
   }
   async componentDidMount() {
-    console.log("Dashboard CDM running");
+    console.log(
+      `Dashboard CDM running // Episode: ${this.props.doc.data.name}`
+    );
 
     const { isPlaying, volume } = this.state;
 
@@ -154,7 +155,7 @@ class DashboardItem extends Component {
     return (
       <Fragment>
         <View style={styles.newContent}>
-          <Text h1 style={{ fontSize: 35 }}>
+          <Text h1 style={{ fontSize: 35, fontWeight: "bold" }}>
             Latest Episode
           </Text>
           <View style={styles.content}>
@@ -164,13 +165,18 @@ class DashboardItem extends Component {
                 <Text style={styles.id}>EP. {id}</Text>
               </View>
             </View>
+            {/**Word cap @ 240 characters */}
             <Text style={styles.description}>{description}</Text>
-            <Text style={{ fontSize: 15, alignSelf: "baseline" }}>{date}</Text>
+            <Text
+              style={{
+                fontSize: 15,
+                alignSelf: "baseline",
+                fontWeight: "bold"
+              }}
+            >
+              {date}
+            </Text>
           </View>
-        </View>
-
-        {/* contorls////////////////////////////////////////*/}
-        <View style={{ flex: 1 }}>
           <View style={styles.controls}>
             {stopAvailable ? (
               <TouchableWithoutFeedback onPress={() => this.handleStop()}>
@@ -214,6 +220,7 @@ const styles = StyleSheet.create({
     marginBottom: 100
   },
   id: {
+    fontWeight: "bold",
     fontSize: 17,
     position: "absolute",
     top: 3,
@@ -236,18 +243,16 @@ const styles = StyleSheet.create({
   },
   newContent: {
     flex: 2,
-    padding: 50,
     justifyContent: "center",
-    alignItems: "center",
-    height: 525
+    alignItems: "center"
   },
   titleHome: {
+    fontWeight: "bold",
     fontSize: 20,
     textAlign: "auto",
     marginRight: 40
   },
   controls: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly"
   },
