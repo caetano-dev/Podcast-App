@@ -33,11 +33,15 @@ const Dashboard = observer(
       const Data = observer(({ doc }) => {
         return <DashboardItem doc={doc} />;
       });
+
+      let social = false;
+
       return (
         <View style={styles.cont}>
           <View style={{ marginVertical: 15, alignSelf: "center" }}>
             <Logo />
           </View>
+
           {/* Buttons//////////////////////////////////////// */}
           <View style={styles.buttonGroup}>
             <Button
@@ -45,11 +49,16 @@ const Dashboard = observer(
               title="Episode Archive"
               onPress={() => this.props.navigation.navigate("Previous")}
             />
+            <Button
+              color="green"
+              title="Social"
+              onPress={() => ` ${(social = !social)}`}
+            />
             <Button color="black" title="Logout" onPress={() => logoutUser()} />
           </View>
 
           <View style={{ margin: 10 }}>
-            <Icons />
+            { social ? <Icons social={social} /> : null}
           </View>
 
           {/*Content/////////////////////////////////////////// */}

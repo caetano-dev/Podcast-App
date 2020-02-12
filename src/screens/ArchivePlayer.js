@@ -41,7 +41,7 @@ class ArchivePlayer extends Component {
 
         {/*Content/////////////////////////////////////////// */}
         <View style={styles.newContent}>
-          <Text h1 style={{ fontSize: 35 }}>
+          <Text h1 style={{ fontSize: 35, fontWeight: "bold" }}>
             Episode {navigation.getParam("id", "default value")}
           </Text>
           <View style={styles.content}>
@@ -53,9 +53,16 @@ class ArchivePlayer extends Component {
               </View>
             </View>
             <Text style={styles.description}>
+              {/**Word cap @ 240 characters */}
               {navigation.getParam("description", "default value")}
             </Text>
-            <Text style={{ fontSize: 15, alignSelf: "baseline" }}>
+            <Text
+              style={{
+                fontSize: 15,
+                alignSelf: "baseline",
+                fontWeight: "bold"
+              }}
+            >
               {navigation.getParam("date", "default value")}
             </Text>
           </View>
@@ -63,6 +70,7 @@ class ArchivePlayer extends Component {
           {/* contorls////////////////////////////////////////*/}
           <Controls
             url={this.props.navigation.getParam("url", "default value")}
+            name={this.props.navigation.getParam("name", "default value")}
           />
         </View>
       </View>
@@ -83,9 +91,8 @@ class Controls extends Component {
   }
 
   async componentDidMount() {
-    console.log("ArchivePlayer CDM running");
-    console.log(`Audio URL => ${this.props.url}`);
-
+    console.log(`ArchivePlayer CDM running // Episode: ${this.props.name} `);
+    console.log(`ArchivePlayer URL => ${this.props.url}`);
     const { isPlaying, volume } = this.state;
 
     try {
@@ -225,6 +232,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   titleHome: {
+    fontWeight: "bold",
     fontSize: 20,
     textAlign: "auto"
   },
