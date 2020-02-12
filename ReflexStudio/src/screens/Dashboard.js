@@ -9,8 +9,8 @@ import {
   Image,
 } from 'react-native';
 // import { Audio } from "expo-av";
-import {Ionicons} from '@expo/vector-icons';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
+// import {Ionicons} from '@expo/vector-icons';
+// import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 import Logo from '../components/LogoM';
 import Icons from '../components/Icons';
@@ -121,44 +121,44 @@ class DashboardItem extends Component {
   //   }
   // }
 
-  onPlaybackStatusUpdate = status => {
-    this.setState({
-      isBuffering: status.isBuffering,
-    });
-  };
+  // onPlaybackStatusUpdate = status => {
+  //   this.setState({
+  //     isBuffering: status.isBuffering,
+  //   });
+  // };
 
-  handlePlayPause = async () => {
-    const {isPlaying, playbackInstance, stopAvailable} = this.state;
-    console.log(
-      `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`,
-    );
-    isPlaying
-      ? await playbackInstance.pauseAsync()
-      : await playbackInstance
-          .playAsync()
-          .then(this.setState({stopAvailable: true}));
+  // handlePlayPause = async () => {
+  //   const {isPlaying, playbackInstance, stopAvailable} = this.state;
+  //   console.log(
+  //     `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`,
+  //   );
+  //   isPlaying
+  //     ? await playbackInstance.pauseAsync()
+  //     : await playbackInstance
+  //         .playAsync()
+  //         .then(this.setState({stopAvailable: true}));
 
-    this.setState({
-      isPlaying: !isPlaying,
-    });
-  };
+  //   this.setState({
+  //     isPlaying: !isPlaying,
+  //   });
+  // };
 
-  handleStop = async () => {
-    const {isPlaying, stopAvailable, playbackInstance} = this.state;
-    console.log(
-      `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`,
-    );
-    try {
-      await playbackInstance.unloadAsync();
-      this.setState({isPlaying: false, stopAvailable: false});
-      this.componentDidMount();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // handleStop = async () => {
+  //   const {isPlaying, stopAvailable, playbackInstance} = this.state;
+  //   console.log(
+  //     `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`,
+  //   );
+  //   try {
+  //     await playbackInstance.unloadAsync();
+  //     this.setState({isPlaying: false, stopAvailable: false});
+  //     this.componentDidMount();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   render() {
-    const {name, id, date, description} = this.props.doc.data;
+    // const {name, id, date, description} = this.props.doc.data;
     const {isPlaying, stopAvailable} = this.state;
 
     return (
@@ -185,7 +185,7 @@ class DashboardItem extends Component {
               {date}
             </Text>
           </View>
-          <View style={styles.controls}>
+          {/* <View style={styles.controls}>
             {stopAvailable ? (
               <TouchableWithoutFeedback onPress={() => this.handleStop()}>
                 <MaterialCommunityIcons
@@ -203,7 +203,7 @@ class DashboardItem extends Component {
                 <Ionicons name="ios-play-circle" size={70} color="black" />
               )}
             </TouchableWithoutFeedback>
-          </View>
+          </View> */}
         </View>
       </Fragment>
     );

@@ -12,7 +12,7 @@ const AuthLoadingScreen = ({navigation: {navigate}}) => {
       navigate('App');
     } else {
       // User is not logged in
-      navigate('HomeScreen');
+      navigate('OnBoard');
     }
   });
 

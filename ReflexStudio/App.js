@@ -30,7 +30,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-function HomeScreen({navigation}) {
+const HomeScreen = ({navigation}) => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
@@ -50,27 +50,27 @@ function HomeScreen({navigation}) {
       </Layout>
     </>
   );
-}
+};
 
 const HeartIcon = style => <Icon {...style} name="github" />;
 
-function MyStack() {
+Core = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>
   );
-}
+};
 
-export default function App() {
+export default App = () => {
   return (
     <ApplicationProvider mapping={mapping} theme={theme}>
       <NavigationContainer>
-        <MyStack />
+        <Core />
       </NavigationContainer>
     </ApplicationProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
