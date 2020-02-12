@@ -10,8 +10,10 @@
  * @format
  */
 
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import * as React from 'react';
+import {StyleSheet} from 'react-native';
+import {View} from 'react-native';
+
 import {
   ApplicationProvider,
   Button,
@@ -20,41 +22,55 @@ import {
   Layout,
   Text,
 } from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import {
-  mapping,
-  light as theme,
-} from '@eva-design/eva';
+import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import {mapping, light as theme} from '@eva-design/eva';
 
-/**
- * Use any valid `name` property from eva icons (e.g `github`, or `heart-outline`)
- * https://akveo.github.io/eva-icons
- */
-const HeartIcon = (style) => (
-  <Icon {...style} name='heart'/>
-);
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const App = () => (
-  <>
-    <IconRegistry icons={EvaIconsPack}/>
-    <ApplicationProvider mapping={mapping} theme={theme}>
+const Stack = createStackNavigator();
+
+function HomeScreen({navigation}) {
+  return (
+    <>
+      <IconRegistry icons={EvaIconsPack} />
       <Layout style={styles.container}>
-        <Text style={styles.text} category='h1'>
+        <Text style={styles.text} category="h1">
           Welcome to UI Kitten 😻
         </Text>
-        <Text style={styles.text} category='s1'>
+        <Text style={styles.text} category="s1">
           Start with editing App.js to configure your App
         </Text>
-        <Text style={styles.text} appearance='hint'>
+        <Text style={styles.text} appearance="hint">
           For example, try changing theme to Dark by simply changing an import
         </Text>
         <Button style={styles.likeButton} icon={HeartIcon}>
           LIKE
         </Button>
       </Layout>
+    </>
+  );
+}
+
+const HeartIcon = style => <Icon {...style} name="github" />;
+
+function MyStack() {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <ApplicationProvider mapping={mapping} theme={theme}>
+      <NavigationContainer>
+        <MyStack />
+      </NavigationContainer>
     </ApplicationProvider>
-  </>
-);
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -69,5 +85,3 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
 });
-
-export default App;

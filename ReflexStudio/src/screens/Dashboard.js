@@ -1,4 +1,4 @@
-import React, { Component, Fragment, memo } from "react";
+import React, {Component, Fragment, memo} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,31 +6,31 @@ import {
   Button,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Image
-} from "react-native";
-import { Audio } from "expo-av";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+  Image,
+} from 'react-native';
+// import { Audio } from "expo-av";
+import {Ionicons} from '@expo/vector-icons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 
-import Logo from "../components/LogoM";
-import Icons from "../components/Icons";
-import { logoutUser } from "../api/auth-api";
+import Logo from '../components/LogoM';
+import Icons from '../components/Icons';
+import {logoutUser} from '../api/auth-api';
 
 //firebase
-import firebase from "firebase";
-import "@firebase/firestore";
-import { initFirestorter, Collection } from "firestorter";
-import { observer } from "mobx-react";
+import firebase from 'firebase';
+import '@firebase/firestore';
+import {initFirestorter, Collection} from 'firestorter';
+import {observer} from 'mobx-react';
 
 // init firestorter
-initFirestorter({ firebase: firebase });
-const latestEP = new Collection("episodes");
+initFirestorter({firebase: firebase});
+const latestEP = new Collection('episodes');
 
 const Dashboard = observer(
   class Dashboard extends Component {
     render() {
-      latestEP.query = ref => ref.orderBy("id", "desc").limit(1);
-      const Data = observer(({ doc }) => {
+      latestEP.query = ref => ref.orderBy('id', 'desc').limit(1);
+      const Data = observer(({doc}) => {
         return <DashboardItem doc={doc} />;
       });
 
@@ -38,7 +38,7 @@ const Dashboard = observer(
 
       return (
         <View style={styles.cont}>
-          <View style={{ marginVertical: 15, alignSelf: "center" }}>
+          <View style={{marginVertical: 15, alignSelf: 'center'}}>
             <Logo />
           </View>
 
@@ -47,7 +47,7 @@ const Dashboard = observer(
             <Button
               color="#427389"
               title="Episode Archive"
-              onPress={() => this.props.navigation.navigate("Previous")}
+              onPress={() => this.props.navigation.navigate('Previous')}
             />
             <Button
               color="green"
@@ -57,12 +57,12 @@ const Dashboard = observer(
             <Button color="black" title="Logout" onPress={() => logoutUser()} />
           </View>
 
-          <View style={{ margin: 10 }}>
-            { social ? <Icons social={social} /> : null}
+          <View style={{margin: 10}}>
+            {social ? <Icons social={social} /> : null}
           </View>
 
           {/*Content/////////////////////////////////////////// */}
-          <View style={{ flex: 3 }}>
+          <View style={{flex: 3}}>
             {latestEP.docs.map(doc => (
               <Data key={doc.id} doc={doc} />
             ))}
@@ -70,7 +70,7 @@ const Dashboard = observer(
         </View>
       );
     }
-  }
+  },
 );
 
 class DashboardItem extends Component {
@@ -81,76 +81,76 @@ class DashboardItem extends Component {
       stopAvailable: false,
       playbackInstance: null,
       volume: 1.0,
-      isBuffering: true
+      isBuffering: true,
     };
   }
-  async componentDidMount() {
-    console.log(
-      `Dashboard CDM running // Episode: ${this.props.doc.data.name}`
-    );
+  // async componentDidMount() {
+  //   console.log(
+  //     `Dashboard CDM running // Episode: ${this.props.doc.data.name}`
+  //   );
 
-    const { isPlaying, volume } = this.state;
+  //   const { isPlaying, volume } = this.state;
 
-    try {
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-        playsInSilentModeIOS: true,
-        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        shouldDuckAndroid: true,
-        staysActiveInBackground: true,
-        playThroughEarpieceAndroid: false
-      });
-      const playbackInstance = new Audio.Sound();
-      const source = {
-        uri: this.props.doc.data.url
-      };
+  //   try {
+  //     await Audio.setAudioModeAsync({
+  //       allowsRecordingIOS: false,
+  //       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+  //       playsInSilentModeIOS: true,
+  //       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+  //       shouldDuckAndroid: true,
+  //       staysActiveInBackground: true,
+  //       playThroughEarpieceAndroid: false
+  //     });
+  //     const playbackInstance = new Audio.Sound();
+  //     const source = {
+  //       uri: this.props.doc.data.url
+  //     };
 
-      const status = {
-        shouldPlay: isPlaying,
-        volume: volume
-      };
+  //     const status = {
+  //       shouldPlay: isPlaying,
+  //       volume: volume
+  //     };
 
-      playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
-      await playbackInstance.loadAsync(source, status, false);
-      this.setState({
-        playbackInstance
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  //     playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
+  //     await playbackInstance.loadAsync(source, status, false);
+  //     this.setState({
+  //       playbackInstance
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 
   onPlaybackStatusUpdate = status => {
     this.setState({
-      isBuffering: status.isBuffering
+      isBuffering: status.isBuffering,
     });
   };
 
   handlePlayPause = async () => {
-    const { isPlaying, playbackInstance, stopAvailable } = this.state;
+    const {isPlaying, playbackInstance, stopAvailable} = this.state;
     console.log(
-      `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`
+      `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`,
     );
     isPlaying
       ? await playbackInstance.pauseAsync()
       : await playbackInstance
           .playAsync()
-          .then(this.setState({ stopAvailable: true }));
+          .then(this.setState({stopAvailable: true}));
 
     this.setState({
-      isPlaying: !isPlaying
+      isPlaying: !isPlaying,
     });
   };
 
   handleStop = async () => {
-    const { isPlaying, stopAvailable, playbackInstance } = this.state;
+    const {isPlaying, stopAvailable, playbackInstance} = this.state;
     console.log(
-      `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`
+      `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`,
     );
     try {
       await playbackInstance.unloadAsync();
-      this.setState({ isPlaying: false, stopAvailable: false });
+      this.setState({isPlaying: false, stopAvailable: false});
       this.componentDidMount();
     } catch (error) {
       console.log(error);
@@ -158,13 +158,13 @@ class DashboardItem extends Component {
   };
 
   render() {
-    const { name, id, date, description } = this.props.doc.data;
-    const { isPlaying, stopAvailable } = this.state;
+    const {name, id, date, description} = this.props.doc.data;
+    const {isPlaying, stopAvailable} = this.state;
 
     return (
       <Fragment>
         <View style={styles.newContent}>
-          <Text h1 style={{ fontSize: 35, fontWeight: "bold" }}>
+          <Text h1 style={{fontSize: 35, fontWeight: 'bold'}}>
             Latest Episode
           </Text>
           <View style={styles.content}>
@@ -179,10 +179,9 @@ class DashboardItem extends Component {
             <Text
               style={{
                 fontSize: 15,
-                alignSelf: "baseline",
-                fontWeight: "bold"
-              }}
-            >
+                alignSelf: 'baseline',
+                fontWeight: 'bold',
+              }}>
               {date}
             </Text>
           </View>
@@ -215,58 +214,58 @@ export default memo(Dashboard);
 
 const styles = StyleSheet.create({
   cont: {
-    backgroundColor: "#325F49",
+    backgroundColor: '#325F49',
     flex: 1,
-    flexDirection: "column"
+    flexDirection: 'column',
   },
   logoBTN: {
-    flex: 1
+    flex: 1,
   },
   date: {
     fontSize: 15,
     marginRight: 50,
     left: 15,
-    marginBottom: 100
+    marginBottom: 100,
   },
   id: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 17,
-    position: "absolute",
+    position: 'absolute',
     top: 3,
-    left: 230
+    left: 230,
   },
   description: {
     fontSize: 18,
     padding: 10,
-    textAlign: "center",
-    alignSelf: "center"
+    textAlign: 'center',
+    alignSelf: 'center',
   },
   content: {
     margin: 15,
-    borderStyle: "solid",
+    borderStyle: 'solid',
     borderRadius: 30,
     borderWidth: 5,
     padding: 10,
     width: 300,
-    backgroundColor: "#799688"
+    backgroundColor: '#799688',
   },
   newContent: {
     flex: 2,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleHome: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 20,
-    textAlign: "auto",
-    marginRight: 40
+    textAlign: 'auto',
+    marginRight: 40,
   },
   controls: {
-    flexDirection: "row",
-    justifyContent: "space-evenly"
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
   buttonGroup: {
-    flexDirection: "row",
-    justifyContent: "space-evenly"
-  }
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
 });
