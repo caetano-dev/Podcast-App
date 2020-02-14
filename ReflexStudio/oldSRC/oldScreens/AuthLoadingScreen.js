@@ -5,7 +5,7 @@ import 'firebase/auth';
 import Background from '../components/Background';
 import {theme} from '../core/theme';
 
-const AuthLoadingScreen = ({navigation: {navigate}}) => {
+const AuthLoadingScreen = ({navigation}) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
       // User is logged in

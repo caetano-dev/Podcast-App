@@ -1,19 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the UI Kitten template
- * https://github.com/akveo/react-native-ui-kitten
- *
- * Documentation: https://akveo.github.io/react-native-ui-kitten/docs
- *
- * @format
- */
+import React, {Component, memo} from 'react';
+import {View, StyleSheet} from 'react-native';
 
-import * as React from 'react';
-import {StyleSheet} from 'react-native';
-import {View} from 'react-native';
+//Redux
+import {createStore} from 'redux';
+import {Provider, connect} from 'react-redux';
+//Navigation
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
+//Style
 import {
   ApplicationProvider,
   Button,
@@ -25,63 +20,95 @@ import {
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {mapping, light as theme} from '@eva-design/eva';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+//Components
+import Dashboard from './src/screens/Dashboard';
+
+//Methods
+import {
+  logoutUser,
+  signInUser,
+  loginUser,
+  sendEmailWithPassword,
+} from './src/auth/auth-api';
+
+//State
+const initialState = {
+  res: 's',
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'GetData':
+      return {res: 'xxx'};
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer);
 
 const Stack = createStackNavigator();
 
-const HomeScreen = ({navigation}) => {
+///////////////////////////////////////////////////////////////////
+
+const Core = () => {
+  return (
+    <Stack.Navigator initialRouteName="InitialRoute">
+      <Stack.Screen name="InitialRoute" component={HomeScreen} />
+      <Stack.Screen name="Dashboard" component={Dashboard} />
+    </Stack.Navigator>
+  );
+};
+
+class App extends React.Component {
+  componentDidMount() {}
+
+  render() {
+    return (
+      <Provider store={store}>
+        <ApplicationProvider mapping={mapping} theme={theme}>
+          <NavigationContainer>
+            <Core />
+          </NavigationContainer>
+        </ApplicationProvider>
+      </Provider>
+    );
+  }
+}
+
+const HomeScreen = ({Dashboard}) => {
+  const navigation = useNavigation();
+
   return (
     <>
-      <IconRegistry icons={EvaIconsPack} />
       <Layout style={styles.container}>
-        <Text style={styles.text} category="h1">
-          Welcome to UI Kitten 😻
-        </Text>
-        <Text style={styles.text} category="s1">
-          Start with editing App.js to configure your App
-        </Text>
-        <Text style={styles.text} appearance="hint">
-          For example, try changing theme to Dark by simply changing an import
-        </Text>
-        <Button style={styles.likeButton} icon={HeartIcon}>
-          LIKE
+        <Button
+          style={styles.reflex}
+          onPress={() => navigation.navigate('Dashboard')}>
+          Reflex
+        </Button>
+        <Button
+          style={styles.podcast}
+          onPress={() => navigation.navigate('Dashboard')}>
+          Podcast
         </Button>
       </Layout>
     </>
   );
 };
 
-const HeartIcon = style => <Icon {...style} name="github" />;
-
-Core = () => {
-  return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
-  );
-};
-
-export default App = () => {
-  return (
-    <ApplicationProvider mapping={mapping} theme={theme}>
-      <NavigationContainer>
-        <Core />
-      </NavigationContainer>
-    </ApplicationProvider>
-  );
-};
+export default App;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   text: {
     textAlign: 'center',
   },
-  likeButton: {
-    marginVertical: 16,
-  },
+  podcast: {},
+  reflex: {},
 });
