@@ -21,7 +21,17 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {mapping, light as theme} from '@eva-design/eva';
 
 //Components
-import Dashboard from './src/screens/Dashboard';
+import {
+  LoginScreen,
+  RegisterScreen,
+  ForgotPasswordScreen,
+  AuthLoadingScreen,
+  Dashboard,
+  Previous,
+  ArchivePlayer,
+  OnBoard,
+  Primary,
+} from './src/screens';
 
 //Methods
 import {
@@ -54,8 +64,11 @@ const Stack = createStackNavigator();
 const Core = () => {
   return (
     <Stack.Navigator initialRouteName="InitialRoute">
-      <Stack.Screen name="InitialRoute" component={HomeScreen} />
-      <Stack.Screen name="Dashboard" component={Dashboard} />
+      <Stack.Screen name="InitialRoute" component={AuthLoadingScreen} />
+      <Stack.Screen name="App" component={App} />
+      <Stack.Screen name="OnBoard" component={OnBoard} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="Primary" component={Primary} />
     </Stack.Navigator>
   );
 };
@@ -76,7 +89,7 @@ class App extends React.Component {
   }
 }
 
-const HomeScreen = ({Dashboard}) => {
+const HomeScreen = ({}) => {
   const navigation = useNavigation();
 
   return (

@@ -1,6 +1,6 @@
 export {default as OnBoard} from './OnBoard';
-export {default as LoginScreen} from './LoginScreen';
-export {default as RegisterScreen} from './RegisterScreen';
+// export {default as LoginScreen} from './LoginScreen';
+// export {default as RegisterScreen} from './RegisterScreen';
 // export {default as ForgotPasswordScreen} from './ForgotPasswordScreen';
 export {default as AuthLoadingScreen} from './auth/AuthLoadingScreen';
 export {default as Dashboard} from './Dashboard';

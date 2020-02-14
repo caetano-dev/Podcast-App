@@ -3,7 +3,6 @@ import {ActivityIndicator} from 'react-native';
 import firebase from '../../firebase';
 import 'firebase/auth';
 import Background from '../components/Background';
-import {theme} from '../core/theme';
 
 const AuthLoadingScreen = ({navigation}) => {
   firebase.auth().onAuthStateChanged(user => {
@@ -18,7 +17,7 @@ const AuthLoadingScreen = ({navigation}) => {
 
   return (
     <Background>
-      <ActivityIndicator size="large" color={theme.colors.primary} />
+      <ActivityIndicator size="large" color="#F6820D" />
     </Background>
   );
 };
