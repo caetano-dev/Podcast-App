@@ -65,10 +65,21 @@ const Core = () => {
   return (
     <Stack.Navigator initialRouteName="InitialRoute">
       <Stack.Screen name="InitialRoute" component={AuthLoadingScreen} />
-      <Stack.Screen name="App" component={App} />
-      <Stack.Screen name="OnBoard" component={OnBoard} />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="Primary" component={Primary} />
+      <Stack.Screen
+        name="OnBoard"
+        component={OnBoard}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Primary"
+        component={Primary}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
