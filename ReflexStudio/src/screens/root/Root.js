@@ -3,7 +3,7 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Layout, Text, Button} from '@ui-kitten/components';
 import {logoutUser} from '../../api/auth-api';
 
-const Primary = ({navigation}) => (
+const Root = ({navigation}) => (
   <Layout style={styles.container}>
     <Text category="h1">Root</Text>
     <Layout style={styles.layout}>
@@ -14,7 +14,7 @@ const Primary = ({navigation}) => (
   </Layout>
 );
 
-export default Primary;
+export default Root;
 
 const styles = StyleSheet.create({
   container: {

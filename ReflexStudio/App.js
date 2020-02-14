@@ -30,7 +30,7 @@ import {
   Previous,
   ArchivePlayer,
   OnBoard,
-  Primary,
+  Root,
 } from './src/screens';
 
 //Methods
@@ -76,8 +76,8 @@ const Core = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Primary"
-        component={Primary}
+        name="Root"
+        component={Root}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

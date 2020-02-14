@@ -6,4 +6,4 @@ export {default as AuthLoadingScreen} from './auth/AuthLoadingScreen';
 export {default as Dashboard} from './Dashboard';
 // export {default as Previous} from './Previous';
 // export {default as ArchivePlayer} from './ArchivePlayer';
-export {default as Primary} from './primary/Primary';
+export {default as root} from './root/Root';
