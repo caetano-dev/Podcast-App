@@ -7,8 +7,8 @@ const Root = ({navigation}) => (
   <Layout style={styles.container}>
     <Text category="h1">Root</Text>
     <Layout style={styles.layout}>
-      <Button onPress={() => console.log('Reflex')}>Reflex</Button>
-      <Button onPress={() => console.log('Podcast')}>Podcast</Button>
+      <Button onPress={() => navigation.navigate('Reflex')}>Reflex</Button>
+      <Button onPress={() => navigation.navigate('Podcast')}>Podcast</Button>
       <Button onPress={() => logoutUser()}>Logout</Button>
     </Layout>
   </Layout>

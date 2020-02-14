@@ -22,15 +22,16 @@ import {mapping, light as theme} from '@eva-design/eva';
 
 //Components
 import {
+  Reflex,
   LoginScreen,
   RegisterScreen,
   ForgotPasswordScreen,
   AuthLoadingScreen,
-  Dashboard,
   Previous,
   ArchivePlayer,
   OnBoard,
   Root,
+  Podcast,
 } from './src/screens';
 
 //Methods
@@ -80,6 +81,16 @@ const Core = () => {
         component={Root}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="Reflex"
+        component={Reflex}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Podcast"
+        component={Podcast}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
@@ -99,27 +110,6 @@ class App extends React.Component {
     );
   }
 }
-
-const HomeScreen = ({}) => {
-  const navigation = useNavigation();
-
-  return (
-    <>
-      <Layout style={styles.container}>
-        <Button
-          style={styles.reflex}
-          onPress={() => navigation.navigate('Dashboard')}>
-          Reflex
-        </Button>
-        <Button
-          style={styles.podcast}
-          onPress={() => navigation.navigate('Dashboard')}>
-          Podcast
-        </Button>
-      </Layout>
-    </>
-  );
-};
 
 export default App;
 
