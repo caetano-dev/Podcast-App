@@ -27,11 +27,11 @@ import {
   RegisterScreen,
   ForgotPasswordScreen,
   AuthLoadingScreen,
-  Previous,
   ArchivePlayer,
   OnBoard,
   Root,
   Podcast,
+  Previous,
 } from './src/screens';
 
 //Methods
@@ -84,6 +84,11 @@ const Core = () => {
       <Stack.Screen
         name="Reflex"
         component={Reflex}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Previous"
+        component={Previous}
         options={{headerShown: false}}
       />
       <Stack.Screen
