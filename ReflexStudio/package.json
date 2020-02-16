@@ -8,8 +8,9 @@
     "start": "react-native start",
     "test": "jest",
     "postinstall": "react-native link",
-    "clean": "rm -rf node_modules",
+    "clean": "del package-lock.json && cd node_modules && DEL /F/Q/S *.* > NUL && cd .. && RMDIR /Q/S node_modules && cls",
     "reinstall": "npm run clean && npm install",
+    "dev": "npm run clean && npm install && npx react-native run-android",
     "rebuild": "npm run clean && npm install && npm run build"
   },
   "dependencies": {
