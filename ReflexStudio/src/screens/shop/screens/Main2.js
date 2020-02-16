@@ -6,7 +6,7 @@ import Logo from '../../../components/LogoM';
 
 import {logoutUser} from '../../../api/auth-api';
 
-export default Main = ({navigation}) => {
+export default Main2 = ({navigation}) => {
   return (
     <Layout style={styles.cont}>
       <View style={{color: 'none', marginVertical: 15, alignSelf: 'center'}}>

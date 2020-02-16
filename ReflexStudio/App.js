@@ -1,5 +1,6 @@
 import React, {Component, memo} from 'react';
 import {View, StyleSheet} from 'react-native';
+import './fixtimerbug.js';
 
 //Redux
 import {createStore} from 'redux';
@@ -22,7 +23,7 @@ import {mapping, light as theme} from '@eva-design/eva';
 
 //Components
 import {
-  Reflex,
+  RootReflexNav,
   LoginScreen,
   RegisterScreen,
   ForgotPasswordScreen,
@@ -64,7 +65,7 @@ const Stack = createStackNavigator();
 
 const Core = () => {
   return (
-    <Stack.Navigator initialRouteName="Reflex">
+    <Stack.Navigator initialRouteName="AuthLoadingScreen">
       <Stack.Screen name="InitialRoute" component={AuthLoadingScreen} />
       <Stack.Screen
         name="OnBoard"
@@ -82,8 +83,8 @@ const Core = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Reflex"
-        component={Reflex}
+        name="RootReflexNav"
+        component={RootReflexNav}
         options={{headerShown: false}}
       />
       <Stack.Screen

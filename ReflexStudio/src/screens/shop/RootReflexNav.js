@@ -1,9 +1,7 @@
 import React, {Component, memo} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-
-import {logoutUser} from '../../api/auth-api';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 // Components
 
@@ -14,9 +12,9 @@ const Dome = () => {
   return <View style={{backgroundColor: 'red'}}></View>;
 };
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
-export default class Reflex extends Component {
+export default class RootReflexNav extends Component {
   render() {
     const navigation = this.props;
 
@@ -30,15 +28,3 @@ export default class Reflex extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  cont: {
-    backgroundColor: '#325F49',
-    flex: 1,
-    flexDirection: 'column',
-  },
-  buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-});

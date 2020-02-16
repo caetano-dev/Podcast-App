@@ -29,7 +29,7 @@ const Previous = ({navigation}) => {
         <Button
           color="#427389"
           title="Go to Home"
-          onPress={() => navigation.navigate('Reflex')}
+          onPress={() => navigation.navigate('RootReflexNav')}
         />
       </View>
 
