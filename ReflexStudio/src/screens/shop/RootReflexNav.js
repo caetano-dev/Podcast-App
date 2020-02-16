@@ -1,18 +1,22 @@
 import React, {Component, memo} from 'react';
-import {View, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {Layout, Text, Button} from '@ui-kitten/components';
 
 // Components
 
 //screens
 import Main from './screens/Main';
 
-const Dome = () => {
-  return <View style={{backgroundColor: 'red'}}></View>;
+const AboutUs = () => {
+  return <Layout style={{backgroundColor: 'silver', flex: 1}}></Layout>;
 };
 
-const Tab = createMaterialTopTabNavigator();
+const Blog = () => {
+  return <Layout style={{backgroundColor: 'silver', flex: 1}}></Layout>;
+};
+
+const Tab = createMaterialBottomTabNavigator();
 
 export default class RootReflexNav extends Component {
   render() {
@@ -22,7 +26,8 @@ export default class RootReflexNav extends Component {
       <NavigationContainer independent={true} initialRouteName="Main">
         <Tab.Navigator>
           <Tab.Screen name="Main" component={Main} />
-          <Tab.Screen name="Dome" component={Dome} />
+          <Tab.Screen name="Blog" component={Blog} />
+          <Tab.Screen name="About Us" component={AboutUs} />
         </Tab.Navigator>
       </NavigationContainer>
     );

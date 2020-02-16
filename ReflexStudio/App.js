@@ -65,8 +65,12 @@ const Stack = createStackNavigator();
 
 const Core = () => {
   return (
-    <Stack.Navigator initialRouteName="AuthLoadingScreen">
-      <Stack.Screen name="InitialRoute" component={AuthLoadingScreen} />
+    <Stack.Navigator initialRouteName="RootReflexNav">
+      <Stack.Screen
+        name="InitialRoute"
+        component={AuthLoadingScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="OnBoard"
         component={OnBoard}
@@ -102,11 +106,10 @@ const Core = () => {
 };
 
 class App extends React.Component {
-  componentDidMount() {}
-
   render() {
     return (
       <Provider store={store}>
+        <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider mapping={mapping} theme={theme}>
           <NavigationContainer>
             <Core />
