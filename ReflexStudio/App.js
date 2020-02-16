@@ -64,7 +64,7 @@ const Stack = createStackNavigator();
 
 const Core = () => {
   return (
-    <Stack.Navigator initialRouteName="InitialRoute">
+    <Stack.Navigator initialRouteName="Reflex">
       <Stack.Screen name="InitialRoute" component={AuthLoadingScreen} />
       <Stack.Screen
         name="OnBoard"

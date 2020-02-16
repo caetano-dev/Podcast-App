@@ -12,6 +12,7 @@
   "dependencies": {
     "@eva-design/eva": "^1.4.0",
     "@react-native-community/masked-view": "^0.1.6",
+    "@react-navigation/material-bottom-tabs": "^5.0.5",
     "@react-navigation/native": "^5.0.2",
     "@react-navigation/stack": "^5.0.2",
     "@ui-kitten/components": "4.4.0",
