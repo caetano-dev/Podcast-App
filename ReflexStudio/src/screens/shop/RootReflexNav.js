@@ -36,7 +36,7 @@ export default class RootReflexNav extends Component {
             marginTop: -5,
           }}>
           {/* <Tab.Screen name="Blog" component={Blog} /> */}
-          <Tab.Screen name="Main" component={Main} />
+          <Tab.Screen name="Shop" component={Main} />
           <Tab.Screen name="Feed" component={Feed} />
           {/* <Tab.Screen name="About Us" component={AboutUs} /> */}
         </Tab.Navigator>

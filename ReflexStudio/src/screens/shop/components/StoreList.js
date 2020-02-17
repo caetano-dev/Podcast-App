@@ -13,23 +13,30 @@ import {
 } from '@ui-kitten/components';
 import SizePicker from './SizePicker';
 
-const Header = () => <CardHeader title="/Shop" description="Season: 1" />;
-
-const ItemHeader = () => (
-  <View>
-    <Text>Title</Text>
-  </View>
-);
-
-const ItemFooter = () => {
-  return (
-    <View style={{marginLeft: -15}}>
-      <SizePicker />
-    </View>
-  );
-};
+import {AddButton} from '../Icons/Icons';
 
 export default StoreList = () => {
+  const Header = () => <CardHeader title="/Shop" description="Season: 1" />;
+
+  const ItemHeader = () => (
+    <View>
+      <Text>Title</Text>
+    </View>
+  );
+
+  const ItemFooter = () => {
+    return (
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <SizePicker />
+        <AddButton />
+      </View>
+    );
+  };
   return (
     <Card header={Header} style={{flex: 1}}>
       <ScrollView>
