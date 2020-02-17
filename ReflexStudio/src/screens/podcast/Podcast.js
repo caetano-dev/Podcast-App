@@ -2,6 +2,7 @@ import React, {Component, memo} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Layout, Text, Button} from '@ui-kitten/components';
 
+import Logo from './assets/Logo.js';
 import {logoutUser} from '../../api/auth-api';
 
 export default class Podcast extends Component {
@@ -11,7 +12,7 @@ export default class Podcast extends Component {
     return (
       <View style={styles.cont}>
         <View style={{marginVertical: 15, alignSelf: 'center'}}>
-          <Text>Podcast</Text>
+          <Logo />
         </View>
 
         {/* Buttons//////////////////////////////////////// */}

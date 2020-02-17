@@ -65,7 +65,7 @@ const Stack = createStackNavigator();
 
 const Core = () => {
   return (
-    <Stack.Navigator initialRouteName="RootReflexNav">
+    <Stack.Navigator initialRouteName="AuthLoadingScreen">
       <Stack.Screen
         name="InitialRoute"
         component={AuthLoadingScreen}

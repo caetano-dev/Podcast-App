@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import PrevEpList from './components/PrevEpList';
+import {Layout} from '@ui-kitten/components';
 // import ArchivePlayer from "./ArchivePlayer";
 
 // import firebase from "firebase";
@@ -43,15 +45,21 @@ const Previous = ({navigation}) => {
 
       <View style={styles.scrollCont}>
         <ScrollView>
-          {/* {episodes.docs.reverse().map(doc => (
-                <Data key={doc.id} doc={doc} />
-              ))} */}
+          <Layout style={{padding: 15, backgroundColor: null}}>
+            <PrevEpList />
+            <PrevEpList />
+            <PrevEpList />
+            <PrevEpList />
+            <PrevEpList />
+          </Layout>
         </ScrollView>
       </View>
     </View>
   );
 };
-
+// {/* {episodes.docs.reverse().map(doc => (
+//       <Data key={doc.id} doc={doc} />
+//     ))} */}
 // class EpisodeItem extends Component {
 //   constructor(props) {
 //     super(props);
