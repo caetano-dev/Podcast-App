@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {logoutUser} from '../../../api/auth-api';
 
 import {Button, Icon} from '@ui-kitten/components';
 
@@ -8,26 +9,37 @@ const CartIcon = style => (
 );
 const CartIconFilled = style => <Icon name="shopping-cart" {...style} />;
 
-export const CartButton = ({cart}) => (
+export const CartButton = ({cart, navigation}) => (
   <Button
     icon={cart ? CartIconFilled : CartIcon}
     appearance="ghost"
-    style={styles.cart}
+    style={styles.button}
+    onPress={() => navigation.navigation('Cart')}
   />
 );
 
 export const LogoutButton = () => (
-  <Button status="basic" appearance="ghost" style={styles.logout}>
+  <Button
+    status="basic"
+    appearance="ghost"
+    onPress={() => logoutUser()}
+    style={styles.button}>
     Log Out
   </Button>
 );
 
+export const RootButton = navigation => (
+  <Button
+    status="basic"
+    appearance="ghost"
+    onPress={() => navigation.navigate('Root')}
+    style={styles.button}>
+    Root
+  </Button>
+);
+
 const styles = StyleSheet.create({
-  cart: {
-    height: 50,
-    width: 100,
-  },
-  logout: {
+  button: {
     height: 50,
     width: 100,
   },
