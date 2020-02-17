@@ -19,9 +19,9 @@ export default class RootReflexNav extends Component {
     const navigation = this.props;
 
     return (
-      <NavigationContainer independent={true} initialRouteName="Main">
+      <NavigationContainer independent={true} initialRouteName="Shop">
         <Tab.Navigator>
-          <Tab.Screen name="Main" component={Main2} />
+          <Tab.Screen name="Shop" component={Main2} />
           <Tab.Screen name="Dome" component={Dome} />
         </Tab.Navigator>
       </NavigationContainer>

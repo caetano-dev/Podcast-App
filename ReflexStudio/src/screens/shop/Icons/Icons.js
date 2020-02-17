@@ -1,29 +1,49 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {logoutUser} from '../../../api/auth-api';
 
-import {Button, Icon} from '@ui-kitten/components';
+import {Button, Icon, Text} from '@ui-kitten/components';
 
-const CartIcon = style => (
-  <Icon name="shopping-cart-outline" style={{height: 30, width: 30}} />
-);
+export const CartButton = ({navigation, cartNum}) => {
+  const [count, setCount] = useState(cartNum);
 
-const CartIconFilled = style => <Icon name="shopping-cart" {...style} />;
+  const CartIcon = style => {
+    return count >= 1 ? (
+      <>
+        <Icon name="shopping-cart" style={{height: 32, width: 32}} />
+        <Text category="h6" style={{marginRight: -10}}>
+          {count}
+        </Text>
+      </>
+    ) : (
+      <>
+        <Icon name="shopping-cart-outline" style={{height: 32, width: 32}} />
+      </>
+    );
+  };
 
-export const CartButton = ({cart, navigation}) => (
-  <Button
-    icon={cart ? CartIconFilled : CartIcon}
-    appearance="ghost"
-    style={styles.button}
-    onPress={() => navigation.navigation('Cart')}
-  />
-);
+  return (
+    <Button
+      icon={CartIcon}
+      appearance="ghost"
+      style={styles.button}
+      onPress={() => navigation.navigation('Cart')}
+    />
+  );
+};
 
-const addIcon = style => <Icon name="plus-circle" {...style} />;
+export const AddButton = () => {
+  const addIcon = style => <Icon name="plus-circle" {...style} />;
 
-export const AddButton = () => (
-  <Button icon={addIcon} appearance="ghost" style={styles.addButton} />
-);
+  return (
+    <Button
+      icon={addIcon}
+      appearance="ghost"
+      onPress={() => console.log('add to cart')}
+      style={styles.addButton}
+    />
+  );
+};
 
 export const LogoutButton = () => (
   <Button

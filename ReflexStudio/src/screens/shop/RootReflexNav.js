@@ -6,7 +6,7 @@ import {Layout, Text, Icon, Button} from '@ui-kitten/components';
 // Components
 
 //screens
-import Main from './screens/Main';
+import Shop from './screens/Shop';
 
 const AboutUs = () => {
   return <Layout style={{backgroundColor: 'silver', flex: 1}}></Layout>;
@@ -29,14 +29,14 @@ export default class RootReflexNav extends Component {
     return (
       <NavigationContainer independent={true}>
         <Tab.Navigator
-          initialRouteName="Main"
+          initialRouteName="Shop"
           activeColor="black"
           barStyle={{
             backgroundColor: 'silver',
             marginTop: -5,
           }}>
           {/* <Tab.Screen name="Blog" component={Blog} /> */}
-          <Tab.Screen name="Shop" component={Main} />
+          <Tab.Screen name="Shop" component={Shop} />
           <Tab.Screen name="Feed" component={Feed} />
           {/* <Tab.Screen name="About Us" component={AboutUs} /> */}
         </Tab.Navigator>
