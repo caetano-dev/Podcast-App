@@ -14,7 +14,7 @@ import {SimpleCard} from '@paraboly/react-native-card';
 import {logoutUser} from '../../../api/auth-api';
 import {CartButton, LogoutButton, RootButton} from '../Icons/Icons';
 
-import Logo from '../Icons/Logo';
+import Logo from '../../../components/Logo';
 import StoreList from '../components/StoreList';
 
 export default Shop = ({navigation}) => {
@@ -43,7 +43,7 @@ export default Shop = ({navigation}) => {
       </Layout>
 
       <Layout style={styles.logo}>
-        <Logo height={'5'} width={'10'} />
+        <Logo height={'140'} />
       </Layout>
 
       <Layout
