@@ -55,15 +55,19 @@ export const LogoutButton = () => (
   </Button>
 );
 
-export const RootButton = navigation => (
-  <Button
-    status="basic"
-    appearance="ghost"
-    onPress={() => navigation.navigate('Root')}
-    style={styles.button}>
-    Root
-  </Button>
-);
+export const BackHomeButton = ({navigation: {goBack}}) => {
+  return (
+    <Button
+      icon={() => (
+        <Icon name="arrow-ios-back" style={{height: 20, width: 20}} />
+      )}
+      appearance="ghost"
+      status="primary"
+      onPress={() => goBack()}>
+      home
+    </Button>
+  );
+};
 
 const styles = StyleSheet.create({
   button: {

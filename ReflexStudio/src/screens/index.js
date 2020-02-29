@@ -6,8 +6,9 @@ export {default as AuthLoadingScreen} from './auth/AuthLoadingScreen';
 // export {default as Previous} from './Previous';
 // export {default as ArchivePlayer} from './ArchivePlayer';
 export {default as Root} from './root/Root';
-export {default as RootReflexNav} from './shop/RootReflexNav.js';
+// export {default as RootReflexNav} from './shop/RootReflexNav.js';
 
 //Podcast
 export {default as Podcast} from './podcast/Podcast.js';
 export {default as Previous} from './podcast/Previous.js';
+export {default as Shop} from './shop/screens/Shop.js';

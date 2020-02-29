@@ -12,7 +12,7 @@ import {
 import {SimpleCard} from '@paraboly/react-native-card';
 
 import {logoutUser} from '../../../api/auth-api';
-import {CartButton, LogoutButton, RootButton} from '../Icons/Icons';
+import {CartButton, LogoutButton, BackHomeButton} from '../Icons/Icons';
 
 import Logo from '../../../components/Logo';
 import StoreList from '../components/StoreList';
@@ -30,25 +30,24 @@ export default Shop = ({navigation}) => {
       case 'D':
         return <StoreList mainHeader="/Shop/Accessories" />;
       default:
-        return <StoreList mainHeader="/Shop" />;
+        return <StoreList mainHeader={'/Shop'} />;
     }
   };
 
   return (
-    <Layout style={{flex: 1, backgroundColor: 'silver'}}>
+    <Layout style={{flex: 1, backgroundColor: '#A0A1B5'}}>
       <Layout style={styles.buttonGroup}>
-        <LogoutButton />
-        <RootButton navigation={navigation} />
+        <BackHomeButton navigation={navigation} />
         <CartButton cartNum={0} />
       </Layout>
 
       <Layout style={styles.logo}>
-        <Logo height={'140'} />
+        <Logo height={'100'} />
       </Layout>
 
       <Layout
         style={{
-          flex: 3,
+          flex: 5,
           margin: 10,
           backgroundColor: null,
           alignItems: 'center',

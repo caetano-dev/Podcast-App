@@ -7,9 +7,7 @@ const Root = ({navigation}) => (
   <Layout style={styles.container}>
     <Text category="h1">Root</Text>
     <Layout style={styles.layout}>
-      <Button onPress={() => navigation.navigate('RootReflexNav')}>
-        RootReflexNav
-      </Button>
+      <Button onPress={() => navigation.navigate('Shop')}>shop</Button>
       <Button onPress={() => navigation.navigate('Podcast')}>Podcast</Button>
       <Button onPress={() => logoutUser()}>Logout</Button>
     </Layout>
@@ -21,10 +19,12 @@ export default Root;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#A0A1B5',
   },
   layout: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    backgroundColor: null,
   },
 });

@@ -33,6 +33,7 @@ import {
   Root,
   Podcast,
   Previous,
+  Shop,
 } from './src/screens';
 
 //Methods
@@ -87,8 +88,8 @@ const Core = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="RootReflexNav"
-        component={RootReflexNav}
+        name="Shop"
+        component={Shop}
         options={{headerShown: false}}
       />
       <Stack.Screen
