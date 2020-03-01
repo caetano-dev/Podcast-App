@@ -8,10 +8,17 @@ export default class PlayerControls extends Component {
     this.state = {
       playButton: false,
       pauseButtonClicked: false,
+      nextTrackClicked: false,
+      prevTrackClicked: false,
     };
   }
   render() {
-    const {playButton, pauseButtonClicked} = this.state;
+    const {
+      playButton,
+      pauseButtonClicked,
+      nextTrackClicked,
+      prevTrackClicked,
+    } = this.state;
     return (
       <Layout
         style={{
@@ -23,7 +30,23 @@ export default class PlayerControls extends Component {
           alignItems: 'center',
         }}>
         <View>
-          <Icon name="arrow-left-outline" style={{height: 85, width: 85}} />
+          {prevTrackClicked ? (
+            <Icon
+              name="arrow-left"
+              style={{height: 85, width: 85}}
+              onPress={() =>
+                this.setState({prevTrackClicked: !prevTrackClicked})
+              }
+            />
+          ) : (
+            <Icon
+              name="arrow-left-outline"
+              style={{height: 85, width: 85}}
+              onPress={() =>
+                this.setState({prevTrackClicked: !prevTrackClicked})
+              }
+            />
+          )}
         </View>
         {playButton ? (
           <View>
@@ -71,7 +94,23 @@ export default class PlayerControls extends Component {
           )}
         </View>
         <View>
-          <Icon name="arrow-right-outline" style={{height: 85, width: 85}} />
+          {nextTrackClicked ? (
+            <Icon
+              name="arrow-right"
+              style={{height: 85, width: 85}}
+              onPress={() =>
+                this.setState({nextTrackClicked: !nextTrackClicked})
+              }
+            />
+          ) : (
+            <Icon
+              name="arrow-right-outline"
+              style={{height: 85, width: 85}}
+              onPress={() =>
+                this.setState({nextTrackClicked: !nextTrackClicked})
+              }
+            />
+          )}
         </View>
       </Layout>
     );
