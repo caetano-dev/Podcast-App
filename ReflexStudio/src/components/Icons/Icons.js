@@ -69,6 +69,17 @@ export const BackHomeButton = ({navigation: {goBack}}) => {
   );
 };
 
+export const RefreshButton = ({press}) => {
+  return (
+    <Button
+      icon={() => <Icon name="refresh" width={25} height={25} fill="#000" />}
+      appearance="ghost"
+      status="primary"
+      onPress={() => press}
+    />
+  );
+};
+
 export const LikeButton = () => {
   const [heart, setHeart] = useState(false);
 

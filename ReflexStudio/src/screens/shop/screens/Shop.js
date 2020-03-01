@@ -15,6 +15,7 @@ import {logoutUser} from '../../../api/auth-api';
 import {
   CartButton,
   LogoutButton,
+  RefreshButton,
   BackHomeButton,
 } from '../../../components/Icons/Icons';
 
@@ -43,6 +44,7 @@ export default Shop = ({navigation}) => {
       <Layout style={styles.buttonGroup}>
         <BackHomeButton navigation={navigation} />
         <CartButton cartNum={0} />
+        <RefreshButton press={console.log('refresh')} />
       </Layout>
 
       <Layout style={styles.logo}>
