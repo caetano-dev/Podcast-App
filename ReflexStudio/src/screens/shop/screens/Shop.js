@@ -12,7 +12,11 @@ import {
 import {SimpleCard} from '@paraboly/react-native-card';
 
 import {logoutUser} from '../../../api/auth-api';
-import {CartButton, LogoutButton, BackHomeButton} from '../Icons/Icons';
+import {
+  CartButton,
+  LogoutButton,
+  BackHomeButton,
+} from '../../../components/Icons/Icons';
 
 import Logo from '../../../components/Logo';
 import StoreList from '../components/StoreList';

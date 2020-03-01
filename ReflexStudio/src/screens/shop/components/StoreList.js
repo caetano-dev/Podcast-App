@@ -13,7 +13,7 @@ import {
 } from '@ui-kitten/components';
 import SizePicker from './SizePicker';
 
-import {AddButton} from '../Icons/Icons';
+import {AddButton} from '../../../components/Icons/Icons';
 
 export default class StoreList extends Component {
   render() {
@@ -59,7 +59,7 @@ export default class StoreList extends Component {
                 footer={ItemFooter}>
                 <Image
                   style={{height: 100, width: 100}}
-                  source={require('../Icons/1.png')}
+                  source={require('../../../components/Icons/1.png')}
                 />
               </Card>
 
@@ -69,7 +69,7 @@ export default class StoreList extends Component {
                 footer={ItemFooter}>
                 <Image
                   style={{height: 100, width: 100}}
-                  source={require('../Icons/1.png')}
+                  source={require('../../../components/Icons/1.png')}
                 />
               </Card>
               <Card
@@ -78,7 +78,7 @@ export default class StoreList extends Component {
                 footer={ItemFooter}>
                 <Image
                   style={{height: 100, width: 100}}
-                  source={require('../Icons/1.png')}
+                  source={require('../../../components/Icons/1.png')}
                 />
               </Card>
 
@@ -88,7 +88,7 @@ export default class StoreList extends Component {
                 footer={ItemFooter}>
                 <Image
                   style={{height: 100, width: 100}}
-                  source={require('../Icons/1.png')}
+                  source={require('../../../components/Icons/1.png')}
                 />
               </Card>
             </Layout>
@@ -100,7 +100,7 @@ export default class StoreList extends Component {
                 footer={ItemFooter}>
                 <Image
                   style={{height: 100, width: 100}}
-                  source={require('../Icons/1.png')}
+                  source={require('../../../components/Icons/1.png')}
                 />
               </Card>
 
@@ -110,7 +110,7 @@ export default class StoreList extends Component {
                 footer={ItemFooter}>
                 <Image
                   style={{height: 100, width: 100}}
-                  source={require('../Icons/1.png')}
+                  source={require('../../../components/Icons/1.png')}
                 />
               </Card>
               <Card
@@ -119,7 +119,7 @@ export default class StoreList extends Component {
                 footer={ItemFooter}>
                 <Image
                   style={{height: 100, width: 100}}
-                  source={require('../Icons/1.png')}
+                  source={require('../../../components/Icons/1.png')}
                 />
               </Card>
 
@@ -129,7 +129,7 @@ export default class StoreList extends Component {
                 footer={ItemFooter}>
                 <Image
                   style={{height: 100, width: 100}}
-                  source={require('../Icons/1.png')}
+                  source={require('../../../components/Icons/1.png')}
                 />
               </Card>
             </Layout>
