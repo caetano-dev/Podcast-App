@@ -24,7 +24,7 @@ export const HomeScreenButton = ({title, press, alertCount}) => {
                 <Icon name="bell" width={35} height={35} fill="#DF6F0D" />
                 <Text
                   category="h3"
-                  style={{color: 'black', marginLeft: 10, fontWeight: 'bold'}}>
+                  style={{color: 'black', marginLeft: 20, fontWeight: 'bold'}}>
                   {alertCount}
                 </Text>
               </View>

@@ -83,6 +83,11 @@ const Core = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Root"
         component={Root}
         options={{headerShown: false}}

@@ -8,7 +8,6 @@ import Paragraph from '../components/Paragraph';
 const OnBoard = ({navigation}) => (
   <Background>
     <Logo />
-    <Header>Firebase Login</Header>
 
     <Paragraph>
       This template supports Firebase authorization out of the box.

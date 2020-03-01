@@ -6,7 +6,7 @@ function Logo({height}) {
     <Svg
       xmlns="http://www.w3.org/2000/svg"
       width="2286.667"
-      height={height}
+      height={height || 130}
       version="1"
       viewBox="0 0 1715 675">
       <Path
