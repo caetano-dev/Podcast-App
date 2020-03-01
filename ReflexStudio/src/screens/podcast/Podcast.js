@@ -1,50 +1,141 @@
-import React, {Component, memo} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Layout, Text, Button} from '@ui-kitten/components';
 
-import Logo from './assets/Logo.js';
+import Logo from '../../components/Logo.js';
+import PodCard from '../../components/PodCard.js';
+
 import {logoutUser} from '../../api/auth-api';
+import {
+  BackHomeButton,
+  LikeButton,
+  FavButton,
+  DownloadButton,
+} from '../../components/Icons/Icons';
 
-export default class Podcast extends Component {
-  render() {
-    let social = false;
-    const navigation = this.props;
-    return (
-      <View style={styles.cont}>
-        <View style={{marginVertical: 15, alignSelf: 'center'}}>
-          <Logo />
-        </View>
+import PlayerControls from './components/PlayerControls';
 
-        {/* Buttons//////////////////////////////////////// */}
-        <View style={styles.buttonGroup}>
-          <Button onPress={() => this.props.navigation.navigate('Previous')}>
-            Episode Archive
-          </Button>
+export default Podcast = ({navigation}) => {
+  let social = false;
+  return (
+    <View style={{flex: 1, backgroundColor: '#A0A1B5'}}>
+      <Layout style={styles.goback}>
+        <BackHomeButton navigation={navigation} />
+      </Layout>
+      <Layout style={styles.logo}>
+        <Logo height={'130'} />
+      </Layout>
 
-          <Button onPress={() => ` ${(social = !social)}`}>Social</Button>
+      <Layout style={{flex: 1, backgroundColor: null}}>
+        <PodCard
+          borderWidth={5}
+          radius={30}
+          content={
+            <>
+              <Text
+                category="h3"
+                style={{
+                  fontWeight: '700',
+                  color: 'black',
+                }}>
+                /Podcast/Reflex/Latest
+              </Text>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                <Button appearance="ghost">Latest</Button>
+                <Button status="basic" appearance="ghost">
+                  Favourites
+                </Button>
+                <Button status="basic" appearance="ghost">
+                  Latest
+                </Button>
+              </View>
+            </>
+          }
+        />
+      </Layout>
 
-          <Button onPress={() => logoutUser()}>Logout</Button>
-        </View>
+      <Layout
+        style={{
+          flex: 2,
+          backgroundColor: null,
+          marginTop: '-5%',
+        }}>
+        <PodCard
+          borderWidth={7}
+          radius={30}
+          content={
+            <Layout
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                backgroundColor: null,
+                justifyContent: 'space-between',
+              }}>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text category="h3" style={{fontWeight: 'bold'}}>
+                  Episode Title
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <LikeButton />
+                  <FavButton />
+                </View>
+              </View>
 
-        {/* Content///////////////////////////////////////////
-        <View style={{flex: 3}}>
-          {latestEP.docs.map(doc => (
-            <Data key={doc.id} doc={doc} />
-          ))}
-        </View>*/}
-      </View>
-    );
-  }
-}
+              <View>
+                <Text category="h5">
+                  Description: Lorem ipsum dolor sit amet, consectetur … … … ...{' '}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <DownloadButton />
+
+                <Text category="h4" style={{fontWeight: 'bold'}}>
+                  Ep. 5
+                </Text>
+              </View>
+            </Layout>
+          }
+        />
+      </Layout>
+
+      <Layout
+        style={{
+          flex: 1,
+          backgroundColor: null,
+        }}>
+        <PlayerControls />
+      </Layout>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   cont: {
-    backgroundColor: '#325F49',
+    backgroundColor: '#A0A1B5',
     flex: 1,
     flexDirection: 'column',
   },
-  logoBTN: {
+  goback: {
+    backgroundColor: null,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  logo: {
     flex: 1,
+    backgroundColor: null,
+    marginVertical: 15,
+    alignSelf: 'center',
   },
   date: {
     fontSize: 15,
