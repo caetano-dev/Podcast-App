@@ -3,7 +3,15 @@ import {View, StyleSheet} from 'react-native';
 import {Button, Icon, Text, Layout} from '@ui-kitten/components';
 
 export default class PlayerControls extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      playButton: false,
+      pauseButtonClicked: false,
+    };
+  }
   render() {
+    const {playButton, pauseButtonClicked} = this.state;
     return (
       <Layout
         style={{
@@ -17,14 +25,50 @@ export default class PlayerControls extends Component {
         <View>
           <Icon name="arrow-left-outline" style={{height: 85, width: 85}} />
         </View>
+        {playButton ? (
+          <View>
+            <Icon
+              name="stop-circle"
+              onPress={() => this.setState({playButton: !playButton})}
+              style={{height: 85, width: 85}}
+            />
+          </View>
+        ) : null}
         <View>
-          <Icon
-            name="play-circle-outline"
-            style={{
-              height: 85,
-              width: 85,
-            }}
-          />
+          {playButton ? (
+            pauseButtonClicked ? (
+              <Icon
+                name="play-circle"
+                onPress={() =>
+                  this.setState({pauseButtonClicked: !pauseButtonClicked})
+                }
+                style={{
+                  height: 85,
+                  width: 85,
+                }}
+              />
+            ) : (
+              <Icon
+                name="pause-circle"
+                onPress={() =>
+                  this.setState({pauseButtonClicked: !pauseButtonClicked})
+                }
+                style={{
+                  height: 85,
+                  width: 85,
+                }}
+              />
+            )
+          ) : (
+            <Icon
+              name="play-circle-outline"
+              onPress={() => this.setState({playButton: !playButton})}
+              style={{
+                height: 85,
+                width: 85,
+              }}
+            />
+          )}
         </View>
         <View>
           <Icon name="arrow-right-outline" style={{height: 85, width: 85}} />
