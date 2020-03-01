@@ -44,7 +44,7 @@ export default Shop = ({navigation}) => {
       <Layout style={styles.buttonGroup}>
         <BackHomeButton navigation={navigation} />
         <CartButton cartNum={0} />
-        <RefreshButton press={console.log('refresh')} />
+        <RefreshButton press={() => console.log('refresh')} />
       </Layout>
 
       <Layout style={styles.logo}>

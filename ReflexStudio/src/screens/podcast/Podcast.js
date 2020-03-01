@@ -30,6 +30,7 @@ export default Podcast = ({navigation}) => {
         <PodCard
           borderWidth={5}
           radius={30}
+          bgColor={'white'}
           content={
             <>
               <Text
@@ -67,6 +68,7 @@ export default Podcast = ({navigation}) => {
         <PodCard
           borderWidth={7}
           radius={30}
+          bgColor={'white'}
           content={
             <Layout
               style={{

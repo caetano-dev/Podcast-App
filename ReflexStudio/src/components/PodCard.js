@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Layout, Text, Button} from '@ui-kitten/components';
 
-const PodCard = ({content, radius, borderWidth}) => {
+const PodCard = ({content, radius, borderWidth, bgColor}) => {
   return (
     <View
       style={{
@@ -11,7 +11,7 @@ const PodCard = ({content, radius, borderWidth}) => {
         borderRadius: radius,
         flex: 1,
         padding: 10,
-        backgroundColor: 'white',
+        backgroundColor: bgColor,
       }}>
       {content}
     </View>
