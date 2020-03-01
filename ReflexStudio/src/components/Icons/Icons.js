@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {logoutUser} from '../../../api/auth-api';
+import {logoutUser} from '../../api/auth-api';
 
 import {Button, Icon, Text} from '@ui-kitten/components';
 
@@ -66,6 +66,62 @@ export const BackHomeButton = ({navigation: {goBack}}) => {
       onPress={() => goBack()}>
       home
     </Button>
+  );
+};
+
+export const LikeButton = () => {
+  const [heart, setHeart] = useState(false);
+
+  return heart ? (
+    <Icon
+      name="heart"
+      fill="#DB3A3A"
+      onPress={() => setHeart(!heart)}
+      style={{height: 35, width: 35}}
+    />
+  ) : (
+    <Icon
+      name="heart-outline"
+      onPress={() => setHeart(!heart)}
+      style={{height: 35, width: 35}}
+    />
+  );
+};
+
+export const FavButton = () => {
+  const [fav, setFav] = useState(false);
+
+  return fav ? (
+    <Icon
+      name="star"
+      fill="#E8DE57"
+      onPress={() => setFav(!fav)}
+      style={{marginLeft: 10, height: 35, width: 35}}
+    />
+  ) : (
+    <Icon
+      name="star-outline"
+      onPress={() => setFav(!fav)}
+      style={{marginLeft: 10, height: 35, width: 35}}
+    />
+  );
+};
+
+export const DownloadButton = () => {
+  const [down, setDown] = useState(false);
+
+  return down ? (
+    <Icon
+      name="cloud-download"
+      onPress={() => setDown(!down)}
+      style={{marginLeft: 10, height: 40, width: 40}}
+    />
+  ) : (
+    <Icon
+      name="cloud-download-outline"
+      onPress={() => setDown(!down)}
+      style={{marginLeft: 10, height: 40, width: 40}}
+    />
   );
 };
 
