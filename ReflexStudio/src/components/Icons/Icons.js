@@ -62,7 +62,7 @@ export const BackHomeButton = ({navigation: {goBack}}) => {
         <Icon name="arrow-ios-back" style={{height: 20, width: 20}} />
       )}
       appearance="ghost"
-      status="primary"
+      status="control"
       onPress={() => goBack()}>
       home
     </Button>

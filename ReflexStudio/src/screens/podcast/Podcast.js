@@ -49,6 +49,9 @@ export default Podcast = ({navigation}) => {
                 <Button status="basic" appearance="ghost">
                   Latest
                 </Button>
+                <Button status="basic" appearance="ghost">
+                  Downloaded
+                </Button>
               </View>
             </>
           }
