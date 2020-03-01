@@ -1,8 +1,48 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {logoutUser} from '../../api/auth-api';
 
 import {Button, Icon, Text} from '@ui-kitten/components';
+
+export const HomeScreenButton = ({title, press, alertCount}) => {
+  return (
+    <View style={{flex: 1}}>
+      <Button
+        status="control"
+        appearance="ghost"
+        size="giant"
+        icon={() =>
+          alertCount >= 1 ? (
+            <>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}>
+                <Icon name="bell" width={35} height={35} fill="#DF6F0D" />
+                <Text
+                  category="h3"
+                  style={{color: 'black', marginLeft: 10, fontWeight: 'bold'}}>
+                  {alertCount}
+                </Text>
+              </View>
+            </>
+          ) : (
+            <Icon name="bell-outline" width={35} height={35} fill="#000" />
+          )
+        }
+        onPress={press}
+        style={{
+          flexDirection: 'row-reverse',
+          justifyContent: 'space-between',
+        }}>
+        {title}
+      </Button>
+    </View>
+  );
+};
 
 export const CartButton = ({navigation, cartNum}) => {
   const [count, setCount] = useState(cartNum);
@@ -47,7 +87,7 @@ export const AddButton = () => {
 
 export const LogoutButton = () => (
   <Button
-    status="basic"
+    status="control"
     appearance="ghost"
     onPress={() => logoutUser()}
     style={styles.button}>
@@ -69,13 +109,26 @@ export const BackHomeButton = ({navigation: {goBack}}) => {
   );
 };
 
+export const SettingsButton = () => {
+  return (
+    <Button
+      icon={() => (
+        <Icon name="settings-2-outline" width={25} height={25} fill="#000" />
+      )}
+      appearance="ghost"
+      status="primary"
+      onPress={() => console.log('Settings Clicked')}
+    />
+  );
+};
+
 export const RefreshButton = ({press}) => {
   return (
     <Button
       icon={() => <Icon name="refresh" width={25} height={25} fill="#000" />}
       appearance="ghost"
       status="primary"
-      onPress={() => press}
+      onPress={press}
     />
   );
 };
