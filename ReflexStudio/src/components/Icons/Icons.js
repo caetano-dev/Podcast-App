@@ -1,13 +1,57 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {logoutUser} from '../../api/auth-api';
+import React, { useState } from "react";
+import { View, StyleSheet } from "react-native";
+import { logoutUser } from "../../api/auth-api";
 
-import {Button, Icon, Text} from '@ui-kitten/components';
+import { Button, Icon, Text, Layout } from "@ui-kitten/components";
 
-export const HomeScreenButton = ({title, press, alertCount}) => {
+export const HomeScreenButton = ({ title, press, alertCount }) => {
   return (
-    <View style={{flex: 1}}>
-      <Button
+    <View style={{ flex: 1 }}>
+      <Layout
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: null,
+          marginHorizontal: "5%"
+        }}
+      >
+        <View>
+          <Text status="basic" category="h1" onPress={press}>
+            {title}
+          </Text>
+        </View>
+        <View>
+          {alertCount >= 1 ? (
+            <>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  alignItems: "center"
+                }}
+              >
+                <Icon name="bell" width={35} height={35} fill="#DF6F0D" />
+                <Text
+                  category="h3"
+                  style={{
+                    color: "black",
+                    marginLeft: 20,
+                    fontWeight: "bold"
+                  }}
+                >
+                  {alertCount}
+                </Text>
+              </View>
+            </>
+          ) : (
+            <Icon name="bell-outline" width={35} height={35} fill="#000" />
+          )}
+        </View>
+      </Layout>
+      {/* <Button
         status="control"
         appearance="ghost"
         size="giant"
@@ -39,25 +83,25 @@ export const HomeScreenButton = ({title, press, alertCount}) => {
           justifyContent: 'space-between',
         }}>
         {title}
-      </Button>
+      </Button> */}
     </View>
   );
 };
 
-export const CartButton = ({navigation, cartNum}) => {
+export const CartButton = ({ navigation, cartNum }) => {
   const [count, setCount] = useState(cartNum);
 
   const CartIcon = style => {
     return count >= 1 ? (
       <>
-        <Icon name="shopping-cart" style={{height: 32, width: 32}} />
-        <Text category="h6" style={{marginRight: -10}}>
+        <Icon name="shopping-cart" style={{ height: 32, width: 32 }} />
+        <Text category="h6" style={{ marginRight: -10 }}>
           {count}
         </Text>
       </>
     ) : (
       <>
-        <Icon name="shopping-cart-outline" style={{height: 32, width: 32}} />
+        <Icon name="shopping-cart-outline" style={{ height: 32, width: 32 }} />
       </>
     );
   };
@@ -67,7 +111,7 @@ export const CartButton = ({navigation, cartNum}) => {
       icon={CartIcon}
       appearance="ghost"
       style={styles.button}
-      onPress={() => navigation.navigation('Cart')}
+      onPress={() => navigation.navigation("Cart")}
     />
   );
 };
@@ -79,7 +123,7 @@ export const AddButton = () => {
     <Button
       icon={addIcon}
       appearance="ghost"
-      onPress={() => console.log('add to cart')}
+      onPress={() => console.log("add to cart")}
       style={styles.addButton}
     />
   );
@@ -90,20 +134,22 @@ export const LogoutButton = () => (
     status="control"
     appearance="ghost"
     onPress={() => logoutUser()}
-    style={styles.button}>
+    style={styles.button}
+  >
     Log Out
   </Button>
 );
 
-export const BackHomeButton = ({navigation: {goBack}}) => {
+export const BackHomeButton = ({ navigation: { goBack } }) => {
   return (
     <Button
       icon={() => (
-        <Icon name="arrow-ios-back" style={{height: 20, width: 20}} />
+        <Icon name="arrow-ios-back" style={{ height: 20, width: 20 }} />
       )}
       appearance="ghost"
       status="control"
-      onPress={() => goBack()}>
+      onPress={() => goBack()}
+    >
       home
     </Button>
   );
@@ -117,12 +163,12 @@ export const SettingsButton = () => {
       )}
       appearance="ghost"
       status="primary"
-      onPress={() => console.log('Settings Clicked')}
+      onPress={() => console.log("Settings Clicked")}
     />
   );
 };
 
-export const RefreshButton = ({press}) => {
+export const RefreshButton = ({ press }) => {
   return (
     <Button
       icon={() => <Icon name="refresh" width={25} height={25} fill="#000" />}
@@ -141,13 +187,13 @@ export const LikeButton = () => {
       name="heart"
       fill="#DB3A3A"
       onPress={() => setHeart(!heart)}
-      style={{height: 35, width: 35}}
+      style={{ height: 35, width: 35 }}
     />
   ) : (
     <Icon
       name="heart-outline"
       onPress={() => setHeart(!heart)}
-      style={{height: 35, width: 35}}
+      style={{ height: 35, width: 35 }}
     />
   );
 };
@@ -160,13 +206,13 @@ export const FavButton = () => {
       name="star"
       fill="#E8DE57"
       onPress={() => setFav(!fav)}
-      style={{marginLeft: 10, height: 35, width: 35}}
+      style={{ marginLeft: 10, height: 35, width: 35 }}
     />
   ) : (
     <Icon
       name="star-outline"
       onPress={() => setFav(!fav)}
-      style={{marginLeft: 10, height: 35, width: 35}}
+      style={{ marginLeft: 10, height: 35, width: 35 }}
     />
   );
 };
@@ -178,13 +224,13 @@ export const DownloadButton = () => {
     <Icon
       name="cloud-download"
       onPress={() => setDown(!down)}
-      style={{marginLeft: 10, height: 40, width: 40}}
+      style={{ marginLeft: 10, height: 40, width: 40 }}
     />
   ) : (
     <Icon
       name="cloud-download-outline"
       onPress={() => setDown(!down)}
-      style={{marginLeft: 10, height: 40, width: 40}}
+      style={{ marginLeft: 10, height: 40, width: 40 }}
     />
   );
 };
@@ -192,10 +238,10 @@ export const DownloadButton = () => {
 const styles = StyleSheet.create({
   button: {
     height: 50,
-    width: 100,
+    width: 100
   },
   addButton: {
     width: 20,
-    height: 40,
-  },
+    height: 40
+  }
 });
