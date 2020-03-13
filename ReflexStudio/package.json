@@ -5,7 +5,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "clean": "rimraf node_modules",
+    "reinstall": "npm run clean && npm install && expo start",
+    "scrub": "del package-lock.json && rimraf node_modules",
+    "bleach": "npm run scrub && npm install && expo start"
   },
   "dependencies": {
     "@eva-design/eva": "^1.4.0",
