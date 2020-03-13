@@ -1,0 +1,63 @@
+{
+  "name": "ReflexStudio",
+  "version": "0.2.1",
+  "private": true,
+  "scripts": {
+    "android": "npx react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "postinstall": "react-native link",
+    "clean": "cd node_modules && DEL /F/Q/S *.* > NUL && cd .. && RMDIR /Q/S node_modules && cls",
+    "reinstall": "npm run clean && npm install && npm run android",
+    "scrub": "del package-lock.json && cd node_modules && DEL /F/Q/S *.* > NUL && cd .. && RMDIR /Q/S node_modules && cls",
+    "bleach": "npm run scrub && npm install && npm run android",
+    "rebuild": "npm run clean && npm install && npm run build"
+  },
+  "dependencies": {
+    "@eva-design/eva": "^1.4.0",
+    "@freakycoder/react-native-helpers": "^0.1.2",
+    "@paraboly/react-native-card": "^0.2.13",
+    "@react-native-community/masked-view": "^0.1.6",
+    "@react-navigation/material-bottom-tabs": "^5.0.5",
+    "@react-navigation/material-top-tabs": "^5.0.5",
+    "@react-navigation/native": "^5.0.2",
+    "@react-navigation/stack": "^5.0.2",
+    "@ui-kitten/components": "4.4.0",
+    "@ui-kitten/eva-icons": "4.4.0",
+    "firebase": "^7.8.1",
+    "firestorter": "^2.0.1",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.1.7",
+    "react": "16.9.0",
+    "react-native": "0.61.5",
+    "react-native-dynamic-vector-icons": "^0.2.1",
+    "react-native-gesture-handler": "^1.5.6",
+    "react-native-material-ripple": "^0.9.1",
+    "react-native-paper": "^3.6.0",
+    "react-native-reanimated": "^1.7.0",
+    "react-native-safe-area-context": "^0.7.2",
+    "react-native-screens": "^2.0.0-beta.2",
+    "react-native-status-bar-height": "^2.4.0",
+    "react-native-svg": "^9.13.6",
+    "react-native-swift": "^1.2.2",
+    "react-native-tab-view": "^2.13.0",
+    "react-native-track-player": "^1.2.2",
+    "react-native-vector-icons": "^6.6.0",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "react-test-renderer": "16.9.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transformIgnorePatterns": []
+  }
+}
