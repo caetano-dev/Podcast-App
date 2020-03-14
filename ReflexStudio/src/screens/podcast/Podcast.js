@@ -17,59 +17,130 @@ import PlayerControls from "./components/PlayerControls";
 
 export default Podcast = ({ navigation }) => {
   const [select, setSelect] = useState("A");
-  const [latest, setLatest] = useState(false);
+  const [selectHeader, setSelectHeader] = useState("A");
+  const [latest, setLatest] = useState(true);
   const [fav, setFav] = useState(false);
   const [archive, setArchive] = useState(false);
   const [download, setDownload] = useState(false);
+  const [controls, setControls] = useState(true);
+
+  const headerSwitch = selectHeader => {
+    switch (selectHeader) {
+      default:
+        return <> /Podcast/Reflex/Latest </>;
+      case "Favourites":
+        return <> /Podcast/Reflex/Fav </>;
+      case "Archive":
+        return <> /Podcast/Reflex/Archive </>;
+      case "Downloaded":
+        return <> /Podcast/Reflex/Saved </>;
+    }
+  };
 
   const podSwitch = select => {
     switch (select) {
       default:
-        return <Latest />;
+        return (
+          <Latest
+            layout={2}
+            epTitle={<>Episode Title</>}
+            desc={
+              <>
+                Description: Lorem ipsum dolor sit amet, consectetur … … … ...
+              </>
+            }
+            epNum={<>Ep. 1</>}
+            ad={<>Mood - Sabali feat Nick the Great</>}
+          />
+        );
       case "B":
-        return <Fav />;
+        return (
+          <Fav
+            layout={4}
+            epTitle={<>Episode Title</>}
+            desc={
+              <>
+                Description: Lorem ipsum dolor sit amet, consectetur … … … ...
+              </>
+            }
+            epNum={<>Ep. 2</>}
+          />
+        );
       case "C":
-        return <Archive />;
+        return (
+          <Archive
+            layout={4}
+            epTitle={<>Episode Title</>}
+            desc={
+              <>
+                Description: Lorem ipsum dolor sit amet, consectetur … … … ...
+              </>
+            }
+            epNum={<>Ep. 3</>}
+          />
+        );
       case "D":
-        return <Download />;
+        return (
+          <Download
+            layout={4}
+            epTitle={<>Episode Title</>}
+            desc={
+              <>
+                Description: Lorem ipsum dolor sit amet, consectetur … … … ...
+              </>
+            }
+            epNum={<>Ep. 4</>}
+          />
+        );
     }
   };
 
   const onLatest = () => (
+    setControls(true),
     setLatest(!latest),
     setFav(false),
     setArchive(false),
     setDownload(false),
-    setSelect()
+    setSelect(),
+    setSelectHeader()
   );
   const onFav = () => (
+    setControls(false),
     setFav(!fav),
     setLatest(false),
     setArchive(false),
     setDownload(false),
-    setSelect("B")
+    setSelect("B"),
+    setSelectHeader("Favourites")
   );
+
   const onArchive = () => (
+    setControls(false),
     setArchive(!archive),
     setLatest(false),
     setFav(false),
     setDownload(false),
-    setSelect("C")
+    setSelect("C"),
+    setSelectHeader("Archive")
   );
+
   const onDownload = () => (
+    setControls(false),
     setDownload(!download),
     setLatest(false),
     setFav(false),
     setArchive(false),
-    setSelect("D")
+    setSelect("D"),
+    setSelectHeader("Downloaded")
   );
+
   return (
     <View style={{ flex: 1, backgroundColor: "#A0A1B5" }}>
       <Layout style={styles.goback}>
         <BackHomeButton navigation={navigation} />
       </Layout>
       <Layout style={styles.logo}>
-        <Logo height={"130"} />
+        <Logo height={"100%"} />
       </Layout>
 
       <Layout style={{ flex: 1, backgroundColor: null }}>
@@ -86,10 +157,13 @@ export default Podcast = ({ navigation }) => {
                   color: "black"
                 }}
               >
-                /Podcast/Reflex/Latest
+                {headerSwitch(selectHeader)}
               </Text>
               <View
-                style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly"
+                }}
               >
                 <Button
                   status={latest ? null : "basic"}
@@ -127,14 +201,16 @@ export default Podcast = ({ navigation }) => {
 
       {podSwitch(select)}
 
-      <Layout
-        style={{
-          flex: 1,
-          backgroundColor: null
-        }}
-      >
-        <PlayerControls />
-      </Layout>
+      {controls ? (
+        <Layout
+          style={{
+            flex: 1,
+            backgroundColor: null
+          }}
+        >
+          <PlayerControls size={85} margins={20} />
+        </Layout>
+      ) : null}
     </View>
   );
 };
