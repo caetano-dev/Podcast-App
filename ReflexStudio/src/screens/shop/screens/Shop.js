@@ -26,11 +26,12 @@ import { AddButton } from "../../../components/Icons/Icons";
 export default Shop = ({ navigation }) => {
   const [cart, setCart] = useState(true);
   const [select, setSelect] = useState("A");
+
   let src = require("../../../components/Icons/1.png");
 
-  const ItemHeader = () => (
+  const ItemHeader = props => (
     <View>
-      <Text>Title</Text>
+      <Text>{props.children}</Text>
     </View>
   );
 
@@ -64,7 +65,7 @@ export default Shop = ({ navigation }) => {
               <>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 0 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -74,7 +75,7 @@ export default Shop = ({ navigation }) => {
                 </Card>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 0 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -84,7 +85,7 @@ export default Shop = ({ navigation }) => {
                 </Card>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 0 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -104,7 +105,7 @@ export default Shop = ({ navigation }) => {
               <>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 1 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -114,7 +115,7 @@ export default Shop = ({ navigation }) => {
                 </Card>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 1 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -124,7 +125,7 @@ export default Shop = ({ navigation }) => {
                 </Card>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 1 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -144,7 +145,7 @@ export default Shop = ({ navigation }) => {
               <>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 2 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -154,7 +155,7 @@ export default Shop = ({ navigation }) => {
                 </Card>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 2 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -164,7 +165,7 @@ export default Shop = ({ navigation }) => {
                 </Card>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 2 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -184,7 +185,7 @@ export default Shop = ({ navigation }) => {
               <>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 3 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -194,7 +195,7 @@ export default Shop = ({ navigation }) => {
                 </Card>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 3 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
@@ -204,7 +205,7 @@ export default Shop = ({ navigation }) => {
                 </Card>
                 <Card
                   style={styles.shopItem}
-                  header={ItemHeader}
+                  header={() => <ItemHeader> Title 3 </ItemHeader>}
                   footer={ItemFooter}
                 >
                   <Image
