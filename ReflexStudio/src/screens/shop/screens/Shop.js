@@ -22,6 +22,7 @@ import Logo from "../../../components/Logo";
 import StoreList from "../components/StoreList";
 import SizePicker from "../components/SizePicker";
 import { AddButton } from "../../../components/Icons/Icons";
+
 export default Shop = ({ navigation }) => {
   const [cart, setCart] = useState(true);
   const [select, setSelect] = useState("A");

@@ -6,11 +6,13 @@ const PodCard = ({ content, radius, borderWidth, bgColor }) => {
   return (
     <View
       style={{
-        margin: 20,
+        margin: "2%",
         borderWidth: borderWidth,
         borderRadius: radius,
         flex: 1,
-        backgroundColor: bgColor
+        backgroundColor: bgColor,
+        alignContent: "center",
+        justifyContent: "center"
       }}
     >
       {content}
