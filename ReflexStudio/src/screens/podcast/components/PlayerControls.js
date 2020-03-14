@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Button, Icon, Text, Layout} from '@ui-kitten/components';
+import React, { Component } from "react";
+import { View, StyleSheet } from "react-native";
+import { Button, Icon, Text, Layout } from "@ui-kitten/components";
 
 export default class PlayerControls extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class PlayerControls extends Component {
       playButton: false,
       pauseButtonClicked: false,
       nextTrackClicked: false,
-      prevTrackClicked: false,
+      prevTrackClicked: false
     };
   }
   render() {
@@ -17,33 +17,36 @@ export default class PlayerControls extends Component {
       playButton,
       pauseButtonClicked,
       nextTrackClicked,
-      prevTrackClicked,
+      prevTrackClicked
     } = this.state;
+
+    const { size, margins } = this.props;
     return (
       <Layout
         style={{
           flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
+          flexDirection: "row",
+          justifyContent: "space-evenly",
           backgroundColor: null,
-          margin: 20,
-          alignItems: 'center',
-        }}>
+          margin: margins,
+          alignItems: "center"
+        }}
+      >
         <View>
           {prevTrackClicked ? (
             <Icon
               name="arrow-left"
-              style={{height: 85, width: 85}}
+              style={{ height: size, width: size }}
               onPress={() =>
-                this.setState({prevTrackClicked: !prevTrackClicked})
+                this.setState({ prevTrackClicked: !prevTrackClicked })
               }
             />
           ) : (
             <Icon
               name="arrow-left-outline"
-              style={{height: 85, width: 85}}
+              style={{ height: size, width: size }}
               onPress={() =>
-                this.setState({prevTrackClicked: !prevTrackClicked})
+                this.setState({ prevTrackClicked: !prevTrackClicked })
               }
             />
           )}
@@ -52,8 +55,8 @@ export default class PlayerControls extends Component {
           <View>
             <Icon
               name="stop-circle"
-              onPress={() => this.setState({playButton: !playButton})}
-              style={{height: 85, width: 85}}
+              onPress={() => this.setState({ playButton: !playButton })}
+              style={{ height: size, width: size }}
             />
           </View>
         ) : null}
@@ -63,32 +66,32 @@ export default class PlayerControls extends Component {
               <Icon
                 name="play-circle"
                 onPress={() =>
-                  this.setState({pauseButtonClicked: !pauseButtonClicked})
+                  this.setState({ pauseButtonClicked: !pauseButtonClicked })
                 }
                 style={{
-                  height: 85,
-                  width: 85,
+                  height: size,
+                  width: size
                 }}
               />
             ) : (
               <Icon
                 name="pause-circle"
                 onPress={() =>
-                  this.setState({pauseButtonClicked: !pauseButtonClicked})
+                  this.setState({ pauseButtonClicked: !pauseButtonClicked })
                 }
                 style={{
-                  height: 85,
-                  width: 85,
+                  height: size,
+                  width: size
                 }}
               />
             )
           ) : (
             <Icon
               name="play-circle-outline"
-              onPress={() => this.setState({playButton: !playButton})}
+              onPress={() => this.setState({ playButton: !playButton })}
               style={{
-                height: 85,
-                width: 85,
+                height: size,
+                width: size
               }}
             />
           )}
@@ -97,17 +100,17 @@ export default class PlayerControls extends Component {
           {nextTrackClicked ? (
             <Icon
               name="arrow-right"
-              style={{height: 85, width: 85}}
+              style={{ height: size, width: size }}
               onPress={() =>
-                this.setState({nextTrackClicked: !nextTrackClicked})
+                this.setState({ nextTrackClicked: !nextTrackClicked })
               }
             />
           ) : (
             <Icon
               name="arrow-right-outline"
-              style={{height: 85, width: 85}}
+              style={{ height: size, width: size }}
               onPress={() =>
-                this.setState({nextTrackClicked: !nextTrackClicked})
+                this.setState({ nextTrackClicked: !nextTrackClicked })
               }
             />
           )}

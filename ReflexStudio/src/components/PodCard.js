@@ -2,14 +2,14 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Layout, Text, Button } from "@ui-kitten/components";
 
-const PodCard = ({ content, radius, borderWidth, bgColor }) => {
+const PodCard = ({ content, radius, borderWidth, bgColor, flex }) => {
   return (
     <View
       style={{
-        margin: "2%",
+        margin: "1%",
         borderWidth: borderWidth,
         borderRadius: radius,
-        flex: 1,
+        flex: flex,
         backgroundColor: bgColor,
         alignContent: "center",
         justifyContent: "center"

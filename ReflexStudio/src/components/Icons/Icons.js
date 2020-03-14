@@ -181,7 +181,7 @@ export const RefreshButton = ({ press }) => {
   );
 };
 
-export const LikeButton = () => {
+export const LikeButton = ({ liked }) => {
   const [heart, setHeart] = useState(false);
 
   return heart ? (
@@ -189,6 +189,13 @@ export const LikeButton = () => {
       name="heart"
       fill="#DB3A3A"
       onPress={() => setHeart(!heart)}
+      style={{ height: 35, width: 35 }}
+    />
+  ) : liked ? (
+    <Icon
+      name="heart"
+      fill="#DB3A3A"
+      onPress={() => setHeart(true)}
       style={{ height: 35, width: 35 }}
     />
   ) : (
@@ -200,7 +207,7 @@ export const LikeButton = () => {
   );
 };
 
-export const FavButton = () => {
+export const FavButton = ({ favouited }) => {
   const [fav, setFav] = useState(false);
 
   return fav ? (
@@ -208,6 +215,13 @@ export const FavButton = () => {
       name="star"
       fill="#E8DE57"
       onPress={() => setFav(!fav)}
+      style={{ marginLeft: 10, height: 35, width: 35 }}
+    />
+  ) : favouited ? (
+    <Icon
+      name="star"
+      fill="#E8DE57"
+      onPress={() => setFav(true)}
       style={{ marginLeft: 10, height: 35, width: 35 }}
     />
   ) : (
@@ -219,13 +233,21 @@ export const FavButton = () => {
   );
 };
 
-export const DownloadButton = () => {
+export const DownloadButton = ({ downloaded }) => {
   const [down, setDown] = useState(false);
 
   return down ? (
     <Icon
       name="cloud-download"
+      fill="#1D95B9"
       onPress={() => setDown(!down)}
+      style={{ marginLeft: 10, height: 40, width: 40 }}
+    />
+  ) : downloaded ? (
+    <Icon
+      name="cloud-download"
+      fill="#1D95B9"
+      onPress={() => setDown(true)}
       style={{ marginLeft: 10, height: 40, width: 40 }}
     />
   ) : (
