@@ -18,7 +18,12 @@ export const HomeScreenButton = ({ title, press, alertCount }) => {
         }}
       >
         <View>
-          <Text status="basic" category="h1" onPress={press}>
+          <Text
+            status="basic"
+            category="h1"
+            onPress={press}
+            style={{ color: "black" }}
+          >
             {title}
           </Text>
         </View>
@@ -29,21 +34,20 @@ export const HomeScreenButton = ({ title, press, alertCount }) => {
                 style={{
                   flex: 1,
                   flexDirection: "row",
-                  justifyContent: "flex-end",
                   alignItems: "center"
                 }}
               >
-                <Icon name="bell" width={35} height={35} fill="#DF6F0D" />
                 <Text
                   category="h3"
+                  status="control"
                   style={{
-                    color: "black",
-                    marginLeft: 20,
+                    marginRight: 5,
                     fontWeight: "bold"
                   }}
                 >
                   {alertCount}
                 </Text>
+                <Icon name="bell" width={35} height={35} fill="#DF6F0D" />
               </View>
             </>
           ) : (
