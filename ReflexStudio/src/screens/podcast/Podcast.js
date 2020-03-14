@@ -1,48 +1,50 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Layout, Text, Button} from '@ui-kitten/components';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Layout, Text, Button } from "@ui-kitten/components";
 
-import Logo from '../../components/Logo.js';
-import PodCard from '../../components/PodCard.js';
+import Logo from "../../components/Logo.js";
+import PodCard from "../../components/PodCard.js";
 
-import {logoutUser} from '../../api/auth-api';
+import { logoutUser } from "../../api/auth-api";
 import {
   BackHomeButton,
   LikeButton,
   FavButton,
-  DownloadButton,
-} from '../../components/Icons/Icons';
+  DownloadButton
+} from "../../components/Icons/Icons";
 
-import PlayerControls from './components/PlayerControls';
+import PlayerControls from "./components/PlayerControls";
 
-export default Podcast = ({navigation}) => {
+export default Podcast = ({ navigation }) => {
   let social = false;
   return (
-    <View style={{flex: 1, backgroundColor: '#A0A1B5'}}>
+    <View style={{ flex: 1, backgroundColor: "#A0A1B5" }}>
       <Layout style={styles.goback}>
         <BackHomeButton navigation={navigation} />
       </Layout>
       <Layout style={styles.logo}>
-        <Logo height={'130'} />
+        <Logo height={"130"} />
       </Layout>
 
-      <Layout style={{flex: 1, backgroundColor: null}}>
+      <Layout style={{ flex: 1, backgroundColor: null }}>
         <PodCard
           borderWidth={5}
           radius={30}
-          bgColor={'white'}
+          bgColor={"white"}
           content={
             <>
               <Text
                 category="h3"
                 style={{
-                  fontWeight: '700',
-                  color: 'black',
-                }}>
+                  fontWeight: "700",
+                  color: "black"
+                }}
+              >
                 /Podcast/Reflex/Latest
               </Text>
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+              >
                 <Button appearance="ghost">Latest</Button>
                 <Button status="basic" appearance="ghost">
                   Favourites
@@ -62,30 +64,37 @@ export default Podcast = ({navigation}) => {
       <Layout
         style={{
           flex: 2,
-          backgroundColor: null,
-        }}>
+          backgroundColor: null
+        }}
+      >
         <PodCard
           borderWidth={7}
           radius={30}
-          bgColor={'white'}
+          bgColor={"white"}
           content={
             <Layout
               style={{
                 flex: 1,
-                flexDirection: 'column',
+                flexDirection: "column",
                 backgroundColor: null,
-                justifyContent: 'space-between',
-              }}>
+                justifyContent: "space-between"
+              }}
+            >
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text category="h3" style={{fontWeight: 'bold'}}>
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between"
+                }}
+              >
+                <Text category="h3" style={{ fontWeight: "bold" }}>
                   Episode Title
                 </Text>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
+                    flexDirection: "row",
+                    justifyContent: "space-between"
+                  }}
+                >
                   <LikeButton />
                   <FavButton />
                 </View>
@@ -93,18 +102,19 @@ export default Podcast = ({navigation}) => {
 
               <View>
                 <Text category="h5">
-                  Description: Lorem ipsum dolor sit amet, consectetur … … … ...{' '}
+                  Description: Lorem ipsum dolor sit amet, consectetur … … … ...{" "}
                 </Text>
               </View>
 
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
+                  flexDirection: "row",
+                  justifyContent: "space-between"
+                }}
+              >
                 <DownloadButton />
 
-                <Text category="h4" style={{fontWeight: 'bold'}}>
+                <Text category="h4" style={{ fontWeight: "bold" }}>
                   Ep. 5
                 </Text>
               </View>
@@ -116,8 +126,9 @@ export default Podcast = ({navigation}) => {
       <Layout
         style={{
           flex: 1,
-          backgroundColor: null,
-        }}>
+          backgroundColor: null
+        }}
+      >
         <PlayerControls />
       </Layout>
     </View>
@@ -126,66 +137,67 @@ export default Podcast = ({navigation}) => {
 
 const styles = StyleSheet.create({
   cont: {
-    backgroundColor: '#A0A1B5',
+    backgroundColor: "#A0A1B5",
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: "column"
   },
   goback: {
     backgroundColor: null,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginTop: 10
   },
   logo: {
     flex: 1,
     backgroundColor: null,
     marginVertical: 15,
-    alignSelf: 'center',
+    alignSelf: "center"
   },
   date: {
     fontSize: 15,
     marginRight: 50,
     left: 15,
-    marginBottom: 100,
+    marginBottom: 100
   },
   id: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 17,
-    position: 'absolute',
+    position: "absolute",
     top: 3,
-    left: 230,
+    left: 230
   },
   description: {
     fontSize: 18,
     padding: 10,
-    textAlign: 'center',
-    alignSelf: 'center',
+    textAlign: "center",
+    alignSelf: "center"
   },
   content: {
     margin: 15,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderRadius: 30,
     borderWidth: 5,
     padding: 10,
     width: 300,
-    backgroundColor: '#799688',
+    backgroundColor: "#799688"
   },
   newContent: {
     flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   titleHome: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 20,
-    textAlign: 'auto',
-    marginRight: 40,
+    textAlign: "auto",
+    marginRight: 40
   },
   controls: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    flexDirection: "row",
+    justifyContent: "space-evenly"
   },
   buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
+    flexDirection: "row",
+    justifyContent: "space-evenly"
+  }
 });

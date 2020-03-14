@@ -10,142 +10,29 @@ import {
   CheckBox,
   Select
 } from "@ui-kitten/components";
-import SizePicker from "./SizePicker";
-
-import { AddButton } from "../../../components/Icons/Icons";
 
 export default class StoreList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: [1, 2, 3, 4, 5]
+    };
+  }
   render() {
-    const { mainHeader } = this.props;
+    const { mainHeader, component } = this.props;
+    const { count } = this.state;
 
     const Header = () => (
       <CardHeader title={mainHeader} description="Season: 1" />
     );
 
-    const ItemHeader = () => (
-      <View>
-        <Text>Title</Text>
-      </View>
-    );
-
-    const ItemFooter = () => {
-      return (
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row"
-          }}
-        >
-          <View
-            style={{ alignSelf: "flex-start", width: 115, marginLeft: -20 }}
-          >
-            <SizePicker />
-          </View>
-          <View style={{ marginLeft: -5 }}>
-            <AddButton />
-          </View>
-        </View>
-      );
-    };
     return (
       <Card
         header={Header}
         status="success"
-        style={{ flex: 1, borderColor: "black" }}
+        style={{ flex: 1, borderColor: "black", width: "100%" }}
       >
-        <ScrollView>
-          <Layout style={{ flexDirection: "row", marginBottom: 80 }}>
-            <Layout style={styles.cont}>
-              <Card
-                style={styles.shopItem}
-                header={ItemHeader}
-                footer={ItemFooter}
-              >
-                <Image
-                  style={{ height: 100, width: 100 }}
-                  source={require("../../../components/Icons/1.png")}
-                />
-              </Card>
-
-              <Card
-                style={styles.shopItem}
-                header={ItemHeader}
-                footer={ItemFooter}
-              >
-                <Image
-                  style={{ height: 100, width: 100 }}
-                  source={require("../../../components/Icons/1.png")}
-                />
-              </Card>
-              <Card
-                style={styles.shopItem}
-                header={ItemHeader}
-                footer={ItemFooter}
-              >
-                <Image
-                  style={{ height: 100, width: 100 }}
-                  source={require("../../../components/Icons/1.png")}
-                />
-              </Card>
-
-              <Card
-                style={styles.shopItem}
-                header={ItemHeader}
-                footer={ItemFooter}
-              >
-                <Image
-                  style={{ height: 100, width: 100 }}
-                  source={require("../../../components/Icons/1.png")}
-                />
-              </Card>
-            </Layout>
-
-            <Layout style={styles.cont}>
-              <Card
-                style={styles.shopItem}
-                header={ItemHeader}
-                footer={ItemFooter}
-              >
-                <Image
-                  style={{ height: 100, width: 100 }}
-                  source={require("../../../components/Icons/1.png")}
-                />
-              </Card>
-
-              <Card
-                style={styles.shopItem}
-                header={ItemHeader}
-                footer={ItemFooter}
-              >
-                <Image
-                  style={{ height: 100, width: 100 }}
-                  source={require("../../../components/Icons/1.png")}
-                />
-              </Card>
-              <Card
-                style={styles.shopItem}
-                header={ItemHeader}
-                footer={ItemFooter}
-              >
-                <Image
-                  style={{ height: 100, width: 100 }}
-                  source={require("../../../components/Icons/1.png")}
-                />
-              </Card>
-
-              <Card
-                style={styles.shopItem}
-                header={ItemHeader}
-                footer={ItemFooter}
-              >
-                <Image
-                  style={{ height: 100, width: 100 }}
-                  source={require("../../../components/Icons/1.png")}
-                />
-              </Card>
-            </Layout>
-          </Layout>
-        </ScrollView>
+        <ScrollView horizontal>{component}</ScrollView>
       </Card>
     );
   }
@@ -153,12 +40,10 @@ export default class StoreList extends Component {
 
 const styles = StyleSheet.create({
   cont: {
-    display: "flex",
-    flexDirection: "column"
-  },
-  shopItem: {
-    borderColor: "black",
-    width: 150,
-    margin: 5
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    overflow: "hidden"
+    // flexWrap: 'wrap'
   }
 });

@@ -117,11 +117,9 @@ export const CartButton = ({ navigation, cartNum }) => {
 };
 
 export const AddButton = () => {
-  const addIcon = style => <Icon name="plus-circle" {...style} />;
-
   return (
     <Button
-      icon={addIcon}
+      icon={() => <Icon name="plus-circle" width={32} height={32} />}
       appearance="ghost"
       onPress={() => console.log("add to cart")}
       style={styles.addButton}
@@ -239,9 +237,5 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     width: 100
-  },
-  addButton: {
-    width: 20,
-    height: 40
   }
 });
