@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Layout, Text, Button } from "@ui-kitten/components";
 
@@ -12,11 +12,57 @@ import {
   FavButton,
   DownloadButton
 } from "../../components/Icons/Icons";
-
+import { Latest, Fav, Archive, Download } from "./components/ContentSwitch";
 import PlayerControls from "./components/PlayerControls";
 
 export default Podcast = ({ navigation }) => {
-  let social = false;
+  const [select, setSelect] = useState("A");
+  const [latest, setLatest] = useState(false);
+  const [fav, setFav] = useState(false);
+  const [archive, setArchive] = useState(false);
+  const [download, setDownload] = useState(false);
+
+  const podSwitch = select => {
+    switch (select) {
+      default:
+        return <Latest />;
+      case "B":
+        return <Fav />;
+      case "C":
+        return <Archive />;
+      case "D":
+        return <Download />;
+    }
+  };
+
+  const onLatest = () => (
+    setLatest(!latest),
+    setFav(false),
+    setArchive(false),
+    setDownload(false),
+    setSelect()
+  );
+  const onFav = () => (
+    setFav(!fav),
+    setLatest(false),
+    setArchive(false),
+    setDownload(false),
+    setSelect("B")
+  );
+  const onArchive = () => (
+    setArchive(!archive),
+    setLatest(false),
+    setFav(false),
+    setDownload(false),
+    setSelect("C")
+  );
+  const onDownload = () => (
+    setDownload(!download),
+    setLatest(false),
+    setFav(false),
+    setArchive(false),
+    setSelect("D")
+  );
   return (
     <View style={{ flex: 1, backgroundColor: "#A0A1B5" }}>
       <Layout style={styles.goback}>
@@ -28,8 +74,8 @@ export default Podcast = ({ navigation }) => {
 
       <Layout style={{ flex: 1, backgroundColor: null }}>
         <PodCard
-          borderWidth={5}
-          radius={30}
+          borderWidth={3}
+          radius={10}
           bgColor={"white"}
           content={
             <>
@@ -45,14 +91,32 @@ export default Podcast = ({ navigation }) => {
               <View
                 style={{ flexDirection: "row", justifyContent: "space-evenly" }}
               >
-                <Button appearance="ghost">Latest</Button>
-                <Button status="basic" appearance="ghost">
-                  Favourites
-                </Button>
-                <Button status="basic" appearance="ghost">
+                <Button
+                  status={latest ? null : "basic"}
+                  appearance="ghost"
+                  onPress={() => onLatest()}
+                >
                   Latest
                 </Button>
-                <Button status="basic" appearance="ghost">
+                <Button
+                  status={fav ? null : "basic"}
+                  appearance="ghost"
+                  onPress={() => onFav()}
+                >
+                  Favourites
+                </Button>
+                <Button
+                  status={archive ? null : "basic"}
+                  appearance="ghost"
+                  onPress={() => onArchive()}
+                >
+                  Archive
+                </Button>
+                <Button
+                  status={download ? null : "basic"}
+                  appearance="ghost"
+                  onPress={() => onDownload()}
+                >
                   Downloaded
                 </Button>
               </View>
@@ -61,67 +125,7 @@ export default Podcast = ({ navigation }) => {
         />
       </Layout>
 
-      <Layout
-        style={{
-          flex: 2,
-          backgroundColor: null
-        }}
-      >
-        <PodCard
-          borderWidth={7}
-          radius={30}
-          bgColor={"white"}
-          content={
-            <Layout
-              style={{
-                flex: 1,
-                flexDirection: "column",
-                backgroundColor: null,
-                justifyContent: "space-between"
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between"
-                }}
-              >
-                <Text category="h3" style={{ fontWeight: "bold" }}>
-                  Episode Title
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between"
-                  }}
-                >
-                  <LikeButton />
-                  <FavButton />
-                </View>
-              </View>
-
-              <View>
-                <Text category="h5">
-                  Description: Lorem ipsum dolor sit amet, consectetur … … … ...{" "}
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between"
-                }}
-              >
-                <DownloadButton />
-
-                <Text category="h4" style={{ fontWeight: "bold" }}>
-                  Ep. 5
-                </Text>
-              </View>
-            </Layout>
-          }
-        />
-      </Layout>
+      {podSwitch(select)}
 
       <Layout
         style={{
