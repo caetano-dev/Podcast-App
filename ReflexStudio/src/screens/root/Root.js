@@ -35,6 +35,7 @@ const Root = ({ navigation }) => (
       }}
     >
       <PodCard
+        flex={1}
         borderWidth={5}
         radius={30}
         bgColor={null}
