@@ -55,6 +55,46 @@ export default Shop = ({ navigation }) => {
 
   const shopSwitch = select => {
     switch (select) {
+      default:
+        return (
+          <StoreList
+            mainHeader={"/Shop"}
+            component={
+              <>
+                <Card
+                  style={styles.shopItem}
+                  header={ItemHeader}
+                  footer={ItemFooter}
+                >
+                  <Image
+                    style={{ height: 160, width: "100%", marginBottom: -10 }}
+                    source={src}
+                  />
+                </Card>
+                <Card
+                  style={styles.shopItem}
+                  header={ItemHeader}
+                  footer={ItemFooter}
+                >
+                  <Image
+                    style={{ height: 160, width: "100%", marginBottom: -10 }}
+                    source={src}
+                  />
+                </Card>
+                <Card
+                  style={styles.shopItem}
+                  header={ItemHeader}
+                  footer={ItemFooter}
+                >
+                  <Image
+                    style={{ height: 160, width: "100%", marginBottom: -10 }}
+                    source={src}
+                  />
+                </Card>
+              </>
+            }
+          />
+        );
       case "B":
         return (
           <StoreList
@@ -139,46 +179,6 @@ export default Shop = ({ navigation }) => {
         return (
           <StoreList
             mainHeader="/Shop/Accessories"
-            component={
-              <>
-                <Card
-                  style={styles.shopItem}
-                  header={ItemHeader}
-                  footer={ItemFooter}
-                >
-                  <Image
-                    style={{ height: 160, width: "100%", marginBottom: -10 }}
-                    source={src}
-                  />
-                </Card>
-                <Card
-                  style={styles.shopItem}
-                  header={ItemHeader}
-                  footer={ItemFooter}
-                >
-                  <Image
-                    style={{ height: 160, width: "100%", marginBottom: -10 }}
-                    source={src}
-                  />
-                </Card>
-                <Card
-                  style={styles.shopItem}
-                  header={ItemHeader}
-                  footer={ItemFooter}
-                >
-                  <Image
-                    style={{ height: 160, width: "100%", marginBottom: -10 }}
-                    source={src}
-                  />
-                </Card>
-              </>
-            }
-          />
-        );
-      default:
-        return (
-          <StoreList
-            mainHeader={"/Shop"}
             component={
               <>
                 <Card
