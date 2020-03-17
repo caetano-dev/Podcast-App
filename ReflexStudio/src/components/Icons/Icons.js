@@ -120,12 +120,12 @@ export const CartButton = ({ navigation, cartNum }) => {
   );
 };
 
-export const AddButton = () => {
+export const AddButton = ({ press }) => {
   return (
     <Button
       icon={() => <Icon name="plus-circle" width={32} height={32} />}
       appearance="ghost"
-      onPress={() => console.log("add to cart")}
+      onPress={press}
       style={styles.addButton}
     />
   );
