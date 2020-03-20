@@ -53,7 +53,7 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
               justifyContent: "space-between"
             }}
           >
-            <Text category="h3" style={{ fontWeight: "bold" }}>
+            <Text category="h3" style={{ fontWeight: "bold", color: "black" }}>
               {epTitle}
             </Text>
             <View
@@ -70,7 +70,9 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
           </View>
 
           <View style={{ flex: 2, marginTop: "2%" }}>
-            <Text category="h5">{desc}</Text>
+            <Text category="h5" style={{ color: "black" }}>
+              {desc}
+            </Text>
           </View>
 
           <View
@@ -86,14 +88,16 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
               <View style={{ alignItems: "center", justifyContent: "center" }}>
                 {audioState ? (
                   <>
-                    <Text category="s1">Sponsored Track</Text>
-                    <Text>{ad}</Text>
+                    <Text category="s1" style={{ color: "black" }}>
+                      Sponsored Track
+                    </Text>
+                    <Text style={{ color: "black" }}>{ad}</Text>
                   </>
                 ) : null}
               </View>
             </View>
 
-            <Text category="h4" style={{ fontWeight: "bold" }}>
+            <Text category="h4" style={{ fontWeight: "bold", color: "black" }}>
               {epNum}
             </Text>
           </View>
