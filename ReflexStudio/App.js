@@ -1,13 +1,13 @@
-import React, {Component, memo} from 'react';
-import {View, StyleSheet} from 'react-native';
-import './fixtimerbug.js';
+import React, { Component, memo } from "react";
+import { View, StyleSheet } from "react-native";
+import "./fixtimerbug.js";
 
 //Redux
-import {createStore} from 'redux';
-import {Provider, connect} from 'react-redux';
+import { createStore } from "redux";
+import { Provider, connect } from "react-redux";
 //Navigation
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 //Style
 import {
@@ -16,10 +16,10 @@ import {
   Icon,
   IconRegistry,
   Layout,
-  Text,
-} from '@ui-kitten/components';
-import {EvaIconsPack} from '@ui-kitten/eva-icons';
-import {mapping, light as theme} from '@eva-design/eva';
+  Text
+} from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { mapping, light as theme } from "@eva-design/eva";
 
 //Components
 import {
@@ -34,25 +34,26 @@ import {
   Podcast,
   Previous,
   Shop,
-} from './src/screens';
+  Blog
+} from "./src/screens";
 
 //Methods
 import {
   logoutUser,
   signInUser,
   loginUser,
-  sendEmailWithPassword,
-} from './src/auth/auth-api';
+  sendEmailWithPassword
+} from "./src/auth/auth-api";
 
 //State
 const initialState = {
-  res: 's',
+  res: "s"
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GetData':
-      return {res: 'xxx'};
+    case "GetData":
+      return { res: "xxx" };
     default:
       return state;
   }
@@ -70,42 +71,47 @@ const Core = () => {
       <Stack.Screen
         name="InitialRoute"
         component={AuthLoadingScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="OnBoard"
         component={OnBoard}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Root"
         component={Root}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Shop"
         component={Shop}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Blog"
+        component={Blog}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Previous"
         component={Previous}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Podcast"
         component={Podcast}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -131,13 +137,13 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    flexDirection: "row"
   },
   text: {
-    textAlign: 'center',
+    textAlign: "center"
   },
   podcast: {},
-  reflex: {},
+  reflex: {}
 });

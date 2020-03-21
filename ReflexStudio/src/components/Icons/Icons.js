@@ -115,7 +115,7 @@ export const CartButton = ({ navigation, cartNum }) => {
       icon={CartIcon}
       appearance="ghost"
       style={styles.button}
-      onPress={() => navigation.navigation("Cart")}
+      // onPress={() => navigation.navigation("Cart")}
     />
   );
 };

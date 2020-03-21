@@ -54,7 +54,7 @@ const Root = ({ navigation }) => (
             <HomeScreenButton
               alertCount={0}
               title="/Blog"
-              press={() => console.log("unlinked homePage button")}
+              press={() => navigation.navigate("Blog")}
             />
             <HomeScreenButton
               alertCount={15}
