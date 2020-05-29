@@ -5,7 +5,7 @@ import { Layout, Text, Button, Icon } from "@ui-kitten/components";
 import {
   LogoutButton,
   SettingsButton,
-  HomeScreenButton
+  HomeScreenButton,
 } from "../../components/Icons/Icons";
 
 import Logo from "../../components/Logo";
@@ -22,16 +22,16 @@ const Root = ({ navigation }) => (
         flex: 1,
         backgroundColor: null,
         marginVertical: 15,
-        alignSelf: "center"
+        alignSelf: "center",
       }}
     >
-      <Logo height={"120%"} />
+      <Logo height={"110%"} />
     </Layout>
 
     <Layout
       style={{
         flex: 4,
-        backgroundColor: null
+        backgroundColor: null,
       }}
     >
       <PodCard
@@ -73,18 +73,18 @@ export default Root;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#A0A1B5"
+    backgroundColor: "#A0A1B5",
   },
   layout: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    backgroundColor: null
+    backgroundColor: null,
   },
   buttonGroup: {
     backgroundColor: null,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 });
