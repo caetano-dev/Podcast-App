@@ -7,7 +7,7 @@ import PodCard from "../../../components/PodCard.js";
 import {
   LikeButton,
   FavButton,
-  DownloadButton
+  DownloadButton,
 } from "../../../components/Icons/Icons";
 
 export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
@@ -43,24 +43,27 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
             flexDirection: "column",
             backgroundColor: null,
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <View
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
-            <Text category="h3" style={{ fontWeight: "bold", color: "black" }}>
+            <Text
+              category="h5"
+              style={{ fontWeight: "bold", color: "black", maxWidth: "60%" }}
+            >
               {epTitle}
             </Text>
             <View
               style={{
                 flex: 1,
                 flexDirection: "row",
-                justifyContent: "space-around"
+                justifyContent: "space-around",
               }}
             >
               <DownloadButton />
@@ -80,7 +83,7 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
               flex: 1,
               flexDirection: "row",
               justifyContent: "space-evenly",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <View style={{ flex: 2, flexDirection: "row" }}>
@@ -122,14 +125,14 @@ export const FavItem = ({ epTitle, desc, epNum }) => {
             backgroundColor: null,
             justifyContent: "center",
             alignItems: "center",
-            margin: 5
+            margin: 5,
           }}
         >
           <View
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <Text category="h3" style={{ fontWeight: "bold", color: "black" }}>
@@ -140,7 +143,7 @@ export const FavItem = ({ epTitle, desc, epNum }) => {
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: "flex-end"
+                alignItems: "flex-end",
               }}
             >
               <LikeButton liked />
@@ -152,7 +155,7 @@ export const FavItem = ({ epTitle, desc, epNum }) => {
               flex: 1,
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <View
@@ -160,7 +163,7 @@ export const FavItem = ({ epTitle, desc, epNum }) => {
                 flex: 3,
                 flexDirection: "row",
                 justifyContent: "flex-start",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <View>
@@ -198,14 +201,14 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
             backgroundColor: null,
             justifyContent: "center",
             alignItems: "center",
-            margin: 5
+            margin: 5,
           }}
         >
           <View
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <Text category="h3" style={{ fontWeight: "bold", color: "black" }}>
@@ -216,7 +219,7 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: "flex-end"
+                alignItems: "flex-end",
               }}
             >
               <LikeButton />
@@ -228,7 +231,7 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
               flex: 1,
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <View
@@ -236,7 +239,7 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
                 flex: 3,
                 flexDirection: "row",
                 justifyContent: "flex-start",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <View>
@@ -274,14 +277,14 @@ export const DownloadItem = ({ epTitle, desc, epNum }) => {
             backgroundColor: null,
             justifyContent: "center",
             alignItems: "center",
-            margin: 5
+            margin: 5,
           }}
         >
           <View
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <Text category="h3" style={{ fontWeight: "bold", color: "black" }}>
@@ -292,7 +295,7 @@ export const DownloadItem = ({ epTitle, desc, epNum }) => {
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: "flex-end"
+                alignItems: "flex-end",
               }}
             >
               <LikeButton liked />
@@ -304,7 +307,7 @@ export const DownloadItem = ({ epTitle, desc, epNum }) => {
               flex: 1,
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <View
@@ -312,7 +315,7 @@ export const DownloadItem = ({ epTitle, desc, epNum }) => {
                 flex: 3,
                 flexDirection: "row",
                 justifyContent: "flex-start",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <View>

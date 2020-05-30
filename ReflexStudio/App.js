@@ -2,9 +2,6 @@ import React, { Component, memo } from "react";
 import { View, StyleSheet } from "react-native";
 import "./fixtimerbug.js";
 
-//Redux
-import { createStore } from "redux";
-import { Provider, connect } from "react-redux";
 //Navigation
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -16,7 +13,7 @@ import {
   Icon,
   IconRegistry,
   Layout,
-  Text
+  Text,
 } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping, light as theme } from "@eva-design/eva";
@@ -34,7 +31,7 @@ import {
   Podcast,
   Previous,
   Shop,
-  Blog
+  Blog,
 } from "./src/screens";
 
 //Methods
@@ -42,92 +39,32 @@ import {
   logoutUser,
   signInUser,
   loginUser,
-  sendEmailWithPassword
+  sendEmailWithPassword,
 } from "./src/auth/auth-api";
+import Core from "./Core";
 
-//State
-const initialState = {
-  res: "s"
-};
+import { AppProvider } from "./src/context";
+import { decode, encode } from "base-64";
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "GetData":
-      return { res: "xxx" };
-    default:
-      return state;
-  }
-};
+if (!global.btoa) {
+  global.btoa = encode;
+}
 
-const store = createStore(reducer);
-
-const Stack = createStackNavigator();
-
-///////////////////////////////////////////////////////////////////
-
-const Core = () => {
-  return (
-    <Stack.Navigator initialRouteName="AuthLoadingScreen">
-      <Stack.Screen
-        name="InitialRoute"
-        component={AuthLoadingScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="OnBoard"
-        component={OnBoard}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="RegisterScreen"
-        component={RegisterScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Root"
-        component={Root}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Shop"
-        component={Shop}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Blog"
-        component={Blog}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Previous"
-        component={Previous}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Podcast"
-        component={Podcast}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-};
+if (!global.atob) {
+  global.atob = decode;
+}
 
 class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
+      <AppProvider>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider mapping={mapping} theme={theme}>
           <NavigationContainer>
             <Core />
           </NavigationContainer>
         </ApplicationProvider>
-      </Provider>
+      </AppProvider>
     );
   }
 }
@@ -139,11 +76,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-evenly",
     alignItems: "center",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   text: {
-    textAlign: "center"
+    textAlign: "center",
   },
   podcast: {},
-  reflex: {}
+  reflex: {},
 });

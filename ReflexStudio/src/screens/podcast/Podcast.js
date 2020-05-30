@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Layout, Text, Button } from "@ui-kitten/components";
-
+import { AppContext } from "../../context/AppContext";
 import Logo from "../../components/Logo.js";
 import PodCard from "../../components/PodCard.js";
 
@@ -10,7 +10,7 @@ import {
   BackHomeButton,
   LikeButton,
   FavButton,
-  DownloadButton
+  DownloadButton,
 } from "../../components/Icons/Icons";
 import { Latest, Fav, Archive, Download } from "./components/ContentSwitch";
 import PlayerControls from "./components/PlayerControls";
@@ -24,7 +24,7 @@ export default Podcast = ({ navigation }) => {
   const [download, setDownload] = useState(false);
   const [controls, setControls] = useState(true);
 
-  const headerSwitch = selectHeader => {
+  const headerSwitch = (selectHeader) => {
     switch (selectHeader) {
       default:
         return <> /Podcast/Reflex/Latest </>;
@@ -37,21 +37,27 @@ export default Podcast = ({ navigation }) => {
     }
   };
 
-  const podSwitch = select => {
+  const podSwitch = (select) => {
     switch (select) {
       default:
         return (
-          <Latest
-            layout={2}
-            epTitle={<>Episode Title</>}
-            desc={
-              <>
-                Description: Lorem ipsum dolor sit amet, consectetur … … … ...
-              </>
-            }
-            epNum={<>Ep. 1</>}
-            ad={<>Mood - Sabali feat Nick the Great</>}
-          />
+          <AppContext.Consumer>
+            {(context) => {
+              const ep1 = context.state.episodes.ep1;
+
+              return (
+                ep1 && (
+                  <Latest
+                    layout={2}
+                    epTitle={<>{ep1.title}</>}
+                    desc={<>{ep1.description}</>}
+                    epNum={<>Ep. {ep1.id}</>}
+                    ad={<>{ep1.ads}</>}
+                  />
+                )
+              );
+            }}
+          </AppContext.Consumer>
         );
       case "B":
         return (
@@ -135,83 +141,93 @@ export default Podcast = ({ navigation }) => {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#A0A1B5" }}>
-      <Layout style={styles.goback}>
-        <BackHomeButton navigation={navigation} />
-      </Layout>
-      <Layout style={styles.logo}>
-        <Logo height={"100%"} />
-      </Layout>
+    <AppContext.Consumer>
+      {(context) => {
+        const ep1 = context.state.episodes.ep1;
 
-      <Layout style={{ flex: 1, backgroundColor: null }}>
-        <PodCard
-          borderWidth={3}
-          radius={10}
-          bgColor={"white"}
-          content={
-            <>
-              <Text
-                category="h3"
-                style={{
-                  fontWeight: "700",
-                  color: "black"
-                }}
-              >
-                {headerSwitch(selectHeader)}
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-evenly"
-                }}
-              >
-                <Button
-                  status={latest ? null : "basic"}
-                  appearance="ghost"
-                  onPress={() => onLatest()}
-                >
-                  Latest
-                </Button>
-                <Button
-                  status={fav ? null : "basic"}
-                  appearance="ghost"
-                  onPress={() => onFav()}
-                >
-                  Favourites
-                </Button>
-                <Button
-                  status={archive ? null : "basic"}
-                  appearance="ghost"
-                  onPress={() => onArchive()}
-                >
-                  Archive
-                </Button>
-                <Button
-                  status={download ? null : "basic"}
-                  appearance="ghost"
-                  onPress={() => onDownload()}
-                >
-                  Downloaded
-                </Button>
-              </View>
-            </>
-          }
-        />
-      </Layout>
+        return (
+          ep1 && (
+            <View style={{ flex: 1, backgroundColor: "#A0A1B5" }}>
+              <Layout style={styles.goback}>
+                <BackHomeButton navigation={navigation} />
+              </Layout>
+              <Layout style={styles.logo}>
+                <Logo height={"100%"} />
+              </Layout>
 
-      {podSwitch(select)}
+              <Layout style={{ flex: 1, backgroundColor: null }}>
+                <PodCard
+                  borderWidth={3}
+                  radius={10}
+                  bgColor={"white"}
+                  content={
+                    <>
+                      <Text
+                        category="h3"
+                        style={{
+                          fontWeight: "700",
+                          color: "black",
+                        }}
+                      >
+                        {headerSwitch(selectHeader)}
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                        }}
+                      >
+                        <Button
+                          status={latest ? null : "basic"}
+                          appearance="ghost"
+                          onPress={() => onLatest()}
+                        >
+                          Latest
+                        </Button>
+                        <Button
+                          status={fav ? null : "basic"}
+                          appearance="ghost"
+                          onPress={() => onFav()}
+                        >
+                          Favourites
+                        </Button>
+                        <Button
+                          status={archive ? null : "basic"}
+                          appearance="ghost"
+                          onPress={() => onArchive()}
+                        >
+                          Archive
+                        </Button>
+                        <Button
+                          status={download ? null : "basic"}
+                          appearance="ghost"
+                          onPress={() => onDownload()}
+                        >
+                          Downloaded
+                        </Button>
+                      </View>
+                    </>
+                  }
+                />
+              </Layout>
 
-      {controls ? (
-        <Layout
-          style={{
-            flex: 1,
-            backgroundColor: null
-          }}
-        >
-          <PlayerControls size={85} margins={20} />
-        </Layout>
-      ) : null}
-    </View>
+              {podSwitch(select)}
+
+              {controls ? (
+                <Layout
+                  style={{
+                    flex: 1,
+                    backgroundColor: null,
+                  }}
+                >
+                  <PlayerControls src={ep1.src} size={85} margins={20} />
+                </Layout>
+              ) : null}
+            </View>
+          )
+        );
+      }}
+    </AppContext.Consumer>
   );
 };
 
@@ -219,38 +235,38 @@ const styles = StyleSheet.create({
   cont: {
     backgroundColor: "#A0A1B5",
     flex: 1,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   goback: {
     backgroundColor: null,
     flexDirection: "row",
     justifyContent: "flex-start",
-    marginTop: 10
+    marginTop: 10,
   },
   logo: {
     flex: 1,
     backgroundColor: null,
     marginVertical: 15,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   date: {
     fontSize: 15,
     marginRight: 50,
     left: 15,
-    marginBottom: 100
+    marginBottom: 100,
   },
   id: {
     fontWeight: "bold",
     fontSize: 17,
     position: "absolute",
     top: 3,
-    left: 230
+    left: 230,
   },
   description: {
     fontSize: 18,
     padding: 10,
     textAlign: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   content: {
     margin: 15,
@@ -259,25 +275,25 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     padding: 10,
     width: 300,
-    backgroundColor: "#799688"
+    backgroundColor: "#799688",
   },
   newContent: {
     flex: 2,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   titleHome: {
     fontWeight: "bold",
     fontSize: 20,
     textAlign: "auto",
-    marginRight: 40
+    marginRight: 40,
   },
   controls: {
     flexDirection: "row",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   buttonGroup: {
     flexDirection: "row",
-    justifyContent: "space-evenly"
-  }
+    justifyContent: "space-evenly",
+  },
 });
