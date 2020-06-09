@@ -15,6 +15,7 @@ export default class AppProvider extends Component {
     super(props);
     this.state = {
       episodes: {},
+      infoSection: false,
     };
   }
 
@@ -39,10 +40,18 @@ export default class AppProvider extends Component {
   }
 
   render() {
+    const openInfo = () => {
+      this.setState({ infoSection: true });
+    };
+    const closeInfo = () => {
+      this.setState({ infoSection: false });
+    };
     return (
       <AppContext.Provider
         value={{
           state: this.state,
+          openInfo: openInfo,
+          closeInfo: closeInfo,
         }}
       >
         {this.props.children}

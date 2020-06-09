@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
+import { AppContext } from "../../context/AppContext";
 import { logoutUser } from "../../api/auth-api";
 
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
@@ -14,7 +15,7 @@ export const HomeScreenButton = ({ title, press, alertCount }) => {
           justifyContent: "space-between",
           alignItems: "center",
           backgroundColor: null,
-          marginHorizontal: "5%"
+          marginHorizontal: "5%",
         }}
       >
         <View>
@@ -34,7 +35,7 @@ export const HomeScreenButton = ({ title, press, alertCount }) => {
                 style={{
                   flex: 1,
                   flexDirection: "row",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <Text
@@ -42,7 +43,7 @@ export const HomeScreenButton = ({ title, press, alertCount }) => {
                   status="control"
                   style={{
                     marginRight: 5,
-                    fontWeight: "bold"
+                    fontWeight: "bold",
                   }}
                 >
                   {alertCount}
@@ -95,7 +96,7 @@ export const HomeScreenButton = ({ title, press, alertCount }) => {
 export const CartButton = ({ navigation, cartNum }) => {
   const [count, setCount] = useState(cartNum);
 
-  const CartIcon = style => {
+  const CartIcon = (style) => {
     return count >= 1 ? (
       <>
         <Icon name="shopping-cart" style={{ height: 32, width: 32 }} />
@@ -239,14 +240,14 @@ export const DownloadButton = ({ downloaded }) => {
   return down ? (
     <Icon
       name="cloud-download"
-      fill="#1D95B9"
+      fill="#B1481A"
       onPress={() => setDown(!down)}
       style={{ marginLeft: 10, height: 40, width: 40 }}
     />
   ) : downloaded ? (
     <Icon
       name="cloud-download"
-      fill="#1D95B9"
+      fill="#B1481A"
       onPress={() => setDown(true)}
       style={{ marginLeft: 10, height: 40, width: 40 }}
     />
@@ -259,9 +260,34 @@ export const DownloadButton = ({ downloaded }) => {
   );
 };
 
+export const InfoButton = ({ information }) => {
+  // const [info, setInfo] = useState(false);
+
+  return (
+    <AppContext.Consumer>
+      {(context) => {
+        return context.state.infoSection ? (
+          <Icon
+            name="info"
+            fill="#1A83B1"
+            onPress={() => context.closeInfo()}
+            style={{ marginLeft: 10, height: 40, width: 40 }}
+          />
+        ) : (
+          <Icon
+            name="info-outline"
+            onPress={() => context.openInfo()}
+            style={{ marginLeft: 10, height: 40, width: 40 }}
+          />
+        );
+      }}
+    </AppContext.Consumer>
+  );
+};
+
 const styles = StyleSheet.create({
   button: {
     height: 50,
-    width: 100
-  }
+    width: 100,
+  },
 });
