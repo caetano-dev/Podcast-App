@@ -260,7 +260,7 @@ export const DownloadButton = ({ downloaded }) => {
   );
 };
 
-export const InfoButton = ({ information }) => {
+export const InfoButton = () => {
   // const [info, setInfo] = useState(false);
 
   return (
@@ -277,6 +277,29 @@ export const InfoButton = ({ information }) => {
           <Icon
             name="info-outline"
             onPress={() => context.openInfo()}
+            style={{ marginLeft: 10, height: 40, width: 40 }}
+          />
+        );
+      }}
+    </AppContext.Consumer>
+  );
+};
+
+export const AdButton = () => {
+  return (
+    <AppContext.Consumer>
+      {(context) => {
+        return context.state.adSection ? (
+          <Icon
+            name="music"
+            fill="#E1940F"
+            style={{ marginLeft: 10, height: 40, width: 40 }}
+            onPress={() => context.closeAd()}
+          />
+        ) : (
+          <Icon
+            name="music-outline"
+            onPress={() => context.openAd()}
             style={{ marginLeft: 10, height: 40, width: 40 }}
           />
         );

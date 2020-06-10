@@ -9,7 +9,8 @@
     "clean": "rimraf node_modules",
     "reinstall": "yarn clean && yarn install && expo start",
     "scrub": "del package-lock.json && rimraf node_modules",
-    "bleach": "yarn scrub && yarn && expo start"
+    "bleach": "yarn scrub && yarn && expo start",
+    "devtools": "react-devtools"
   },
   "dependencies": {
     "@eva-design/eva": "^1.4.0",

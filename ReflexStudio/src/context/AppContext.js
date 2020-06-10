@@ -16,6 +16,7 @@ export default class AppProvider extends Component {
     this.state = {
       episodes: {},
       infoSection: false,
+      adSection: false,
     };
   }
 
@@ -46,12 +47,20 @@ export default class AppProvider extends Component {
     const closeInfo = () => {
       this.setState({ infoSection: false });
     };
+    const openAd = () => {
+      this.setState({ adSection: true });
+    };
+    const closeAd = () => {
+      this.setState({ adSection: false });
+    };
     return (
       <AppContext.Provider
         value={{
           state: this.state,
           openInfo: openInfo,
           closeInfo: closeInfo,
+          openAd: openAd,
+          closeAd: closeAd,
         }}
       >
         {this.props.children}
