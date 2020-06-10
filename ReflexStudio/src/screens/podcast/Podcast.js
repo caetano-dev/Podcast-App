@@ -6,14 +6,9 @@ import Logo from "../../components/Logo.js";
 import PodCard from "../../components/PodCard.js";
 
 import { logoutUser } from "../../api/auth-api";
-import {
-  BackHomeButton,
-  LikeButton,
-  FavButton,
-  DownloadButton,
-} from "../../components/Icons/Icons";
-import { Latest, Fav, Archive, Download } from "./components/ContentSwitch";
+import { BackHomeButton } from "../../components/Icons/Icons";
 import PlayerControls from "./components/PlayerControls";
+import { headerSwitch, podSwitch } from "./modules/PodSwitch";
 
 export default Podcast = ({ navigation }) => {
   const [select, setSelect] = useState("A");
@@ -23,83 +18,6 @@ export default Podcast = ({ navigation }) => {
   const [archive, setArchive] = useState(false);
   const [download, setDownload] = useState(false);
   const [controls, setControls] = useState(true);
-
-  const headerSwitch = (selectHeader) => {
-    switch (selectHeader) {
-      default:
-        return <> /Podcast/Reflex/Latest </>;
-      case "Favourites":
-        return <> /Podcast/Reflex/Fav </>;
-      case "Archive":
-        return <> /Podcast/Reflex/Archive </>;
-      case "Downloaded":
-        return <> /Podcast/Reflex/Saved </>;
-    }
-  };
-
-  const podSwitch = (select) => {
-    switch (select) {
-      default:
-        return (
-          <AppContext.Consumer>
-            {(context) => {
-              const ep1 = context.state.episodes.ep1;
-
-              return (
-                ep1 && (
-                  <Latest
-                    layout={2}
-                    epTitle={<>{ep1.title}</>}
-                    desc={<>{ep1.description}</>}
-                    epNum={<>Ep. {ep1.id}</>}
-                    ad={<>{ep1.ads}</>}
-                  />
-                )
-              );
-            }}
-          </AppContext.Consumer>
-        );
-      case "B":
-        return (
-          <Fav
-            layout={4}
-            epTitle={<>Episode Title</>}
-            desc={
-              <>
-                Description: Lorem ipsum dolor sit amet, consectetur … … … ...
-              </>
-            }
-            epNum={<>Ep. 2</>}
-          />
-        );
-      case "C":
-        return (
-          <Archive
-            layout={4}
-            epTitle={<>Episode Title</>}
-            desc={
-              <>
-                Description: Lorem ipsum dolor sit amet, consectetur … … … ...
-              </>
-            }
-            epNum={<>Ep. 3</>}
-          />
-        );
-      case "D":
-        return (
-          <Download
-            layout={4}
-            epTitle={<>Episode Title</>}
-            desc={
-              <>
-                Description: Lorem ipsum dolor sit amet, consectetur … … … ...
-              </>
-            }
-            epNum={<>Ep. 4</>}
-          />
-        );
-    }
-  };
 
   const onLatest = () => (
     setControls(true),
@@ -220,7 +138,9 @@ export default Podcast = ({ navigation }) => {
                     backgroundColor: null,
                   }}
                 >
-                  <PlayerControls src={ep1.src} size={85} margins={20} />
+                  {ep1 && (
+                    <PlayerControls src={ep1.src} size={85} margins={20} />
+                  )}
                 </Layout>
               ) : null}
             </View>

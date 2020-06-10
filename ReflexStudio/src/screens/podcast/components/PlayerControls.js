@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
+import { Audio } from "expo-av";
 
 export default class PlayerControls extends Component {
   constructor(props) {
@@ -14,11 +15,6 @@ export default class PlayerControls extends Component {
   }
 
   async componentDidMount() {
-    console
-      .log
-      //   `Dashboard CDM running // Episode: ${this.props.doc.data.name}`
-      ();
-
     const { isPlaying, volume } = this.state;
 
     try {
