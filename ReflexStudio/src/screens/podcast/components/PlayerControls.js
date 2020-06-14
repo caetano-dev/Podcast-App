@@ -11,12 +11,12 @@ export default class PlayerControls extends Component {
       pauseButtonClicked: false,
       nextTrackClicked: false,
       prevTrackClicked: false,
+      playbackInstance: null,
     };
   }
 
   async componentDidMount() {
     const { isPlaying, volume } = this.state;
-
     try {
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: false,
@@ -27,9 +27,10 @@ export default class PlayerControls extends Component {
         staysActiveInBackground: true,
         playThroughEarpieceAndroid: false,
       });
+
       const playbackInstance = new Audio.Sound();
       const source = {
-        uri: this.props.src && this.props.src,
+        uri: this.props.testUrl,
       };
 
       const status = {
@@ -47,6 +48,52 @@ export default class PlayerControls extends Component {
     }
   }
 
+  onPlaybackStatusUpdate = (status) => {
+    this.setState({
+      isBuffering: status.isBuffering,
+    });
+  };
+
+  handlePlayPause = async () => {
+    const {
+      isPlaying,
+      playbackInstance,
+      stopAvailable,
+      playButton,
+    } = this.state;
+
+    isPlaying
+      ? await playbackInstance.pauseAsync()
+      : await playbackInstance
+          .playAsync()
+          .then(this.setState({ stopAvailable: true }));
+
+    this.setState({
+      isPlaying: !isPlaying,
+    });
+  };
+
+  handleStop = async () => {
+    const {
+      isPlaying,
+      stopAvailable,
+      playbackInstance,
+      playButton,
+    } = this.state;
+
+    try {
+      await playbackInstance.unloadAsync();
+      this.setState({
+        isPlaying: false,
+        stopAvailable: false,
+        playButton: !playButton,
+      });
+      this.componentDidMount();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     const {
       playButton,
@@ -55,46 +102,10 @@ export default class PlayerControls extends Component {
       prevTrackClicked,
       isPlaying,
       stopAvailable,
+      playback,
     } = this.state;
 
     const { size, margins } = this.props;
-
-    const onPlaybackStatusUpdate = (status) => {
-      this.setState({
-        isBuffering: status.isBuffering,
-      });
-    };
-
-    const handlePlayPause = async () => {
-      const { isPlaying, playbackInstance, stopAvailable } = this.state;
-      console.log(
-        `handlePlayPause. isPlaying = ${isPlaying} playbackInstance = ${playbackInstance}`
-      );
-      isPlaying
-        ? await playbackInstance.pauseAsync()
-        : await playbackInstance
-            .playAsync()
-            .then(this.setState({ stopAvailable: true }));
-
-      this.setState({
-        isPlaying: !isPlaying,
-      });
-    };
-
-    const handleStop = async () => {
-      const { isPlaying, stopAvailable, playbackInstance } = this.state;
-      console.log(
-        `handleStop. isPlaying = ${isPlaying}  playbackInstance = ${playbackInstance}`
-      );
-      try {
-        await playbackInstance.unloadAsync();
-        this.setState({ isPlaying: false, stopAvailable: false });
-        this.componentDidMount();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     return (
       <Layout
         style={{
@@ -106,7 +117,7 @@ export default class PlayerControls extends Component {
           alignItems: "center",
         }}
       >
-        <View>
+        {/* <View>
           {prevTrackClicked ? (
             <Icon
               name="arrow-left"
@@ -124,24 +135,28 @@ export default class PlayerControls extends Component {
               }
             />
           )}
-        </View>
+        </View> */}
         {playButton ? (
           <View>
             <Icon
               name="stop-circle"
-              onPress={() => this.setState({ playButton: !playButton })}
+              onPress={() => {
+                this.handleStop();
+              }}
               style={{ height: size, width: size }}
             />
           </View>
         ) : null}
+
         <View>
           {playButton ? (
             pauseButtonClicked ? (
               <Icon
                 name="play-circle"
-                onPress={() =>
-                  this.setState({ pauseButtonClicked: !pauseButtonClicked })
-                }
+                onPress={() => {
+                  this.handlePlayPause(),
+                    this.setState({ pauseButtonClicked: !pauseButtonClicked });
+                }}
                 style={{
                   height: size,
                   width: size,
@@ -150,9 +165,10 @@ export default class PlayerControls extends Component {
             ) : (
               <Icon
                 name="pause-circle"
-                onPress={() =>
-                  this.setState({ pauseButtonClicked: !pauseButtonClicked })
-                }
+                onPress={() => {
+                  this.handlePlayPause(),
+                    this.setState({ pauseButtonClicked: !pauseButtonClicked });
+                }}
                 style={{
                   height: size,
                   width: size,
@@ -162,7 +178,10 @@ export default class PlayerControls extends Component {
           ) : (
             <Icon
               name="play-circle-outline"
-              onPress={() => this.setState({ playButton: !playButton })}
+              onPress={() => {
+                this.handlePlayPause(),
+                  this.setState({ playButton: !playButton });
+              }}
               style={{
                 height: size,
                 width: size,
@@ -170,7 +189,7 @@ export default class PlayerControls extends Component {
             />
           )}
         </View>
-        <View>
+        {/* <View>
           {nextTrackClicked ? (
             <Icon
               name="arrow-right"
@@ -188,7 +207,7 @@ export default class PlayerControls extends Component {
               }
             />
           )}
-        </View>
+        </View> */}
       </Layout>
     );
   }

@@ -66,9 +66,9 @@ export default Podcast = ({ navigation }) => {
         return (
           ep1 && (
             <View style={{ flex: 1, backgroundColor: "#A0A1B5" }}>
-              <Layout style={styles.goback}>
+              {/* <Layout style={styles.goback}>
                 <BackHomeButton navigation={navigation} />
-              </Layout>
+              </Layout> */}
               <Layout style={styles.logo}>
                 <Logo height={"100%"} />
               </Layout>
@@ -139,7 +139,14 @@ export default Podcast = ({ navigation }) => {
                   }}
                 >
                   {ep1 && (
-                    <PlayerControls src={ep1.src} size={85} margins={20} />
+                    <PlayerControls
+                      src={ep1.url}
+                      testUrl={
+                        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+                      }
+                      size={85}
+                      margins={20}
+                    />
                   )}
                 </Layout>
               ) : null}
