@@ -65,7 +65,9 @@ export default Podcast = ({ navigation }) => {
 
         return (
           ep1 && (
-            <View style={{ flex: 1, backgroundColor: "#A0A1B5" }}>
+            <View
+              style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}
+            >
               {/* <Layout style={styles.goback}>
                 <BackHomeButton navigation={navigation} />
               </Layout> */}

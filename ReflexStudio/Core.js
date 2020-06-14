@@ -65,7 +65,7 @@ const Core = () => {
       <Stack.Screen
         name="Podcast"
         component={Podcast}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: false }}
       />
     </Stack.Navigator>
   );

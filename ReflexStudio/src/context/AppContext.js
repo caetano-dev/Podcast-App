@@ -21,8 +21,6 @@ export default class AppProvider extends Component {
   }
 
   async componentDidMount() {
-    console.log("network id => ", nid.reflex);
-
     try {
       //get
       await networkRef.get().then((doc) => {
@@ -30,6 +28,8 @@ export default class AppProvider extends Component {
           const reflexPodCatalogue = doc.data();
 
           return this.setState({ episodes: reflexPodCatalogue });
+          console.log("network id => ", nid.reflex);
+          console.log("Document => ", this.state.episodes.ep1.title);
         } else {
           console.log("No such document!");
         }
@@ -37,7 +37,6 @@ export default class AppProvider extends Component {
     } catch (error) {
       console.log("err", error);
     }
-    console.log("Document => ", this.state.episodes.ep1.title);
   }
 
   render() {

@@ -86,7 +86,8 @@ export default class PlayerControls extends Component {
       this.setState({
         isPlaying: false,
         stopAvailable: false,
-        playButton: !playButton,
+        playButton: false,
+        pauseButtonClicked: false,
       });
       this.componentDidMount();
     } catch (error) {
@@ -103,21 +104,23 @@ export default class PlayerControls extends Component {
       isPlaying,
       stopAvailable,
       playback,
+      playbackInstance,
     } = this.state;
 
     const { size, margins } = this.props;
     return (
-      <Layout
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          backgroundColor: null,
-          margin: margins,
-          alignItems: "center",
-        }}
-      >
-        {/* <View>
+      playbackInstance && (
+        <Layout
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            backgroundColor: null,
+            margin: margins,
+            alignItems: "center",
+          }}
+        >
+          {/* <View>
           {prevTrackClicked ? (
             <Icon
               name="arrow-left"
@@ -136,60 +139,64 @@ export default class PlayerControls extends Component {
             />
           )}
         </View> */}
-        {playButton ? (
-          <View>
-            <Icon
-              name="stop-circle"
-              onPress={() => {
-                this.handleStop();
-              }}
-              style={{ height: size, width: size }}
-            />
-          </View>
-        ) : null}
-
-        <View>
           {playButton ? (
-            pauseButtonClicked ? (
+            <View>
               <Icon
-                name="play-circle"
+                name="stop-circle"
                 onPress={() => {
-                  this.handlePlayPause(),
-                    this.setState({ pauseButtonClicked: !pauseButtonClicked });
+                  this.handleStop();
                 }}
-                style={{
-                  height: size,
-                  width: size,
-                }}
+                style={{ height: size, width: size }}
               />
+            </View>
+          ) : null}
+
+          <View>
+            {playButton ? (
+              pauseButtonClicked ? (
+                <Icon
+                  name="play-circle"
+                  onPress={() => {
+                    this.handlePlayPause(),
+                      this.setState({
+                        pauseButtonClicked: !pauseButtonClicked,
+                      });
+                  }}
+                  style={{
+                    height: size,
+                    width: size,
+                  }}
+                />
+              ) : (
+                <Icon
+                  name="pause-circle"
+                  onPress={() => {
+                    this.handlePlayPause(),
+                      this.setState({
+                        pauseButtonClicked: !pauseButtonClicked,
+                      });
+                  }}
+                  style={{
+                    height: size,
+                    width: size,
+                  }}
+                />
+              )
             ) : (
               <Icon
-                name="pause-circle"
+                name="play-circle-outline"
                 onPress={() => {
                   this.handlePlayPause(),
-                    this.setState({ pauseButtonClicked: !pauseButtonClicked });
+                    this.setState({ playButton: !playButton });
                 }}
                 style={{
                   height: size,
                   width: size,
                 }}
               />
-            )
-          ) : (
-            <Icon
-              name="play-circle-outline"
-              onPress={() => {
-                this.handlePlayPause(),
-                  this.setState({ playButton: !playButton });
-              }}
-              style={{
-                height: size,
-                width: size,
-              }}
-            />
-          )}
-        </View>
-        {/* <View>
+            )}
+          </View>
+          {/* <View>
           {nextTrackClicked ? (
             <Icon
               name="arrow-right"
@@ -208,7 +215,8 @@ export default class PlayerControls extends Component {
             />
           )}
         </View> */}
-      </Layout>
+        </Layout>
+      )
     );
   }
 }
