@@ -5,7 +5,7 @@ import { Layout, Text, Icon } from "@ui-kitten/components";
 import {
   LikeButton,
   FavButton,
-  DownloadButton
+  DownloadButton,
 } from "../../../components/Icons/Icons";
 import PodCard from "../../../components/PodCard.js";
 import PlayerControls from "./PlayerControls";
@@ -15,7 +15,7 @@ export class Latest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      audio: false
+      audio: false,
     };
   }
 
@@ -27,7 +27,7 @@ export class Latest extends Component {
       <Layout
         style={{
           flex: layout,
-          backgroundColor: null
+          backgroundColor: null,
         }}
       >
         <LatestItem
@@ -49,7 +49,7 @@ export const Fav = ({ layout, epTitle, desc, epNum }) => {
     <Layout
       style={{
         flex: layout,
-        backgroundColor: null
+        backgroundColor: null,
       }}
     >
       <PodCard
@@ -63,7 +63,7 @@ export const Fav = ({ layout, epTitle, desc, epNum }) => {
               flex: 1,
               flexDirection: "column",
               backgroundColor: null,
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <ScrollView>
@@ -81,7 +81,7 @@ export const Archive = ({ layout, epTitle, desc, epNum }) => {
     <Layout
       style={{
         flex: layout,
-        backgroundColor: null
+        backgroundColor: null,
       }}
     >
       <PodCard
@@ -95,7 +95,7 @@ export const Archive = ({ layout, epTitle, desc, epNum }) => {
               flex: 1,
               flexDirection: "column",
               backgroundColor: null,
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <ScrollView>
@@ -113,7 +113,7 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
     <Layout
       style={{
         flex: layout,
-        backgroundColor: null
+        backgroundColor: null,
       }}
     >
       <PodCard
@@ -127,7 +127,7 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
               flex: 1,
               flexDirection: "column",
               backgroundColor: null,
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <ScrollView>

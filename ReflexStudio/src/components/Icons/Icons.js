@@ -291,16 +291,17 @@ export const AdButton = () => {
       {(context) => {
         return context.state.adSection ? (
           <Icon
-            name="music"
+            name="bell"
             fill="#E1940F"
-            style={{ marginLeft: 10, height: 40, width: 40 }}
             onPress={() => context.closeAd()}
+            style={{ marginLeft: 10, height: 30, width: 30 }}
           />
         ) : (
           <Icon
-            name="music-outline"
+            name="bell-off"
+            fill="gray"
             onPress={() => context.openAd()}
-            style={{ marginLeft: 10, height: 40, width: 40 }}
+            style={{ marginLeft: 10, height: 30, width: 30 }}
           />
         );
       }}

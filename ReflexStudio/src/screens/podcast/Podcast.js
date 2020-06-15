@@ -143,6 +143,21 @@ export default Podcast = ({ navigation }) => {
                   {ep1 && (
                     <PlayerControls
                       src={ep1.url}
+                      isPlaying={context.state.isPlaying}
+                      playerActive={context.playerActive}
+                      playerInactive={context.playerInactive}
+                      flipIsPlaying={context.flipIsPlaying}
+                      volume={context.state.volume}
+                      setUpAudio={context.setUpAudio}
+                      onPlaybackStatusUpdate={context.onPlaybackStatusUpdate}
+                      handlePlayPause={context.handlePlayPause}
+                      handleStop={context.handleStop}
+                      togglePauseButton={context.togglePauseButton}
+                      playButton={context.state.player.playButton}
+                      pauseButtonClicked={
+                        context.state.player.pauseButtonClicked
+                      }
+                      playbackInstance={context.state.player.playbackInstance}
                       testUrl={
                         "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
                       }

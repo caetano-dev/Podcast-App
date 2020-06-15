@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { Layout, Text, Icon, Button } from "@ui-kitten/components";
 import PlayerControls from "./PlayerControls";
 
@@ -63,14 +63,23 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
 
                 <Layout style={{ flex: 2 }}>
                   {context.state.infoSection ? (
-                    <View style={{ marginHorizontal: 5 }}>
-                      <Text category="h6" style={{ color: "black" }}>
-                        {epTitle}
-                      </Text>
-                      <Text category="s2" style={{ color: "black" }}>
-                        {desc}
-                      </Text>
-                    </View>
+                    <ScrollView>
+                      <View style={{ marginHorizontal: 5 }}>
+                        <Text category="h6" style={{ color: "black" }}>
+                          {epTitle}
+                        </Text>
+                        <Text category="s2" style={{ color: "black" }}>
+                          {desc}
+                          {desc}
+                          {desc}
+                          {desc}
+                          {desc}
+                          {desc}
+                          {desc}
+                          {desc}
+                        </Text>
+                      </View>
+                    </ScrollView>
                   ) : (
                     <View style={{ marginHorizontal: 5 }}>
                       <Text category="h4" style={{ color: "black" }}>
@@ -90,7 +99,11 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
                 >
                   <View style={{ flex: 2, flexDirection: "row" }}>
                     <View
-                      style={{ alignItems: "center", justifyContent: "center" }}
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginLeft: 10,
+                      }}
                     >
                       {context.state.adSection ? (
                         <>
@@ -105,7 +118,11 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
 
                   <Text
                     category="h4"
-                    style={{ fontWeight: "bold", color: "black" }}
+                    style={{
+                      fontWeight: "bold",
+                      color: "black",
+                      marginRight: 10,
+                    }}
                   >
                     {epNum}
                   </Text>
@@ -178,9 +195,7 @@ export const FavItem = ({ epTitle, desc, epNum }) => {
               <View>
                 <DownloadButton />
               </View>
-              <View>
-                <PlayerControls size={40} />
-              </View>
+              <View>{/* <PlayerControls size={40} /> */}</View>
             </View>
 
             <View style={{ flex: 1 }}>
@@ -254,9 +269,7 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
               <View>
                 <DownloadButton />
               </View>
-              <View>
-                <PlayerControls size={40} />
-              </View>
+              <View>{/* <PlayerControls size={40} /> */}</View>
             </View>
 
             <View style={{ flex: 1 }}>
@@ -330,9 +343,7 @@ export const DownloadItem = ({ epTitle, desc, epNum }) => {
               <View>
                 <DownloadButton downloaded />
               </View>
-              <View>
-                <PlayerControls size={40} />
-              </View>
+              <View>{/* <PlayerControls size={40} /> */}</View>
             </View>
 
             <View style={{ flex: 1 }}>
