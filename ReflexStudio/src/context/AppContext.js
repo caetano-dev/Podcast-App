@@ -19,6 +19,7 @@ export default class AppProvider extends Component {
       infoSection: false,
       adSection: false,
       player: {
+        demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
         playbackInstance: null,
         isPlaying: false,
         volume: 1.0,
@@ -63,7 +64,12 @@ export default class AppProvider extends Component {
   }
 
   render() {
-    const { isPlaying, pauseButtonClicked } = this.state.player;
+    const {
+      isPlaying,
+      pauseButtonClicked,
+      playbackInstance,
+    } = this.state.player;
+    console.log("is there playbackInstance ?", Boolean(playbackInstance));
     const openInfo = () => {
       this.setState({ infoSection: true });
     };
@@ -94,7 +100,8 @@ export default class AppProvider extends Component {
     };
 
     const setUpAudio = async (src) => {
-      const { player } = this.state.player;
+      const { player, playbackInstance } = this.state.player;
+
       try {
         const playbackInstance = new Audio.Sound();
         const source = {
@@ -124,49 +131,63 @@ export default class AppProvider extends Component {
         isBuffering: status.isBuffering,
       });
     };
-
-    const handlePlayPause = async () => {
+    const handlePlay = async () => {
       const { playbackInstance, isPlaying } = this.state.player;
-      isPlaying
-        ? await playbackInstance.pauseAsync().then(
-            this.setState((prevState) => ({
-              player: {
-                ...prevState.player,
-                pauseButtonClicked: !pauseButtonClicked,
-              },
-            }))
-          )
-        : await playbackInstance.playAsync().then(
-            this.setState((prevState) => ({
-              stopAvailable: true,
-              player: {
-                ...prevState.player,
-                isPlaying: true,
-                // playButton: true,
-              },
-            }))
-          );
+
+      await playbackInstance.playAsync().then(
+        this.setState((prevState) => ({
+          stopAvailable: true,
+          player: {
+            ...prevState.player,
+            isPlaying: true,
+            pauseButtonClicked: !pauseButtonClicked,
+
+            // playButton: true,
+          },
+        })),
+        console.log("playbackInstance @ playpause", playbackInstance),
+        console.log("isPlaying @ playpause", isPlaying)
+      );
+    };
+    const handlePause = async () => {
+      const { playbackInstance, isPlaying } = this.state.player;
+      await playbackInstance.pauseAsync().then(
+        this.setState((prevState) => ({
+          player: {
+            ...prevState.player,
+            pauseButtonClicked: !pauseButtonClicked,
+          },
+        }))
+      );
     };
 
+    // const handlePlayPause = async () => {
+    //   const { playbackInstance, isPlaying } = this.state.player;
+    //   console.log("isPlaying ?", Boolean(isPlaying));
+
+    //   isPlaying
+    //     ?
+    //     :
+    // };
+
     const handleStop = async () => {
-      const { playbackInstance } = this.state.player;
+      const { playbackInstance, demo } = this.state.player;
 
       try {
         await playbackInstance.unloadAsync();
-        playerInactive();
 
         this.setState((prevState) => ({
           stopAvailable: false,
           player: {
             ...prevState.player,
             playButton: false,
+            isPlaying: false,
             pauseButtonClicked: false,
           },
         }));
-
-        setUpAudio();
+        setUpAudio(demo);
       } catch (error) {
-        console.log(error);
+        console.log("Audio Setup", error);
       }
     };
 
@@ -183,7 +204,8 @@ export default class AppProvider extends Component {
           flipIsPlaying: flipIsPlaying,
           setUpAudio: setUpAudio,
           onPlaybackStatusUpdate: onPlaybackStatusUpdate,
-          handlePlayPause: handlePlayPause,
+          handlePlay: handlePlay,
+          handlePause: handlePause,
           handleStop: handleStop,
           togglePauseButton: togglePauseButton,
         }}

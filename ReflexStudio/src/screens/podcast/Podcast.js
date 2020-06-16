@@ -5,8 +5,8 @@ import { AppContext } from "../../context/AppContext";
 import Logo from "../../components/Logo.js";
 import PodCard from "../../components/PodCard.js";
 
-import { logoutUser } from "../../api/auth-api";
-import { BackHomeButton } from "../../components/Icons/Icons";
+// import { logoutUser } from "../../api/auth-api";
+// import { BackHomeButton } from "../../components/Icons/Icons";
 import PlayerControls from "./components/PlayerControls";
 import { headerSwitch, podSwitch } from "./modules/PodSwitch";
 
@@ -157,10 +157,8 @@ export default Podcast = ({ navigation }) => {
                       pauseButtonClicked={
                         context.state.player.pauseButtonClicked
                       }
+                      demo={context.state.player.demo}
                       playbackInstance={context.state.player.playbackInstance}
-                      testUrl={
-                        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
-                      }
                       size={85}
                       margins={20}
                     />

@@ -12,14 +12,16 @@ export default PlayerControls = ({
   onPlaybackStatusUpdate,
   handlePlayPause,
   handleStop,
+  playbackInstance,
   togglePauseButton,
   flipIsPlaying,
+  demo,
   pauseButtonClicked,
-  testUrl,
 }) => {
   useEffect(() => {
-    pauseButtonClicked ? null : setUpAudio(testUrl);
-  }, [pauseButtonClicked]);
+    pauseButtonClicked ? null : setUpAudio(demo);
+    playbackInstance ? null : setUpAudio(demo);
+  }, []);
 
   return (
     <AppContext.Consumer>
@@ -30,7 +32,11 @@ export default PlayerControls = ({
           pauseButtonClicked,
           playbackInstance,
         } = context.state.player;
-        console.log("isPlaying =>", isPlaying);
+        const { handlePlay, handlePause } = context;
+        console.log(
+          "playbackInstance from playercontrols",
+          Boolean(playbackInstance)
+        );
         return (
           playbackInstance && (
             <Layout
@@ -78,9 +84,9 @@ export default PlayerControls = ({
                 {isPlaying ? (
                   pauseButtonClicked ? (
                     <Icon
-                      name="play-circle"
+                      name="pause-circle"
                       onPress={() => {
-                        handlePlayPause();
+                        handlePause();
                       }}
                       style={{
                         height: size,
@@ -89,9 +95,9 @@ export default PlayerControls = ({
                     />
                   ) : (
                     <Icon
-                      name="pause-circle"
+                      name="play-circle"
                       onPress={() => {
-                        handlePlayPause();
+                        handlePlay();
                       }}
                       style={{
                         height: size,
@@ -103,7 +109,7 @@ export default PlayerControls = ({
                   <Icon
                     name="play-circle-outline"
                     onPress={() => {
-                      handlePlayPause();
+                      handlePlay();
                     }}
                     style={{
                       height: size,
