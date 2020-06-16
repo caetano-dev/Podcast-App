@@ -37,13 +37,15 @@ export default class AppProvider extends Component {
       //get
       await networkRef.get().then((doc) => {
         if (doc.exists) {
-          const reflexPodCatalogue = doc.data();
+          const PodCatalogue = doc.data();
 
-          return (
-            this.setState({ episodes: reflexPodCatalogue }),
-            console.log("network id => ", nid.reflex),
-            console.log("Document => ", this.state.episodes.ep1.title)
-          );
+          return this.setState({ episodes: PodCatalogue });
+          // console.log(
+          //   "PodCatalogue => ",
+          //   PodCatalogue.reflex.map((i) => {
+          //     return i.id;
+          //   })
+          // )
         } else {
           console.log("No such document!");
         }
