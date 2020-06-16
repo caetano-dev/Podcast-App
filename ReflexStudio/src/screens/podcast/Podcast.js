@@ -105,18 +105,18 @@ export default Podcast = ({ navigation }) => {
                           Latest
                         </Button>
                         <Button
-                          status={fav ? null : "basic"}
-                          appearance="ghost"
-                          onPress={() => onFav()}
-                        >
-                          Favourites
-                        </Button>
-                        <Button
                           status={archive ? null : "basic"}
                           appearance="ghost"
                           onPress={() => onArchive()}
                         >
                           Archive
+                        </Button>
+                        <Button
+                          status={fav ? null : "basic"}
+                          appearance="ghost"
+                          onPress={() => onFav()}
+                        >
+                          Favourites
                         </Button>
                         <Button
                           status={download ? null : "basic"}

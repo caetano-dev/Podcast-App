@@ -70,13 +70,6 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
                         </Text>
                         <Text category="s2" style={{ color: "black" }}>
                           {desc}
-                          {desc}
-                          {desc}
-                          {desc}
-                          {desc}
-                          {desc}
-                          {desc}
-                          {desc}
                         </Text>
                       </View>
                     </ScrollView>
