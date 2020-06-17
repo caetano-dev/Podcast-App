@@ -38,14 +38,17 @@ export default class AppProvider extends Component {
       await networkRef.get().then((doc) => {
         if (doc.exists) {
           const PodCatalogue = doc.data();
-
-          return this.setState({ episodes: PodCatalogue });
-          // console.log(
-          //   "PodCatalogue => ",
-          //   PodCatalogue.reflex.map((i) => {
-          //     return i.id;
-          //   })
-          // )
+          // const res = Math.max.apply(Math,array.map(function(o){return o.y;}))
+          // const obj = array.find(function(o){ return o.y == res; })
+          return (
+            this.setState({ episodes: PodCatalogue }),
+            console.log(
+              "latest episode => ",
+              PodCatalogue.reflex.map((i) => {
+                return i.id;
+              })
+            )
+          );
         } else {
           console.log("No such document!");
         }
@@ -114,7 +117,7 @@ export default class AppProvider extends Component {
           shouldPlay: this.state.isPlaying,
           volume: this.state.volume,
         };
-        //TODO - make the audio player work regardless of position in app
+
         playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
         await playbackInstance.loadAsync(source, status, false);
         this.setState((prevState) => ({

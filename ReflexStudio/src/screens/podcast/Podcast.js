@@ -62,6 +62,11 @@ export default Podcast = ({ navigation }) => {
     <AppContext.Consumer>
       {(context) => {
         const ep1 = context.state.episodes.ep1;
+        // TODO change from ep1 to reflex & get latest episode object
+        console.log(
+          "context.state.episodes.ep1",
+          context.state.episodes.reflex
+        );
 
         return (
           ep1 && (
