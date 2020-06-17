@@ -34,16 +34,17 @@ export class Latest extends Component {
         <AppContext.Consumer>
           {(context) => {
             const catalog = context.state.episodes.reflex;
+
             let latestEpId = Math.max.apply(
               Math,
               catalog &&
-                catalog.map(function (o) {
+                catalog.map((o) => {
                   return o.id;
                 })
             );
             let latestEpisode =
               catalog &&
-              catalog.find(function (o) {
+              catalog.find((o) => {
                 return o.id == latestEpId;
               });
 

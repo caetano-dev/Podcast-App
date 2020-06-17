@@ -66,13 +66,13 @@ export default Podcast = ({ navigation }) => {
         let latestEpId = Math.max.apply(
           Math,
           catalog &&
-            catalog.map(function (o) {
+            catalog.map((o) => {
               return o.id;
             })
         );
         let latestEpisode =
           catalog &&
-          catalog.find(function (o) {
+          catalog.find((o) => {
             return o.id == latestEpId;
           });
 
