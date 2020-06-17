@@ -114,7 +114,6 @@ export default class AppProvider extends Component {
           shouldPlay: this.state.isPlaying,
           volume: this.state.volume,
         };
-        //TODO - make the audio player work regardless of position in app
         playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate);
         await playbackInstance.loadAsync(source, status, false);
         this.setState((prevState) => ({
@@ -146,9 +145,9 @@ export default class AppProvider extends Component {
 
             // playButton: true,
           },
-        })),
-        console.log("playbackInstance @ playpause", playbackInstance),
-        console.log("isPlaying @ playpause", isPlaying)
+        }))
+        // console.log("playbackInstance @ playpause", playbackInstance),
+        // console.log("isPlaying @ playpause", isPlaying)
       );
     };
     const handlePause = async () => {

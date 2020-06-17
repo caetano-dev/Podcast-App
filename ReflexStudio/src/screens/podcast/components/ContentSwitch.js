@@ -109,25 +109,14 @@ export const Archive = ({ layout }) => {
 
                   return sortedCatalog.map((v, i) => {
                     return (
-                      <>
-                        <ArchiveItem
-                          key={i}
-                          epTitle={v.title}
-                          desc={v.description}
-                          epNum={v.id}
-                        />
-                      </>
+                      <ArchiveItem
+                        key={i}
+                        epTitle={v.title}
+                        desc={v.description}
+                        epNum={v.id}
+                      />
                     );
                   });
-                  // return (
-                  //   <>
-                  //     <ArchiveItem
-                  //       epTitle={epTitle}
-                  //       desc={desc}
-                  //       epNum={epNum}
-                  //     />
-                  //   </>
-                  // );
                 }}
               </AppContext.Consumer>
             </ScrollView>
