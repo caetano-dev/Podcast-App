@@ -10,6 +10,7 @@ import {
 import PodCard from "../../../components/PodCard.js";
 import PlayerControls from "./PlayerControls";
 import { DownloadItem, ArchiveItem, FavItem, LatestItem } from "./ContentItem";
+import { AppContext } from "../../../context/AppContext";
 
 export class Latest extends Component {
   constructor(props) {
@@ -76,7 +77,7 @@ export const Fav = ({ layout, epTitle, desc, epNum }) => {
   );
 };
 
-export const Archive = ({ layout, epTitle, desc, epNum }) => {
+export const Archive = ({ layout }) => {
   return (
     <Layout
       style={{
@@ -99,7 +100,36 @@ export const Archive = ({ layout, epTitle, desc, epNum }) => {
             }}
           >
             <ScrollView>
-              <ArchiveItem epTitle={epTitle} desc={desc} epNum={epNum} />
+              <AppContext.Consumer>
+                {(context) => {
+                  const catalog = context.state.episodes.reflex;
+                  const sortedCatalog = catalog.sort((a, b) =>
+                    a.id < b.id ? 1 : -1
+                  );
+
+                  return sortedCatalog.map((v, i) => {
+                    return (
+                      <>
+                        <ArchiveItem
+                          key={i}
+                          epTitle={v.title}
+                          desc={v.description}
+                          epNum={v.id}
+                        />
+                      </>
+                    );
+                  });
+                  // return (
+                  //   <>
+                  //     <ArchiveItem
+                  //       epTitle={epTitle}
+                  //       desc={desc}
+                  //       epNum={epNum}
+                  //     />
+                  //   </>
+                  // );
+                }}
+              </AppContext.Consumer>
             </ScrollView>
           </Layout>
         }

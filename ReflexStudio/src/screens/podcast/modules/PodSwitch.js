@@ -36,6 +36,8 @@ export const podSwitch = (select) => {
           }}
         </AppContext.Consumer>
       );
+    case "C":
+      return <Archive layout={4} />;
     case "B":
       return (
         <Fav
@@ -47,17 +49,7 @@ export const podSwitch = (select) => {
           epNum={<>Ep. 2</>}
         />
       );
-    case "C":
-      return (
-        <Archive
-          layout={4}
-          epTitle={<>Episode Title</>}
-          desc={
-            <>Description: Lorem ipsum dolor sit amet, consectetur … … … ...</>
-          }
-          epNum={<>Ep. 3</>}
-        />
-      );
+
     case "D":
       return (
         <Download
