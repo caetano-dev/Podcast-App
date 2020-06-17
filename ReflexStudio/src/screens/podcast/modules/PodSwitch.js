@@ -21,18 +21,8 @@ export const podSwitch = (select) => {
       return (
         <AppContext.Consumer>
           {(context) => {
-            const ep1 = context.state.episodes.ep1;
-            return (
-              ep1 && (
-                <Latest
-                  layout={2}
-                  epTitle={<>{ep1.title}</>}
-                  desc={<>{ep1.description}</>}
-                  epNum={<>Ep. {ep1.id}</>}
-                  ad={<>{ep1.ads}</>}
-                />
-              )
-            );
+            const catalog = context.state.episodes.reflex;
+            return catalog && <Latest layout={2} />;
           }}
         </AppContext.Consumer>
       );

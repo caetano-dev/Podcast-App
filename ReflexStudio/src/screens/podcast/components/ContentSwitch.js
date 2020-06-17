@@ -31,13 +31,35 @@ export class Latest extends Component {
           backgroundColor: null,
         }}
       >
-        <LatestItem
-          audio={audio}
-          epTitle={epTitle}
-          desc={desc}
-          epNum={epNum}
-          ad={ad}
-        />
+        <AppContext.Consumer>
+          {(context) => {
+            const catalog = context.state.episodes.reflex;
+            let latestEpId = Math.max.apply(
+              Math,
+              catalog &&
+                catalog.map(function (o) {
+                  return o.id;
+                })
+            );
+            let latestEpisode =
+              catalog &&
+              catalog.find(function (o) {
+                return o.id == latestEpId;
+              });
+
+            return (
+              catalog && (
+                <LatestItem
+                  audio={audio}
+                  epTitle={latestEpisode.title}
+                  desc={latestEpisode.description}
+                  epNum={`Ep. ${latestEpisode.id}`}
+                  ad={latestEpisode.ads}
+                />
+              )
+            );
+          }}
+        </AppContext.Consumer>
       </Layout>
     );
   }
@@ -107,16 +129,19 @@ export const Archive = ({ layout }) => {
                     a.id < b.id ? 1 : -1
                   );
 
-                  return sortedCatalog.map((v, i) => {
-                    return (
-                      <ArchiveItem
-                        key={i}
-                        epTitle={v.title}
-                        desc={v.description}
-                        epNum={v.id}
-                      />
-                    );
-                  });
+                  return (
+                    catalog &&
+                    sortedCatalog.map((v, i) => {
+                      return (
+                        <ArchiveItem
+                          key={i}
+                          epTitle={v.title}
+                          desc={v.description}
+                          epNum={v.id}
+                        />
+                      );
+                    })
+                  );
                 }}
               </AppContext.Consumer>
             </ScrollView>
