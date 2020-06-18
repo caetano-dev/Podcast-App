@@ -21,21 +21,13 @@ export const podSwitch = (select) => {
       return (
         <AppContext.Consumer>
           {(context) => {
-            const ep1 = context.state.episodes.ep1;
-            return (
-              ep1 && (
-                <Latest
-                  layout={2}
-                  epTitle={<>{ep1.title}</>}
-                  desc={<>{ep1.description}</>}
-                  epNum={<>Ep. {ep1.id}</>}
-                  ad={<>{ep1.ads}</>}
-                />
-              )
-            );
+            const catalog = context.state.episodes.reflex;
+            return catalog && <Latest layout={2} />;
           }}
         </AppContext.Consumer>
       );
+    case "C":
+      return <Archive layout={4} />;
     case "B":
       return (
         <Fav
@@ -47,17 +39,7 @@ export const podSwitch = (select) => {
           epNum={<>Ep. 2</>}
         />
       );
-    case "C":
-      return (
-        <Archive
-          layout={4}
-          epTitle={<>Episode Title</>}
-          desc={
-            <>Description: Lorem ipsum dolor sit amet, consectetur … … … ...</>
-          }
-          epNum={<>Ep. 3</>}
-        />
-      );
+
     case "D":
       return (
         <Download

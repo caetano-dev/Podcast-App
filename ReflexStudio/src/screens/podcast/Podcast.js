@@ -61,10 +61,23 @@ export default Podcast = ({ navigation }) => {
   return (
     <AppContext.Consumer>
       {(context) => {
-        const ep1 = context.state.episodes.ep1;
+        const catalog = context.state.episodes.reflex;
+
+        let latestEpId = Math.max.apply(
+          Math,
+          catalog &&
+            catalog.map((o) => {
+              return o.id;
+            })
+        );
+        let latestEpisode =
+          catalog &&
+          catalog.find((o) => {
+            return o.id == latestEpId;
+          });
 
         return (
-          ep1 && (
+          catalog && (
             <View
               style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}
             >
@@ -140,9 +153,9 @@ export default Podcast = ({ navigation }) => {
                     backgroundColor: null,
                   }}
                 >
-                  {ep1 && (
+                  {catalog && (
                     <PlayerControls
-                      src={ep1.url}
+                      src={latestEpisode.url}
                       isPlaying={context.state.isPlaying}
                       playerActive={context.playerActive}
                       playerInactive={context.playerInactive}

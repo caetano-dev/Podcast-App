@@ -17,10 +17,11 @@ export default PlayerControls = ({
   flipIsPlaying,
   demo,
   pauseButtonClicked,
+  src,
 }) => {
   useEffect(() => {
-    pauseButtonClicked ? null : setUpAudio(demo);
-    playbackInstance ? null : setUpAudio(demo);
+    pauseButtonClicked ? null : setUpAudio(src);
+    playbackInstance ? null : setUpAudio(src);
   }, []);
 
   return (
