@@ -43,7 +43,7 @@ import {
 } from "./src/auth/auth-api";
 import Core from "./Core";
 
-import { AppProvider } from "./src/context";
+import { AppProvider, EngagementProvider } from "./src/context";
 import { decode, encode } from "base-64";
 
 if (!global.btoa) {
@@ -58,12 +58,14 @@ class App extends React.Component {
   render() {
     return (
       <AppProvider>
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider mapping={mapping} theme={theme}>
-          <NavigationContainer>
-            <Core />
-          </NavigationContainer>
-        </ApplicationProvider>
+        <EngagementProvider>
+          <IconRegistry icons={EvaIconsPack} />
+          <ApplicationProvider mapping={mapping} theme={theme}>
+            <NavigationContainer>
+              <Core />
+            </NavigationContainer>
+          </ApplicationProvider>
+        </EngagementProvider>
       </AppProvider>
     );
   }

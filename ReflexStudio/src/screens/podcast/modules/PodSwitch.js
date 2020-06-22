@@ -18,14 +18,7 @@ export const headerSwitch = (selectHeader) => {
 export const podSwitch = (select) => {
   switch (select) {
     default:
-      return (
-        <AppContext.Consumer>
-          {(context) => {
-            const catalog = context.state.episodes.reflex;
-            return catalog && <Latest layout={2} />;
-          }}
-        </AppContext.Consumer>
-      );
+      return <Latest layout={2} />;
     case "C":
       return <Archive layout={4} />;
     case "B":

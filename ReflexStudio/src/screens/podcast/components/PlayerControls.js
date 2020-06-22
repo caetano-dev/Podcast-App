@@ -20,8 +20,8 @@ export default PlayerControls = ({
   src,
 }) => {
   useEffect(() => {
-    pauseButtonClicked ? null : setUpAudio(src);
-    playbackInstance ? null : setUpAudio(src);
+    pauseButtonClicked ? null : setUpAudio(demo);
+    playbackInstance ? null : setUpAudio(demo);
   }, []);
 
   return (

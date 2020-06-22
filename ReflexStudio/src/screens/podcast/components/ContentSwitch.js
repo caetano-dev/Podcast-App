@@ -56,6 +56,7 @@ export class Latest extends Component {
                   desc={latestEpisode.description}
                   epNum={`Ep. ${latestEpisode.id}`}
                   ad={latestEpisode.ads}
+                  cid={latestEpisode.cid}
                 />
               )
             );
