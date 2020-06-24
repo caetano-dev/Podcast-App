@@ -11,6 +11,7 @@ import PodCard from "../../../components/PodCard.js";
 import PlayerControls from "./PlayerControls";
 import { DownloadItem, ArchiveItem, FavItem, LatestItem } from "./ContentItem";
 import { AppContext } from "../../../context/AppContext";
+import { EngagementContext } from "../../../context/EngagementContext";
 
 export class Latest extends Component {
   constructor(props) {
@@ -32,35 +33,39 @@ export class Latest extends Component {
         }}
       >
         <AppContext.Consumer>
-          {(context) => {
-            const catalog = context.state.episodes.reflex;
+          {(appContext) => (
+            <EngagementContext.Consumer>
+              {(engagementContext) => {
+                const catalog = appContext.state.episodes.reflex;
 
-            let latestEpId = Math.max.apply(
-              Math,
-              catalog &&
-                catalog.map((o) => {
-                  return o.id;
-                })
-            );
-            let latestEpisode =
-              catalog &&
-              catalog.find((o) => {
-                return o.id == latestEpId;
-              });
-
-            return (
-              catalog && (
-                <LatestItem
-                  audio={audio}
-                  epTitle={latestEpisode.title}
-                  desc={latestEpisode.description}
-                  epNum={`Ep. ${latestEpisode.id}`}
-                  ad={latestEpisode.ads}
-                  cid={latestEpisode.cid}
-                />
-              )
-            );
-          }}
+                let latestEpId = Math.max.apply(
+                  Math,
+                  catalog &&
+                    catalog.map((o) => {
+                      return o.id;
+                    })
+                );
+                let latestEpisode =
+                  catalog &&
+                  catalog.find((o) => {
+                    return o.id == latestEpId;
+                  });
+                return (
+                  catalog && (
+                    <LatestItem
+                      audio={audio}
+                      epTitle={latestEpisode.title}
+                      desc={latestEpisode.description}
+                      epNum={`Ep. ${latestEpisode.id}`}
+                      ad={latestEpisode.ads}
+                      cid={latestEpisode.cid}
+                      engagementLoad={engagementContext.state.engagementLoad}
+                    />
+                  )
+                );
+              }}
+            </EngagementContext.Consumer>
+          )}
         </AppContext.Consumer>
       </Layout>
     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import { Layout, Text, Icon, Button } from "@ui-kitten/components";
 import PlayerControls from "./PlayerControls";
@@ -12,15 +12,34 @@ import {
   AdButton,
 } from "../../../components/Icons/Icons";
 
-import { AppContext } from "../../../context/AppContext";
+import { EngagementContext } from "../../../context/EngagementContext";
 
-export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
+export const LatestItem = ({
+  audio,
+  epTitle,
+  desc,
+  epNum,
+  ad,
+  cid,
+  engagementLoad,
+}) => {
   const [audioState, setAudioState] = useState(audio);
   const [descState, setDescState] = useState(false);
+  const [liked, setLiked] = useState(false);
+
+  // console.log("cid =>", cid);
+  // console.log("engagementLoad =>", engagementLoad);
+  engagementLoad &&
+    cid &&
+    console.log("engagement wanted =>", engagementLoad[cid]);
 
   return (
-    <AppContext.Consumer>
+    <EngagementContext.Consumer>
       {(context) => {
+        //    console.log("snap 2", context.state.userData);
+
+        setLiked(context.state.latestPod.liked);
+
         return (
           <PodCard
             flex={1}
@@ -56,8 +75,8 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
                   >
                     <InfoButton />
                     <DownloadButton />
-                    <LikeButton />
-                    <FavButton />
+                    <LikeButton liked={engagementLoad[cid].liked} />
+                    <FavButton favouited={engagementLoad[cid].favouited} />
                   </View>
                 </View>
 
@@ -125,7 +144,7 @@ export const LatestItem = ({ audio, epTitle, desc, epNum, ad }) => {
           />
         );
       }}
-    </AppContext.Consumer>
+    </EngagementContext.Consumer>
   );
 };
 
@@ -225,12 +244,17 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "space-between",
             }}
           >
-            <Text category="h3" style={{ fontWeight: "bold", color: "black" }}>
-              {epTitle}
-            </Text>
+            <View>
+              <Text
+                category="s1"
+                style={{ fontWeight: "bold", color: "black" }}
+              >
+                {epTitle}
+              </Text>
+            </View>
+
             <View
               style={{
                 flex: 1,
@@ -240,7 +264,7 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
               }}
             >
               <LikeButton />
-              <FavButton favouited />
+              <FavButton />
             </View>
           </View>
           <View
@@ -267,7 +291,7 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
 
             <View style={{ flex: 1 }}>
               <Text category="h4" style={{ color: "black" }}>
-                {epNum}
+                Ep.{epNum}
               </Text>
             </View>
           </View>
