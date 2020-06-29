@@ -68,7 +68,7 @@ export default class EngagementProvider extends Component {
     const { loggedUserEngagements } = this.state;
 
     console.log("engagements logged in state", loggedUserEngagements);
-    const handleLike = async (cid, asdf) => {
+    const handleLike = async (cid) => {
       const { user, engagementExists } = this.state;
       const engagementRef = db.collection("engagement").doc(cid);
       const uid = user.uid;

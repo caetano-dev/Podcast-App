@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { AppContext } from "../../context/AppContext";
 import { EngagementContext } from "../../context/EngagementContext";
@@ -184,34 +184,28 @@ export const RefreshButton = ({ press }) => {
   );
 };
 
-export const LikeButton = ({ liked, likeClicked, cid }) => {
-  const [heart, setHeart] = useState(false);
+export const LikeButton = ({ cid, loggedUserEngagements }) => {
+  const [liked, setLiked] = useState(false);
   // TODO likeButton will recieve cid and based on if ep is
   //        liked
-  return (
-    <EngagementContext.Consumer>
-      {(engagementContext) => {
-        console.log(
-          "like Button",
-          engagementContext.state.loggedUserEngagements
-        );
-        console.log("cid", cid);
-        return liked ? (
-          <Icon
-            name="heart"
-            fill="#DB3A3A"
-            onPress={(() => setHeart(true), likeClicked())}
-            style={{ height: 35, width: 35 }}
-          />
-        ) : (
-          <Icon
-            name="heart-outline"
-            onPress={() => setHeart(!heart)}
-            style={{ height: 35, width: 35 }}
-          />
-        );
-      }}
-    </EngagementContext.Consumer>
+
+  useEffect(() => {
+    const engagementObj = loggedUserEngagements.find((obj) => obj.cid == cid);
+
+    if (loggedUserEngagements.length > 1 && engagementObj) {
+      return onSetEngagement(engagementObj);
+    }
+  }, []);
+
+  const onSetEngagement = (engagementObj) => {
+    const likeVal = engagementObj.foundUserEngagment[1].liked;
+    // console.log("likeButton", likeVal);
+    setLiked(likeVal);
+  };
+  return liked ? (
+    <Icon name="heart" fill="#DB3A3A" style={{ height: 35, width: 35 }} />
+  ) : (
+    <Icon name="heart-outline" style={{ height: 35, width: 35 }} />
   );
 };
 
