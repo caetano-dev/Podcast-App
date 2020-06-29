@@ -27,18 +27,10 @@ export const LatestItem = ({
   const [descState, setDescState] = useState(false);
   const [liked, setLiked] = useState(false);
 
-  // console.log("cid =>", cid);
-  // console.log("engagementLoad =>", engagementLoad);
-  engagementLoad &&
-    cid &&
-    console.log("engagement wanted =>", engagementLoad[cid]);
-
   return (
     <EngagementContext.Consumer>
       {(context) => {
-        //    console.log("snap 2", context.state.userData);
-
-        setLiked(context.state.latestPod.liked);
+        //  context.handleLike(cid);
 
         return (
           <PodCard
@@ -75,8 +67,8 @@ export const LatestItem = ({
                   >
                     <InfoButton />
                     <DownloadButton />
-                    <LikeButton liked={engagementLoad[cid].liked} />
-                    <FavButton favouited={engagementLoad[cid].favouited} />
+                    <LikeButton cid={cid} />
+                    <FavButton />
                   </View>
                 </View>
 
