@@ -34,23 +34,18 @@ export default class AppProvider extends Component {
 
   async componentDidMount() {
     try {
-      //get
+      //get catalog
+      // TODO fix the way episodes are loaded (use reflex obj)
       await networkRef.get().then((doc) => {
         if (doc.exists) {
           const PodCatalogue = doc.data();
-
           return this.setState({ episodes: PodCatalogue });
-          // console.log(
-          //   "PodCatalogue => ",
-          //   PodCatalogue.reflex.map((i) => {
-          //     return i.id;
-          //   })
-          // )
         } else {
           console.log("No such document!");
         }
       });
 
+      //set up audio
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: false,
         interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -71,6 +66,7 @@ export default class AppProvider extends Component {
       pauseButtonClicked,
       playbackInstance,
     } = this.state.player;
+
     console.log("is there playbackInstance ?", Boolean(playbackInstance));
     const openInfo = () => {
       this.setState({ infoSection: true });

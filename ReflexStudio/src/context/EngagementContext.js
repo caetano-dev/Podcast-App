@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import firebase from "../../firebase";
-import "firebase/auth";
-import { v4 as uuidv4 } from "uuid";
-import Constants from "expo-constants";
+import "@firebase/firestore";
 
 export const EngagementContext = React.createContext();
-
-const realTimeDB = firebase.database();
-let deviceId = Constants.installationId;
-const currUser = firebase.auth().currentUser;
-
+// TODO remove engagement context entirely and place the liking feature in appcontext
+const db = firebase.firestore();
+const nid = {
+  reflex: "sToBbV6lqw2H62vS9UyU",
+};
 export default class EngagementProvider extends Component {
   constructor(props) {
     super(props);
@@ -24,77 +22,94 @@ export default class EngagementProvider extends Component {
         favourited: false,
         liked: false,
       },
+      engagementExists: null,
+      loggedUserEngagements: [],
     };
   }
 
-  // TODO get all engagments for the specific user then manipulate that data where need be
   componentDidMount() {
     const { engagementLoad } = this.state;
+    //get user info
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ user });
-        engagementLoad == null ? this.onEngagementLoad() : null;
+        this.setState({ user }), this.loadUserEngagement();
       } else {
         this.setState({ user: null });
       }
     });
-
-    // realTimeRef.on(
-    //   "value",
-    //   (snapshot) => console.log("snap", snapshot.val())
-    //   this.setState((prevState) => ({
-    //     userData: {
-    //       ...prevState.userData,
-    //       userData: snapshot.val(),
-    //     },
-    //   }))
-    //    updateStarCount(postElement, snapshot.val());
-    // );
-    // await realTimeDB
-    //   .ref("/engagement/" + authUID)
-    //   .once("value")
-    //   .then((snapshot) => {
-    //     let snapVal = snapshot.val();
-    //     console.log("snap,", snapVal);
-    //     return this.setState({ userEngagement: snapVal });
-    //   });
   }
 
-  onEngagementLoad() {
-    const authUID = this.state.user.uid;
-    const engagementRef = firebase.database().ref("engagement/" + authUID);
+  async loadUserEngagement() {
+    const { user, loggedUserEngagements } = this.state;
 
-    engagementRef.on("value", (snapshot) => {
-      return (
-        this.setState({ engagementLoad: snapshot.val() }),
-        console.log("getData engagement", snapshot.val()),
-        console.log("uuid", deviceId, "Auth uid", authUID)
-      );
+    await db.collection("engagement").onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const foundUserEngagment = Object.entries(doc.data()).find(
+          ([key, value]) => key === user.uid
+        );
+        // console.log("bow", doc.id, " => ", doc.data());
+        // console.log("pew", foundUserEngagment);
+
+        // create an object that stores the engagement for each cid
+
+        this.setState((prevState) => ({
+          loggedUserEngagements: [
+            ...prevState.loggedUserEngagements,
+            { cid: doc.id, foundUserEngagment },
+          ],
+        }));
+
+        // then push that into state
+      });
     });
   }
 
   render() {
-    //  console.log("user state", this.state.user);
-    //  console.log("State =>", this.state.latestPod);
-    //  const getContentEngagement = async (cid) =>
-    const getData = () => {};
-    const likeClicked = async (cid) => {
-      // using the cid provided by the current episode, update engagement with that cid
-      try {
-        realTimeDB.ref("engagement/" + authUID + cid).set({
-          liked: true,
-        });
-      } catch (error) {
-        console.log("err", error);
-      }
-    };
+    const { loggedUserEngagements } = this.state;
 
+    console.log("engagements logged in state", loggedUserEngagements);
+    const handleLike = async (cid, asdf) => {
+      const { user, engagementExists } = this.state;
+      const engagementRef = db.collection("engagement").doc(cid);
+      const uid = user.uid;
+
+      if (engagementExists == null) {
+        await engagementRef.get().then((doc) => {
+          const data = doc.data();
+          //  TODO do the next comments in order
+          //0  consider replacing the logo with a spinner while loading
+          //1 check if the user has already made an interaction || done
+          const checkData = Boolean(Object.keys(data).find((i) => i == uid));
+          console.log("data obj", data);
+          //2 if an interaction has already been made update the value
+          // if not then make theinteraction
+          if (checkData == true) {
+            // update the interaction here
+            //   engagementRef;
+          } else {
+            //create the primary interaction here
+          }
+
+          //3 finally update ui
+          return this.setState({ engagementExists: checkData });
+        });
+      } else if (engagementExists == true) {
+        //   db.collection("engagement").doc(cid).update({
+        //     uid: {
+        //       state: "Ice Cream"
+        //     }
+        // })
+      }
+
+      // catalogRef.update({
+      //   regions: firebase.firestore.FieldValue.arrayUnion("greater_virginia"),
+      // });
+    };
     return (
       <EngagementContext.Provider
         value={{
           state: this.state,
-          getData: getData,
-          likeClicked: likeClicked,
+          handleLike: handleLike,
         }}
       >
         {this.props.children}
