@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { AppContext } from "../../context/AppContext";
+import { EngagementContext } from "../../context/EngagementContext";
+
 import { logoutUser } from "../../api/auth-api";
 
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
@@ -182,29 +184,34 @@ export const RefreshButton = ({ press }) => {
   );
 };
 
-export const LikeButton = ({ liked }) => {
+export const LikeButton = ({ liked, likeClicked, cid }) => {
   const [heart, setHeart] = useState(false);
-
-  return heart ? (
-    <Icon
-      name="heart"
-      fill="#DB3A3A"
-      onPress={() => setHeart(!heart)}
-      style={{ height: 35, width: 35 }}
-    />
-  ) : liked ? (
-    <Icon
-      name="heart"
-      fill="#DB3A3A"
-      onPress={() => setHeart(true)}
-      style={{ height: 35, width: 35 }}
-    />
-  ) : (
-    <Icon
-      name="heart-outline"
-      onPress={() => setHeart(!heart)}
-      style={{ height: 35, width: 35 }}
-    />
+  // TODO likeButton will recieve cid and based on if ep is
+  //        liked
+  return (
+    <EngagementContext.Consumer>
+      {(engagementContext) => {
+        console.log(
+          "like Button",
+          engagementContext.state.loggedUserEngagements
+        );
+        console.log("cid", cid);
+        return liked ? (
+          <Icon
+            name="heart"
+            fill="#DB3A3A"
+            onPress={(() => setHeart(true), likeClicked())}
+            style={{ height: 35, width: 35 }}
+          />
+        ) : (
+          <Icon
+            name="heart-outline"
+            onPress={() => setHeart(!heart)}
+            style={{ height: 35, width: 35 }}
+          />
+        );
+      }}
+    </EngagementContext.Consumer>
   );
 };
 
