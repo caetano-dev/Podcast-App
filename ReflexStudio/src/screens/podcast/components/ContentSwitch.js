@@ -60,6 +60,7 @@ export class Latest extends Component {
                       ad={latestEpisode.ads}
                       cid={latestEpisode.cid}
                       engagementLoad={engagementContext.state.engagementLoad}
+                      infoSection={appContext.state.infoSection}
                     />
                   )
                 );

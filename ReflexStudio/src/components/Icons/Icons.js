@@ -189,19 +189,19 @@ export const LikeButton = ({ cid, loggedUserEngagements }) => {
   // TODO likeButton will recieve cid and based on if ep is
   //        liked
 
-  useEffect(() => {
-    const engagementObj = loggedUserEngagements.find((obj) => obj.cid == cid);
+  // useEffect(() => {
+  //   const engagementObj = loggedUserEngagements.find((obj) => obj.cid == cid);
 
-    if (loggedUserEngagements.length > 1 && engagementObj) {
-      return onSetEngagement(engagementObj);
-    }
-  }, []);
+  //   if (loggedUserEngagements.length > 1 && engagementObj) {
+  //     return onSetEngagement(engagementObj);
+  //   }
+  // }, []);
 
-  const onSetEngagement = (engagementObj) => {
-    const likeVal = engagementObj.foundUserEngagment[1].liked;
-    // console.log("likeButton", likeVal);
-    setLiked(likeVal);
-  };
+  // const onSetEngagement = (engagementObj) => {
+  //   const likeVal = engagementObj.foundUserEngagment[1].liked;
+  //   // console.log("likeButton", likeVal);
+  //   setLiked(likeVal);
+  // };
   return liked ? (
     <Icon name="heart" fill="#DB3A3A" style={{ height: 35, width: 35 }} />
   ) : (

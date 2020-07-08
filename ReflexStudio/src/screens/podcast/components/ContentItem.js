@@ -22,6 +22,7 @@ export const LatestItem = ({
   ad,
   cid,
   engagementLoad,
+  infoSection,
 }) => {
   const [audioState, setAudioState] = useState(audio);
   const [descState, setDescState] = useState(false);
@@ -67,6 +68,8 @@ export const LatestItem = ({
                       }}
                     >
                       <InfoButton />
+                      {/*
+                        //TODO: taken out for demo
                       <DownloadButton />
                       <LikeButton
                         cid={cid}
@@ -74,12 +77,12 @@ export const LatestItem = ({
                           engagementContext.state.loggedUserEngagements
                         }
                       />
-                      <FavButton />
+                      <FavButton /> */}
                     </View>
                   </View>
 
                   <Layout style={{ flex: 2 }}>
-                    {engagementContext.state.infoSection ? (
+                    {infoSection ? (
                       <ScrollView>
                         <View style={{ marginHorizontal: 5 }}>
                           <Text category="h6" style={{ color: "black" }}>

@@ -167,7 +167,7 @@ export default class AppProvider extends Component {
     //     :
     // };
 
-    const handleStop = async () => {
+    const handleStop = async (src) => {
       const { playbackInstance, demo } = this.state.player;
 
       try {
@@ -182,7 +182,7 @@ export default class AppProvider extends Component {
             pauseButtonClicked: false,
           },
         }));
-        setUpAudio(demo);
+        setUpAudio(src);
       } catch (error) {
         console.log("Audio Setup", error);
       }

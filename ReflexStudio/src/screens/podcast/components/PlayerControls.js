@@ -20,8 +20,8 @@ export default PlayerControls = ({
   src,
 }) => {
   useEffect(() => {
-    pauseButtonClicked ? null : setUpAudio(demo);
-    playbackInstance ? null : setUpAudio(demo);
+    pauseButtonClicked ? null : setUpAudio(src);
+    playbackInstance ? null : setUpAudio(src);
   }, []);
 
   return (
@@ -74,7 +74,7 @@ export default PlayerControls = ({
                   <Icon
                     name="stop-circle"
                     onPress={() => {
-                      handleStop();
+                      handleStop(src);
                     }}
                     style={{ height: size, width: size }}
                   />
