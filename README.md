@@ -20,21 +20,29 @@ connected to `Firestore` (database within Firebase), creating a smoother develop
 To run development version
 
 ```
-  npm install
+  cd ReflexStudio 
+  yarn install
   expo start
-  run the app either via simulated phone or via expo ios or android app by scanning QR code
 ```
+  `run the app either via simulated phone or via expo ios or android app by scanning QR code`
+
 
 # Screenshots
 
+`Updated version (IOS) `
 <p float="left">
+<img src="Design/github/1.2 Dashboard.png" height="560" width="330" />  
+<img src="Design/github/2.2 Previous.png" height="560" width="330" />  
+</p>
+ `Version 1 (Android) `
+  <p float="right">
 <img src="Design/github/1.Dashboard.png" height="560" width="330" />  
 <img src="Design/github/2.Previous.png" height="560" width="330" />  
 </p>
 
 ## Notable Technologies Used
 
-React Native, expo, expo-av, react-navigation, Firebase, Firebase/Auth, Firebase/Storage, Firestore, MobX.
+React Native, expo, expo-av, react-navigation, Firebase, Firebase/Auth, Firebase/Storage, Firestore.
 
 # Why use Firebase as a backend solution?
 
