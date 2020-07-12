@@ -2,12 +2,12 @@ import React, { memo } from "react";
 import {
   ImageBackground,
   StyleSheet,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 
 const Background = ({ children }) => (
   <ImageBackground
-    source={require("../assets/background_dot.png")}
+    source={require("../../assets/background_dot.png")}
     resizeMode="repeat"
     style={styles.background}
   >
@@ -20,7 +20,7 @@ const Background = ({ children }) => (
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: "100%"
+    width: "100%",
   },
   container: {
     flex: 1,
@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     maxWidth: 340,
     alignSelf: "center",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
 export default memo(Background);

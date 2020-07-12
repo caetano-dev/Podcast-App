@@ -1,6 +1,5 @@
 import React from "react";
 import { Latest, Fav, Archive, Download } from "../components/ContentSwitch";
-import { AppContext } from "../../../context/AppContext";
 
 export const headerSwitch = (selectHeader) => {
   switch (selectHeader) {

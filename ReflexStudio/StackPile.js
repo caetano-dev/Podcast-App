@@ -3,18 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 //Components
 import {
-  RootReflexNav,
   LoginScreen,
   RegisterScreen,
-  ForgotPasswordScreen,
   AuthLoadingScreen,
-  ArchivePlayer,
   OnBoard,
   Root,
   Podcast,
-  Previous,
-  Shop,
-  Blog,
 } from "./src/screens";
 
 const Stack = createStackNavigator();
@@ -48,6 +42,13 @@ const Core = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Podcast"
+        component={Podcast}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
+      {/* 
+    for later use
+      <Stack.Screen
         name="Shop"
         component={Shop}
         options={{ headerShown: false }}
@@ -61,12 +62,7 @@ const Core = () => {
         name="Previous"
         component={Previous}
         options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Podcast"
-        component={Podcast}
-        options={{ headerShown: false, gestureEnabled: false }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

@@ -12,7 +12,7 @@ import {
   AdButton,
 } from "../../../components/Icons/Icons";
 
-import { EngagementContext } from "../../../context/EngagementContext";
+//import { EngagementContext } from "../../../context/EngagementContext";
 
 export const LatestItem = ({
   audio,
@@ -24,51 +24,48 @@ export const LatestItem = ({
   engagementLoad,
   infoSection,
 }) => {
-  const [audioState, setAudioState] = useState(audio);
   const [descState, setDescState] = useState(false);
   const [liked, setLiked] = useState(false);
 
   return (
-    <EngagementContext.Consumer>
-      {(engagementContext) => {
-        //  engagementContext.handleLike(cid);
+    // <EngagementContext.Consumer>
+    //   {(engagementContext) => {
+    //     return (
+    <PodCard
+      flex={1}
+      borderWidth={4}
+      radius={20}
+      bgColor={"white"}
+      content={
+        //  engagementContext.state && (
+        <Layout
+          style={{
+            flex: 1,
+            flexWrap: "wrap",
+            flexDirection: "column",
+            backgroundColor: null,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <AdButton />
 
-        return (
-          <PodCard
-            flex={1}
-            borderWidth={4}
-            radius={20}
-            bgColor={"white"}
-            content={
-              engagementContext.state && (
-                <Layout
-                  style={{
-                    flex: 1,
-                    flexWrap: "wrap",
-                    flexDirection: "column",
-                    backgroundColor: null,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <AdButton />
-
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      <InfoButton />
-                      {/*
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "flex-end",
+              }}
+            >
+              <InfoButton />
+              {/*
                         //TODO: taken out for demo
                       <DownloadButton />
                       <LikeButton
@@ -78,75 +75,79 @@ export const LatestItem = ({
                         }
                       />
                       <FavButton /> */}
-                    </View>
-                  </View>
+            </View>
+          </View>
 
-                  <Layout style={{ flex: 2 }}>
-                    {infoSection ? (
-                      <ScrollView>
-                        <View style={{ marginHorizontal: 5 }}>
-                          <Text category="h6" style={{ color: "black" }}>
-                            {epTitle}
-                          </Text>
-                          <Text category="s2" style={{ color: "black" }}>
-                            {desc}
-                          </Text>
-                        </View>
-                      </ScrollView>
-                    ) : (
-                      <View style={{ marginHorizontal: 5 }}>
-                        <Text category="h4" style={{ color: "black" }}>
-                          {epTitle}
-                        </Text>
-                      </View>
-                    )}
-                  </Layout>
+          <Layout style={{ flex: 2 }}>
+            {infoSection ? (
+              <ScrollView>
+                <View style={{ marginHorizontal: 5 }}>
+                  <Text category="h6" style={{ color: "black" }}>
+                    {epTitle}
+                  </Text>
+                  <Text category="s2" style={{ color: "black" }}>
+                    {desc}
+                  </Text>
+                </View>
+              </ScrollView>
+            ) : (
+              <View style={{ marginHorizontal: 5 }}>
+                <Text category="h4" style={{ color: "black" }}>
+                  {epTitle}
+                </Text>
+              </View>
+            )}
+          </Layout>
 
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: "row",
-                      justifyContent: "space-evenly",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View style={{ flex: 2, flexDirection: "row" }}>
-                      <View
-                        style={{
-                          alignItems: "center",
-                          justifyContent: "center",
-                          marginLeft: 10,
-                        }}
-                      >
-                        {engagementContext.state.adSection ? (
-                          <>
-                            <Text category="s1" style={{ color: "black" }}>
-                              Sponsored Track
-                            </Text>
-                            <Text style={{ color: "black" }}>{ad}</Text>
-                          </>
-                        ) : null}
-                      </View>
-                    </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
+            <View style={{ flex: 2, flexDirection: "row" }}>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginLeft: 10,
+                }}
+              >
+                {
+                  //engagementContext.state.adSection ? (
+                  //   <>
+                  //     <Text category="s1" style={{ color: "black" }}>
+                  //       Sponsored Track
+                  //     </Text>
+                  //     <Text style={{ color: "black" }}>{ad}</Text>
+                  //   </>
+                  // ) :
 
-                    <Text
-                      category="h4"
-                      style={{
-                        fontWeight: "bold",
-                        color: "black",
-                        marginRight: 10,
-                      }}
-                    >
-                      {epNum}
-                    </Text>
-                  </View>
-                </Layout>
-              )
-            }
-          />
-        );
-      }}
-    </EngagementContext.Consumer>
+                  null
+                }
+              </View>
+            </View>
+
+            <Text
+              category="h4"
+              style={{
+                fontWeight: "bold",
+                color: "black",
+                marginRight: 10,
+              }}
+            >
+              {epNum}
+            </Text>
+          </View>
+        </Layout>
+        // )
+      }
+    />
+    //     );
+    //   }}
+    // </EngagementContext.Consumer>
   );
 };
 

@@ -1,51 +1,21 @@
-import React, { Component, memo } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useContext, useReducer } from "react";
+
+import { decode, encode } from "base-64";
 import "./fixtimerbug.js";
 
+//context
+import AppContext from "./context/AppContext";
+import reducer from "./context/reducer";
+
 //Navigation
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
 
 //Style
-import {
-  ApplicationProvider,
-  Button,
-  Icon,
-  IconRegistry,
-  Layout,
-  Text,
-} from "@ui-kitten/components";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping, light as theme } from "@eva-design/eva";
 
-//Components
-import {
-  RootReflexNav,
-  LoginScreen,
-  RegisterScreen,
-  ForgotPasswordScreen,
-  AuthLoadingScreen,
-  ArchivePlayer,
-  OnBoard,
-  Root,
-  Podcast,
-  Previous,
-  Shop,
-  Blog,
-} from "./src/screens";
-
-//Methods
-import {
-  logoutUser,
-  signInUser,
-  loginUser,
-  sendEmailWithPassword,
-} from "./src/auth/auth-api";
-import Core from "./Core";
-
-import { AppProvider, EngagementProvider } from "./src/context";
-import { decode, encode } from "base-64";
-
+//bug fix
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -54,35 +24,22 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-class App extends React.Component {
-  render() {
-    return (
-      <AppProvider>
-        <EngagementProvider>
-          <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider mapping={mapping} theme={theme}>
-            <NavigationContainer>
-              <Core />
-            </NavigationContainer>
-          </ApplicationProvider>
-        </EngagementProvider>
-      </AppProvider>
-    );
-  }
-}
+import StackPile from "./StackPile";
+
+const App = () => {
+  const initialState = useContext(AppContext);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <AppContext.Provider value={{ state, dispatch }}>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider mapping={mapping} theme={theme}>
+        <NavigationContainer>
+          <StackPile />
+        </NavigationContainer>
+      </ApplicationProvider>
+    </AppContext.Provider>
+  );
+};
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  text: {
-    textAlign: "center",
-  },
-  podcast: {},
-  reflex: {},
-});

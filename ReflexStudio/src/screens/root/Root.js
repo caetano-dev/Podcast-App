@@ -1,6 +1,6 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Layout, Text, Button, Icon } from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { Layout } from "@ui-kitten/components";
 
 import {
   LogoutButton,

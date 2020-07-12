@@ -2,55 +2,49 @@ import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
 import { Audio } from "expo-av";
-import { AppContext } from "../../../context/AppContext";
+import AppContext from "../../../../context/AppContext";
 
 export default PlayerControls = ({
   size,
   margins,
-  isPlaying,
   setUpAudio,
-  onPlaybackStatusUpdate,
-  handlePlayPause,
   handleStop,
   playbackInstance,
-  togglePauseButton,
-  flipIsPlaying,
   demo,
-  pauseButtonClicked,
   src,
 }) => {
   useEffect(() => {
-    pauseButtonClicked ? null : setUpAudio(src);
-    playbackInstance ? null : setUpAudio(src);
+    // pauseButtonClicked ? null : setUpAudio(src);
+    // playbackInstance ? null : setUpAudio(src);
   }, []);
 
   return (
-    <AppContext.Consumer>
-      {(context) => {
-        const {
-          isPlaying,
-          playButton,
-          pauseButtonClicked,
-          playbackInstance,
-        } = context.state.player;
-        const { handlePlay, handlePause } = context;
-        console.log(
-          "playbackInstance from playercontrols",
-          Boolean(playbackInstance)
-        );
-        return (
-          playbackInstance && (
-            <Layout
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                backgroundColor: null,
-                margin: margins,
-                alignItems: "center",
-              }}
-            >
-              {/* <View>
+    // <AppContext.Consumer>
+    //   {(context) => {
+    //     const {
+    //       isPlaying,
+    //       playButton,
+    //       pauseButtonClicked,
+    //       playbackInstance,
+    //     } = context.state.player;
+    //     const { handlePlay, handlePause } = context;
+    //     console.log(
+    //       "playbackInstance from playercontrols",
+    //       Boolean(playbackInstance)
+    //     );
+    //     return (
+    // playbackInstance && (
+    <Layout
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        backgroundColor: null,
+        margin: margins,
+        alignItems: "center",
+      }}
+    >
+      {/* <View>
           {prevTrackClicked ? (
             <Icon
               name="arrow-left"
@@ -69,7 +63,10 @@ export default PlayerControls = ({
             />
           )}
         </View> */}
-              {isPlaying ? (
+
+      {/* {DONT DELETE */}
+
+      {/* isPlaying ? (
                 <View>
                   <Icon
                     name="stop-circle"
@@ -79,9 +76,9 @@ export default PlayerControls = ({
                     style={{ height: size, width: size }}
                   />
                 </View>
-              ) : null}
+              ) : null} */}
 
-              <View>
+      {/* <View>
                 {isPlaying ? (
                   pauseButtonClicked ? (
                     <Icon
@@ -106,20 +103,23 @@ export default PlayerControls = ({
                       }}
                     />
                   )
-                ) : (
-                  <Icon
-                    name="play-circle-outline"
-                    onPress={() => {
-                      handlePlay();
-                    }}
-                    style={{
-                      height: size,
-                      width: size,
-                    }}
-                  />
-                )}
-              </View>
-              {/* <View>
+                ) : ( */}
+      <Icon
+        name="play-circle-outline"
+        onPress={() => {
+          handlePlay();
+        }}
+        style={{
+          height: size,
+          width: size,
+        }}
+      />
+      {/* )}
+              </View> */}
+
+      {/* {DONT DELETE */}
+
+      {/* <View>
           {nextTrackClicked ? (
             <Icon
               name="arrow-right"
@@ -138,10 +138,10 @@ export default PlayerControls = ({
             />
           )}
         </View> */}
-            </Layout>
-          )
-        );
-      }}
-    </AppContext.Consumer>
+    </Layout>
+    //       )
+    //     );
+    //   }}
+    // </AppContext.Consumer>
   );
 };

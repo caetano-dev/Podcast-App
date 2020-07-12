@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { AppContext } from "../../context/AppContext";
-import { EngagementContext } from "../../context/EngagementContext";
+import AppContext from "../../../context/AppContext";
+//import { EngagementContext } from "../../context/EngagementContext";
 
-import { logoutUser } from "../../api/auth-api";
+import { logoutUser } from "../../api/auth";
 
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
 
@@ -265,48 +265,48 @@ export const InfoButton = () => {
   // const [info, setInfo] = useState(false);
 
   return (
-    <AppContext.Consumer>
-      {(context) => {
-        return context.state.infoSection ? (
-          <Icon
-            name="info"
-            fill="#1A83B1"
-            onPress={() => context.closeInfo()}
-            style={{ marginLeft: 10, height: 40, width: 40 }}
-          />
-        ) : (
-          <Icon
-            name="info-outline"
-            onPress={() => context.openInfo()}
-            style={{ marginLeft: 10, height: 40, width: 40 }}
-          />
-        );
-      }}
-    </AppContext.Consumer>
+    // <AppContext.Consumer>
+    //   {(context) => {
+    //     return context.state.infoSection ? (
+    //   <Icon
+    //     name="info"
+    //     fill="#1A83B1"
+    //     onPress={() => context.closeInfo()}
+    //     style={{ marginLeft: 10, height: 40, width: 40 }}
+    //   />
+    // ) : (
+    <Icon
+      name="info-outline"
+      onPress={() => context.openInfo()}
+      style={{ marginLeft: 10, height: 40, width: 40 }}
+    />
+    //     );
+    //   }}
+    // </AppContext.Consumer>
   );
 };
 
 export const AdButton = () => {
   return (
-    <AppContext.Consumer>
-      {(context) => {
-        return context.state.adSection ? (
-          <Icon
-            name="bell"
-            fill="#E1940F"
-            onPress={() => context.closeAd()}
-            style={{ marginLeft: 10, height: 30, width: 30 }}
-          />
-        ) : (
-          <Icon
-            name="bell-off"
-            fill="gray"
-            onPress={() => context.openAd()}
-            style={{ marginLeft: 10, height: 30, width: 30 }}
-          />
-        );
-      }}
-    </AppContext.Consumer>
+    // <AppContext.Consumer>
+    //   {(context) => {
+    //     return context.state.adSection ? (
+    //       <Icon
+    //         name="bell"
+    //         fill="#E1940F"
+    //         onPress={() => context.closeAd()}
+    //         style={{ marginLeft: 10, height: 30, width: 30 }}
+    //       />
+    //     ) : (
+    <Icon
+      name="bell-off"
+      fill="gray"
+      onPress={() => context.openAd()}
+      style={{ marginLeft: 10, height: 30, width: 30 }}
+    />
+    //     );
+    //   }}
+    // </AppContext.Consumer>
   );
 };
 

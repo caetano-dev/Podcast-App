@@ -10,20 +10,16 @@ import {
 import PodCard from "../../../components/PodCard.js";
 import PlayerControls from "./PlayerControls";
 import { DownloadItem, ArchiveItem, FavItem, LatestItem } from "./ContentItem";
-import { AppContext } from "../../../context/AppContext";
-import { EngagementContext } from "../../../context/EngagementContext";
+import AppContext from "../../../../context/AppContext";
+//import { EngagementContext } from "../../../context/EngagementContext";
 
 export class Latest extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      audio: false,
-    };
   }
 
   render() {
     const { layout, epTitle, desc, epNum, ad } = this.props;
-    const { audio } = this.state;
 
     return (
       <Layout
@@ -32,7 +28,7 @@ export class Latest extends Component {
           backgroundColor: null,
         }}
       >
-        <AppContext.Consumer>
+        {/* <AppContext.Consumer>
           {(appContext) => (
             <EngagementContext.Consumer>
               {(engagementContext) => {
@@ -51,23 +47,22 @@ export class Latest extends Component {
                     return o.id == latestEpId;
                   });
                 return (
-                  catalog && (
-                    <LatestItem
-                      audio={audio}
-                      epTitle={latestEpisode.title}
-                      desc={latestEpisode.description}
-                      epNum={`Ep. ${latestEpisode.id}`}
-                      ad={latestEpisode.ads}
-                      cid={latestEpisode.cid}
-                      engagementLoad={engagementContext.state.engagementLoad}
-                      infoSection={appContext.state.infoSection}
-                    />
-                  )
+                  catalog && ( */}
+        <LatestItem
+          epTitle={"title"}
+          desc={"desc"}
+          epNum={`Ep. ${"0"}`}
+          ad={"ad"}
+          cid={"latestEpisode.cid"}
+          engagementLoad={"engagementContext.state.engagementLoad"}
+          infoSection={"appContext.state.infoSection"}
+        />
+        {/* )
                 );
               }}
             </EngagementContext.Consumer>
           )}
-        </AppContext.Consumer>
+        </AppContext.Consumer> */}
       </Layout>
     );
   }
@@ -130,7 +125,7 @@ export const Archive = ({ layout }) => {
             }}
           >
             <ScrollView>
-              <AppContext.Consumer>
+              {/* <AppContext.Consumer>
                 {(context) => {
                   const catalog = context.state.episodes.reflex;
                   const sortedCatalog = catalog.sort((a, b) =>
@@ -140,18 +135,18 @@ export const Archive = ({ layout }) => {
                   return (
                     catalog &&
                     sortedCatalog.map((v, i) => {
-                      return (
-                        <ArchiveItem
-                          key={i}
-                          epTitle={v.title}
-                          desc={v.description}
-                          epNum={v.id}
-                        />
-                      );
+                      return ( */}
+              <ArchiveItem
+                // key={i}
+                epTitle={"v.title"}
+                desc={"v.description"}
+                epNum={"v.id"}
+              />
+              {/* );
                     })
                   );
                 }}
-              </AppContext.Consumer>
+              </AppContext.Consumer> */}
             </ScrollView>
           </Layout>
         }

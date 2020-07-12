@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Layout, Text, Button } from "@ui-kitten/components";
-import { AppContext } from "../../context/AppContext";
-import Logo from "../../components/Logo.js";
+import AppContext from "../../../context/AppContext";
 import PodCard from "../../components/PodCard.js";
-
+import {
+  Background,
+  Logo,
+  Header,
+  TextInput,
+  BackButton,
+  Toast,
+} from "../../components/onBoard";
 // import { logoutUser } from "../../api/auth-api";
 // import { BackHomeButton } from "../../components/Icons/Icons";
 import PlayerControls from "./components/PlayerControls";
@@ -59,130 +65,119 @@ export default Podcast = ({ navigation }) => {
   );
 
   return (
-    <AppContext.Consumer>
-      {(context) => {
-        const catalog = context.state.episodes.reflex;
+    // <AppContext.Consumer>
+    //   {(context) => {
+    //     const catalog = context.state.episodes.reflex;
 
-        let latestEpId = Math.max.apply(
-          Math,
-          catalog &&
-            catalog.map((o) => {
-              return o.id;
-            })
-        );
-        let latestEpisode =
-          catalog &&
-          catalog.find((o) => {
-            return o.id == latestEpId;
-          });
+    //     let latestEpId = Math.max.apply(
+    //       Math,
+    //       catalog &&
+    //         catalog.map((o) => {
+    //           return o.id;
+    //         })
+    //     );
+    //     let latestEpisode =
+    //       catalog &&
+    //       catalog.find((o) => {
+    //         return o.id == latestEpId;
+    //       });
 
-        return (
-          catalog && (
-            <View
-              style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}
-            >
-              {/* <Layout style={styles.goback}>
+    //     return (
+    //  catalog && (
+    <View style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}>
+      {/* <Layout style={styles.goback}>
                 <BackHomeButton navigation={navigation} />
               </Layout> */}
-              <Layout style={styles.logo}>
-                <Logo height={"100%"} />
-              </Layout>
+      <Layout style={styles.logo}>
+        <Logo height={"100%"} />
+      </Layout>
 
-              <Layout style={{ flex: 1, backgroundColor: null }}>
-                <PodCard
-                  borderWidth={3}
-                  radius={10}
-                  bgColor={"white"}
-                  content={
-                    <>
-                      <Text
-                        category="h3"
-                        style={{
-                          fontWeight: "700",
-                          color: "black",
-                        }}
-                      >
-                        {headerSwitch(selectHeader)}
-                      </Text>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                        }}
-                      >
-                        <Button
-                          status={latest ? null : "basic"}
-                          appearance="ghost"
-                          onPress={() => onLatest()}
-                        >
-                          Latest
-                        </Button>
-                        <Button
-                          status={archive ? null : "basic"}
-                          appearance="ghost"
-                          onPress={() => onArchive()}
-                        >
-                          Archive
-                        </Button>
-                        <Button
-                          status={fav ? null : "basic"}
-                          appearance="ghost"
-                          onPress={() => onFav()}
-                        >
-                          Favourites
-                        </Button>
-                        <Button
-                          status={download ? null : "basic"}
-                          appearance="ghost"
-                          onPress={() => onDownload()}
-                        >
-                          Downloaded
-                        </Button>
-                      </View>
-                    </>
-                  }
-                />
-              </Layout>
-
-              {podSwitch(select)}
-
-              {controls ? (
-                <Layout
-                  style={{
-                    flex: 1,
-                    backgroundColor: null,
-                  }}
+      <Layout style={{ flex: 1, backgroundColor: null }}>
+        <PodCard
+          borderWidth={3}
+          radius={10}
+          bgColor={"white"}
+          content={
+            <>
+              <Text
+                category="h3"
+                style={{
+                  fontWeight: "700",
+                  color: "black",
+                }}
+              >
+                {headerSwitch(selectHeader)}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                <Button
+                  status={latest ? null : "basic"}
+                  appearance="ghost"
+                  onPress={() => onLatest()}
                 >
-                  {catalog && (
-                    <PlayerControls
-                      src={latestEpisode.url}
-                      isPlaying={context.state.isPlaying}
-                      playerActive={context.playerActive}
-                      playerInactive={context.playerInactive}
-                      flipIsPlaying={context.flipIsPlaying}
-                      volume={context.state.volume}
-                      setUpAudio={context.setUpAudio}
-                      onPlaybackStatusUpdate={context.onPlaybackStatusUpdate}
-                      handlePlayPause={context.handlePlayPause}
-                      handleStop={context.handleStop}
-                      togglePauseButton={context.togglePauseButton}
-                      playButton={context.state.player.playButton}
-                      pauseButtonClicked={
-                        context.state.player.pauseButtonClicked
-                      }
-                      demo={context.state.player.demo}
-                      playbackInstance={context.state.player.playbackInstance}
-                      size={85}
-                      margins={20}
-                    />
-                  )}
-                </Layout>
-              ) : null}
-            </View>
-          )
-        );
-      }}
-    </AppContext.Consumer>
+                  Latest
+                </Button>
+                <Button
+                  status={archive ? null : "basic"}
+                  appearance="ghost"
+                  onPress={() => onArchive()}
+                >
+                  Archive
+                </Button>
+                <Button
+                  status={fav ? null : "basic"}
+                  appearance="ghost"
+                  onPress={() => onFav()}
+                >
+                  Favourites
+                </Button>
+                <Button
+                  status={download ? null : "basic"}
+                  appearance="ghost"
+                  onPress={() => onDownload()}
+                >
+                  Downloaded
+                </Button>
+              </View>
+            </>
+          }
+        />
+      </Layout>
+
+      {podSwitch(select)}
+
+      {controls ? (
+        <Layout
+          style={{
+            flex: 1,
+            backgroundColor: null,
+          }}
+        >
+          {
+            //catalog && (
+            <PlayerControls
+              src={"latestEpisode.url"}
+              demo={"context.state.player.demo"}
+              //   playerActive={context.playerActive}
+              //   playerInactive={context.playerInactive}
+              //   handleStop={context.handleStop}
+              //   setUpAudio={context.setUpAudio}
+              size={85}
+              margins={20}
+            />
+            // )
+          }
+        </Layout>
+      ) : null}
+    </View>
+    //      )
+    //     );
+    //   }}
+    // </AppContext.Consumer>
   );
 };
 
