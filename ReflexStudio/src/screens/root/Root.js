@@ -5,7 +5,7 @@ import { Layout } from "@ui-kitten/components";
 import {
   LogoutButton,
   SettingsButton,
-  HomeScreenButton,
+  RootScreenNav,
 } from "../../components/Icons/Icons";
 
 import Logo from "../../components/Logo";
@@ -41,22 +41,22 @@ const Root = ({ navigation }) => (
         bgColor={null}
         content={
           <>
-            <HomeScreenButton
+            <RootScreenNav
               alertCount={0}
               title="/Podcast"
               press={() => navigation.navigate("Podcast")}
             />
-            <HomeScreenButton
+            <RootScreenNav
               alertCount={4}
               title="/Shop"
               press={() => navigation.navigate("Shop")}
             />
-            <HomeScreenButton
+            <RootScreenNav
               alertCount={0}
               title="/Blog"
               press={() => navigation.navigate("Blog")}
             />
-            <HomeScreenButton
+            <RootScreenNav
               alertCount={15}
               title="/Network"
               press={() => console.log("unlinked homePage button")}

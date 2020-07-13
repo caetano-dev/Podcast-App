@@ -7,8 +7,7 @@ import { logoutUser } from "../../api/auth";
 
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
 
-export const HomeScreenButton = ({ title, press, alertCount }) => {
-  //TODO rename component to RootScreenNav
+export const RootScreenNav = ({ title, press, alertCount }) => {
   const { state } = useContext(AppContext);
 
   return (
