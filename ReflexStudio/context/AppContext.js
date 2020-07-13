@@ -1,12 +1,10 @@
 import { createContext } from "react";
 
 const AppContext = createContext({
-  currentUser: null,
-  isAuth: false,
-  mapSelected: "mapbox://styles/mapbox/streets-v11",
-  draftPin: null,
-  pins: [],
-  selectedPin: null,
+  user: null,
+  episodes: {},
+  infoSection: false,
+  adSection: false,
 });
 
 export default AppContext;
