@@ -6,8 +6,11 @@ import AppContext from "../../../context/AppContext";
 import { logoutUser } from "../../api/auth";
 
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
-//TODO read context here
+
 export const HomeScreenButton = ({ title, press, alertCount }) => {
+  //TODO rename component to RootScreenNav
+  const { state } = useContext(AppContext);
+
   return (
     <View style={{ flex: 1 }}>
       <Layout
@@ -95,45 +98,6 @@ export const HomeScreenButton = ({ title, press, alertCount }) => {
   );
 };
 
-export const CartButton = ({ navigation, cartNum }) => {
-  const [count, setCount] = useState(cartNum);
-
-  const CartIcon = (style) => {
-    return count >= 1 ? (
-      <>
-        <Icon name="shopping-cart" style={{ height: 32, width: 32 }} />
-        <Text category="h6" style={{ marginRight: -10 }}>
-          {count}
-        </Text>
-      </>
-    ) : (
-      <>
-        <Icon name="shopping-cart-outline" style={{ height: 32, width: 32 }} />
-      </>
-    );
-  };
-
-  return (
-    <Button
-      icon={CartIcon}
-      appearance="ghost"
-      style={styles.button}
-      // onPress={() => navigation.navigation("Cart")}
-    />
-  );
-};
-
-export const AddButton = ({ press }) => {
-  return (
-    <Button
-      icon={() => <Icon name="plus-circle" width={32} height={32} />}
-      appearance="ghost"
-      onPress={press}
-      style={styles.addButton}
-    />
-  );
-};
-
 export const LogoutButton = () => (
   <Button
     status="control"
@@ -160,31 +124,9 @@ export const BackHomeButton = ({ navigation: { goBack } }) => {
   );
 };
 
-export const SettingsButton = () => {
-  return (
-    <Button
-      icon={() => (
-        <Icon name="settings-2-outline" width={25} height={25} fill="#000" />
-      )}
-      appearance="ghost"
-      status="primary"
-      onPress={() => console.log("Settings Clicked")}
-    />
-  );
-};
-
-export const RefreshButton = ({ press }) => {
-  return (
-    <Button
-      icon={() => <Icon name="refresh" width={25} height={25} fill="#000" />}
-      appearance="ghost"
-      status="primary"
-      onPress={press}
-    />
-  );
-};
-
 export const LikeButton = ({ cid, loggedUserEngagements }) => {
+  const { state } = useContext(AppContext);
+
   const [liked, setLiked] = useState(false);
   //  likeButton will recieve cid and based on if ep is
   //        liked
@@ -210,6 +152,8 @@ export const LikeButton = ({ cid, loggedUserEngagements }) => {
 };
 
 export const FavButton = ({ favouited }) => {
+  const { state } = useContext(AppContext);
+
   const [fav, setFav] = useState(false);
 
   return fav ? (
@@ -232,6 +176,59 @@ export const FavButton = ({ favouited }) => {
       onPress={() => setFav(!fav)}
       style={{ marginLeft: 10, height: 35, width: 35 }}
     />
+  );
+};
+
+export const InfoButton = () => {
+  const { state } = useContext(AppContext);
+
+  // const [info, setInfo] = useState(false);
+
+  return (
+    // <AppContext.Consumer>
+    //   {(context) => {
+    //     return context.state.infoSection ? (
+    //   <Icon
+    //     name="info"
+    //     fill="#1A83B1"
+    //     onPress={() => context.closeInfo()}
+    //     style={{ marginLeft: 10, height: 40, width: 40 }}
+    //   />
+    // ) : (
+    <Icon
+      name="info-outline"
+      onPress={() => context.openInfo()}
+      style={{ marginLeft: 10, height: 40, width: 40 }}
+    />
+    //     );
+    //   }}
+    // </AppContext.Consumer>
+  );
+};
+
+export const AdButton = () => {
+  const { state } = useContext(AppContext);
+
+  return (
+    // <AppContext.Consumer>
+    //   {(context) => {
+    //     return context.state.adSection ? (
+    //       <Icon
+    //         name="bell"
+    //         fill="#E1940F"
+    //         onPress={() => context.closeAd()}
+    //         style={{ marginLeft: 10, height: 30, width: 30 }}
+    //       />
+    //     ) : (
+    <Icon
+      name="bell-off"
+      fill="gray"
+      onPress={() => context.openAd()}
+      style={{ marginLeft: 10, height: 30, width: 30 }}
+    />
+    //     );
+    //   }}
+    // </AppContext.Consumer>
   );
 };
 
@@ -261,52 +258,16 @@ export const DownloadButton = ({ downloaded }) => {
   );
 };
 
-export const InfoButton = () => {
-  // const [info, setInfo] = useState(false);
-
+export const SettingsButton = () => {
   return (
-    // <AppContext.Consumer>
-    //   {(context) => {
-    //     return context.state.infoSection ? (
-    //   <Icon
-    //     name="info"
-    //     fill="#1A83B1"
-    //     onPress={() => context.closeInfo()}
-    //     style={{ marginLeft: 10, height: 40, width: 40 }}
-    //   />
-    // ) : (
-    <Icon
-      name="info-outline"
-      onPress={() => context.openInfo()}
-      style={{ marginLeft: 10, height: 40, width: 40 }}
+    <Button
+      icon={() => (
+        <Icon name="settings-2-outline" width={25} height={25} fill="#000" />
+      )}
+      appearance="ghost"
+      status="primary"
+      onPress={() => console.log("Settings Clicked")}
     />
-    //     );
-    //   }}
-    // </AppContext.Consumer>
-  );
-};
-
-export const AdButton = () => {
-  return (
-    // <AppContext.Consumer>
-    //   {(context) => {
-    //     return context.state.adSection ? (
-    //       <Icon
-    //         name="bell"
-    //         fill="#E1940F"
-    //         onPress={() => context.closeAd()}
-    //         style={{ marginLeft: 10, height: 30, width: 30 }}
-    //       />
-    //     ) : (
-    <Icon
-      name="bell-off"
-      fill="gray"
-      onPress={() => context.openAd()}
-      style={{ marginLeft: 10, height: 30, width: 30 }}
-    />
-    //     );
-    //   }}
-    // </AppContext.Consumer>
   );
 };
 
@@ -316,3 +277,55 @@ const styles = StyleSheet.create({
     width: 100,
   },
 });
+
+// export const RefreshButton = ({ press }) => {
+//   return (
+//     <Button
+//       icon={() => <Icon name="refresh" width={25} height={25} fill="#000" />}
+//       appearance="ghost"
+//       status="primary"
+//       onPress={press}
+//     />
+//   );
+// };
+
+// export const CartButton = ({ navigation, cartNum }) => {
+//   const { state } = useContext(AppContext);
+
+//   const [count, setCount] = useState(cartNum);
+
+//   const CartIcon = (style) => {
+//     return count >= 1 ? (
+//       <>
+//         <Icon name="shopping-cart" style={{ height: 32, width: 32 }} />
+//         <Text category="h6" style={{ marginRight: -10 }}>
+//           {count}
+//         </Text>
+//       </>
+//     ) : (
+//       <>
+//         <Icon name="shopping-cart-outline" style={{ height: 32, width: 32 }} />
+//       </>
+//     );
+//   };
+
+//   return (
+//     <Button
+//       icon={CartIcon}
+//       appearance="ghost"
+//       style={styles.button}
+//       // onPress={() => navigation.navigation("Cart")}
+//     />
+//   );
+// };
+
+// export const AddButton = ({ press }) => {
+//   return (
+//     <Button
+//       icon={() => <Icon name="plus-circle" width={32} height={32} />}
+//       appearance="ghost"
+//       onPress={press}
+//       style={styles.addButton}
+//     />
+//   );
+// };
