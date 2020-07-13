@@ -6,7 +6,7 @@ import AppContext from "../../../context/AppContext";
 import { logoutUser } from "../../api/auth";
 
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
-
+//TODO read context here
 export const HomeScreenButton = ({ title, press, alertCount }) => {
   return (
     <View style={{ flex: 1 }}>
@@ -186,7 +186,7 @@ export const RefreshButton = ({ press }) => {
 
 export const LikeButton = ({ cid, loggedUserEngagements }) => {
   const [liked, setLiked] = useState(false);
-  // TODO likeButton will recieve cid and based on if ep is
+  //  likeButton will recieve cid and based on if ep is
   //        liked
 
   // useEffect(() => {

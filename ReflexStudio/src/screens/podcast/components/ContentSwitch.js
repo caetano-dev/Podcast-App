@@ -21,6 +21,8 @@ export class Latest extends Component {
   render() {
     const { layout, epTitle, desc, epNum, ad } = this.props;
 
+    //TODO remove LatestItem from ContextItem.js and put it directly
+    //     here
     return (
       <Layout
         style={{

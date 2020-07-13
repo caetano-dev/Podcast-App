@@ -26,6 +26,7 @@ export const LatestItem = ({
 }) => {
   const [descState, setDescState] = useState(false);
   const [liked, setLiked] = useState(false);
+  //TODO read latest episode here
 
   return (
     // <EngagementContext.Consumer>
@@ -66,7 +67,7 @@ export const LatestItem = ({
             >
               <InfoButton />
               {/*
-                        //TODO: taken out for demo
+                         taken out for demo
                       <DownloadButton />
                       <LikeButton
                         cid={cid}
