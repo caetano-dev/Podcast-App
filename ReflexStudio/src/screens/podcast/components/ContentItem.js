@@ -227,7 +227,7 @@ export const FavItem = ({ epTitle, desc, epNum }) => {
   );
 };
 
-export const ArchiveItem = ({ epTitle, desc, epNum }) => {
+export const ArchiveItem = ({ epTitle, desc, epNum, src }) => {
   return (
     <PodCard
       flex={1}
@@ -291,7 +291,9 @@ export const ArchiveItem = ({ epTitle, desc, epNum }) => {
               <View>
                 <DownloadButton />
               </View>
-              <View>{/* <PlayerControls size={40} /> */}</View>
+              <View>
+                <PlayerControls size={45} src={src} />
+              </View>
             </View>
 
             <View style={{ flex: 1 }}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Button, Icon, Text, Layout } from "@ui-kitten/components";
+import { Button, Icon, Text, Spinner, Layout } from "@ui-kitten/components";
 import { Audio } from "expo-av";
 import AppContext from "../../../../context/AppContext";
 
