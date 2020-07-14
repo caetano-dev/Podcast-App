@@ -18,6 +18,13 @@ export default function reducer(state, { type, payload }) {
         latestEpisode: payload,
       };
 
+    //buttons
+    case "FLIP_INFO":
+      return {
+        ...state,
+        infoSection: payload,
+      };
+
     default:
       return state;
   }

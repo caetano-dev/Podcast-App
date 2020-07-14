@@ -179,30 +179,33 @@ export const FavButton = ({ favouited }) => {
 };
 
 export const InfoButton = () => {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
 
   // const [info, setInfo] = useState(false);
 
-  return (
-    //TODO fix switchs
-    // <AppContext.Consumer>
-    //   {(context) => {
-    //     return context.state.infoSection ? (
-    //   <Icon
-    //     name="info"
-    //     fill="#1A83B1"
-    //     onPress={() => context.closeInfo()}
-    //     style={{ marginLeft: 10, height: 40, width: 40 }}
-    //   />
-    // ) : (
+  return state.infoSection ? (
     <Icon
-      name="info-outline"
-      onPress={() => context.openInfo()}
+      name="info"
+      fill="#1A83B1"
+      onPress={() =>
+        dispatch({
+          type: "FLIP_INFO",
+          payload: !state.infoSection,
+        })
+      }
       style={{ marginLeft: 10, height: 40, width: 40 }}
     />
-    //     );
-    //   }}
-    // </AppContext.Consumer>
+  ) : (
+    <Icon
+      name="info-outline"
+      onPress={() =>
+        dispatch({
+          type: "FLIP_INFO",
+          payload: !state.infoSection,
+        })
+      }
+      style={{ marginLeft: 10, height: 40, width: 40 }}
+    />
   );
 };
 
