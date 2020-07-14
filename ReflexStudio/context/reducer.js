@@ -1,10 +1,16 @@
-export default function reducer(state, action) {
-  switch (action.type) {
+export default function reducer(state, { type, payload }) {
+  switch (type) {
     // Auth
-    case "test":
+    case "GET_USERINFO":
       return {
         ...state,
-        currentUser: action.payload,
+        user: payload,
+      };
+    // Catalogue
+    case "GET_CATALOGUE":
+      return {
+        ...state,
+        episodes: payload,
       };
 
     default:

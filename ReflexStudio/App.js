@@ -1,5 +1,5 @@
-import React, { useContext, useReducer } from "react";
-
+import React, { useContext, useReducer, useEffect } from "react";
+import firebase from "./firebase";
 import { decode, encode } from "base-64";
 import "./fixtimerbug.js";
 
@@ -14,6 +14,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping, light as theme } from "@eva-design/eva";
+
+//queries
+import { getCatalogue, getUserInfo } from "./src/api/catalogue";
 
 //bug fix
 if (!global.btoa) {
@@ -33,9 +36,26 @@ const App = () => {
   //     then with the promise returned use .then() to execute dispatch
   //     with the payload being cataloue data
   useEffect(() => {
-    effect;
-    return () => {};
-  }, [input]);
+    //get auth user info
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch({
+          type: "GET_USERINFO",
+          payload: user,
+        });
+      } else {
+        console.log("err @ Get_UserInfo");
+      }
+    });
+
+    //get episodes
+    getCatalogue().then((value) =>
+      dispatch({
+        type: "GET_CATALOGUE",
+        payload: value,
+      })
+    );
+  }, []);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
