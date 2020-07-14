@@ -32,7 +32,6 @@ import StackPile from "./StackPile";
 const App = () => {
   const initialState = useContext(AppContext);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const catalog = state.episodes.reflex;
 
   useEffect(() => {
     //get auth user info
@@ -61,12 +60,16 @@ const App = () => {
         return o.id == latestEpId;
       });
 
-      return dispatch({
-        type: "GET_CATALOGUE",
-        payload: value,
-        type: "GET_LATEST_EPISODE",
-        payload: latestEpisode,
-      });
+      return (
+        dispatch({
+          type: "GET_LATEST_EPISODE",
+          payload: latestEpisode,
+        }),
+        dispatch({
+          type: "GET_CATALOGUE",
+          payload: catalogue,
+        })
+      );
     });
   }, []);
   return (

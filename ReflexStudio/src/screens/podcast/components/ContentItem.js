@@ -42,7 +42,6 @@ export const LatestItem = ({
         radius={20}
         bgColor={"white"}
         content={
-          //  engagementContext.state && (
           <Layout
             style={{
               flex: 1,
@@ -145,7 +144,6 @@ export const LatestItem = ({
               </Text>
             </View>
           </Layout>
-          // )
         }
       />
       //     );

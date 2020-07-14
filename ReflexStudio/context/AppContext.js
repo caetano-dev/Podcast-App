@@ -1,10 +1,9 @@
 import { createContext } from "react";
 
 const AppContext = createContext({
-  user: null,
   infoSection: false,
   adSection: false,
-  episodes: {},
+  episodes: null,
   latestEpisode: null,
   player: {
     demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
@@ -17,6 +16,7 @@ const AppContext = createContext({
     prevTrackClicked: false,
     playbackInstance: null,
   },
+  user: null,
 });
 
 export default AppContext;

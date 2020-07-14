@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, StyleSheet } from "react-native";
 import { Layout, Text, Button } from "@ui-kitten/components";
 import AppContext from "../../../context/AppContext";
@@ -17,6 +17,7 @@ import PlayerControls from "./components/PlayerControls";
 import { headerSwitch, podSwitch } from "./modules/PodSwitch";
 
 export default Podcast = ({ navigation }) => {
+  const { state, dispatch } = useContext(AppContext);
   const [select, setSelect] = useState("A");
   const [selectHeader, setSelectHeader] = useState("A");
   const [latest, setLatest] = useState(true);
@@ -25,65 +26,55 @@ export default Podcast = ({ navigation }) => {
   const [download, setDownload] = useState(false);
   const [controls, setControls] = useState(true);
 
-  const onLatest = () => (
-    setControls(true),
-    setLatest(!latest),
-    setFav(false),
-    setArchive(false),
-    setDownload(false),
-    setSelect(),
-    setSelectHeader()
-  );
-  const onFav = () => (
-    setControls(false),
-    setFav(!fav),
-    setLatest(false),
-    setArchive(false),
-    setDownload(false),
-    setSelect("B"),
-    setSelectHeader("Favourites")
-  );
+  //return to implicit
+  const onLatest = () => {
+    return (
+      setControls(true),
+      setLatest(!latest),
+      setFav(false),
+      setArchive(false),
+      setDownload(false),
+      setSelect(),
+      setSelectHeader()
+    );
+  };
+  const onFav = () => {
+    return (
+      setControls(false),
+      setFav(!fav),
+      setLatest(false),
+      setArchive(false),
+      setDownload(false),
+      setSelect("B"),
+      setSelectHeader("Favourites")
+    );
+  };
 
-  const onArchive = () => (
-    setControls(false),
-    setArchive(!archive),
-    setLatest(false),
-    setFav(false),
-    setDownload(false),
-    setSelect("C"),
-    setSelectHeader("Archive")
-  );
+  const onArchive = () => {
+    return (
+      setControls(false),
+      setArchive(!archive),
+      setLatest(false),
+      setFav(false),
+      setDownload(false),
+      setSelect("C"),
+      setSelectHeader("Archive")
+    );
+  };
 
-  const onDownload = () => (
-    setControls(false),
-    setDownload(!download),
-    setLatest(false),
-    setFav(false),
-    setArchive(false),
-    setSelect("D"),
-    setSelectHeader("Downloaded")
-  );
+  const onDownload = () => {
+    return (
+      setControls(false),
+      setDownload(!download),
+      setLatest(false),
+      setFav(false),
+      setArchive(false),
+      setSelect("D"),
+      setSelectHeader("Downloaded")
+    );
+  };
 
   return (
-    // <AppContext.Consumer>
-    //   {(context) => {
-    //     const catalog = context.state.episodes.reflex;
-
-    //     let latestEpId = Math.max.apply(
-    //       Math,
-    //       catalog &&
-    //         catalog.map((o) => {
-    //           return o.id;
-    //         })
-    //     );
-    //     let latestEpisode =
-    //       catalog &&
-    //       catalog.find((o) => {
-    //         return o.id == latestEpId;
-    //       });
-
-    //     return (
-    //  catalog && (
     <View style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}>
       {/* <Layout style={styles.goback}>
                 <BackHomeButton navigation={navigation} />
@@ -157,11 +148,10 @@ export default Podcast = ({ navigation }) => {
             backgroundColor: null,
           }}
         >
-          {
-            //catalog && (
+          {state.latestEpisode && (
             <PlayerControls
-              src={"latestEpisode.url"}
-              demo={"context.state.player.demo"}
+              src={state.latestEpisode.url}
+              demo={"state.player.demo"}
               //   playerActive={context.playerActive}
               //   playerInactive={context.playerInactive}
               //   handleStop={context.handleStop}
@@ -169,15 +159,10 @@ export default Podcast = ({ navigation }) => {
               size={85}
               margins={20}
             />
-            // )
-          }
+          )}
         </Layout>
       ) : null}
     </View>
-    //      )
-    //     );
-    //   }}
-    // </AppContext.Consumer>
   );
 };
 

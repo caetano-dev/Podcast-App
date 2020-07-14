@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { useState, Component, useContext, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import { Layout, Text, Icon } from "@ui-kitten/components";
 
@@ -73,6 +73,8 @@ export class Latest extends Component {
 export default Latest;
 
 export const Fav = ({ layout, epTitle, desc, epNum }) => {
+  const { state } = useContext(AppContext);
+
   return (
     <Layout
       style={{
@@ -105,6 +107,10 @@ export const Fav = ({ layout, epTitle, desc, epNum }) => {
 };
 
 export const Archive = ({ layout }) => {
+  const { state } = useContext(AppContext);
+  const catalog = state.episodes;
+  const ordered = catalog.sort((a, b) => (a.id < b.id ? 1 : -1));
+
   return (
     <Layout
       style={{
@@ -127,28 +133,14 @@ export const Archive = ({ layout }) => {
             }}
           >
             <ScrollView>
-              {/* <AppContext.Consumer>
-                {(context) => {
-                  const catalog = context.state.episodes.reflex;
-                  const sortedCatalog = catalog.sort((a, b) =>
-                    a.id < b.id ? 1 : -1
-                  );
-
-                  return (
-                    catalog &&
-                    sortedCatalog.map((v, i) => {
-                      return ( */}
-              <ArchiveItem
-                // key={i}
-                epTitle={"v.title"}
-                desc={"v.description"}
-                epNum={"v.id"}
-              />
-              {/* );
-                    })
-                  );
-                }}
-              </AppContext.Consumer> */}
+              {ordered.map((v, i) => (
+                <ArchiveItem
+                  key={i}
+                  epTitle={v.title}
+                  desc={v.description}
+                  epNum={v.id}
+                />
+              ))}
             </ScrollView>
           </Layout>
         }
