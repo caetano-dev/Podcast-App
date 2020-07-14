@@ -151,7 +151,6 @@ export default Podcast = ({ navigation }) => {
           {state.latestEpisode && (
             <PlayerControls
               src={state.latestEpisode.url}
-              demo={"state.player.demo"}
               //   playerActive={context.playerActive}
               //   playerInactive={context.playerInactive}
               //   handleStop={context.handleStop}

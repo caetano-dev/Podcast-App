@@ -30,41 +30,7 @@ export class Latest extends Component {
           backgroundColor: null,
         }}
       >
-        {/* <AppContext.Consumer>
-          {(appContext) => (
-            <EngagementContext.Consumer>
-              {(engagementContext) => {
-                const catalog = appContext.state.episodes.reflex;
-
-                let latestEpId = Math.max.apply(
-                  Math,
-                  catalog &&
-                    catalog.map((o) => {
-                      return o.id;
-                    })
-                );
-                let latestEpisode =
-                  catalog &&
-                  catalog.find((o) => {
-                    return o.id == latestEpId;
-                  });
-                return (
-                  catalog && ( */}
-        <LatestItem
-          epTitle={"title"}
-          desc={"desc"}
-          epNum={`Ep. ${"0"}`}
-          ad={"ad"}
-          cid={"latestEpisode.cid"}
-          engagementLoad={"engagementContext.state.engagementLoad"}
-          infoSection={"appContext.state.infoSection"}
-        />
-        {/* )
-                );
-              }}
-            </EngagementContext.Consumer>
-          )}
-        </AppContext.Consumer> */}
+        <LatestItem />
       </Layout>
     );
   }
@@ -139,6 +105,7 @@ export const Archive = ({ layout }) => {
                   epTitle={v.title}
                   desc={v.description}
                   epNum={v.id}
+                  src={v.url}
                 />
               ))}
             </ScrollView>

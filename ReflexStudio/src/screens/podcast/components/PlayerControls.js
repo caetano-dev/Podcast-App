@@ -1,39 +1,104 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Icon, Text, Layout } from "@ui-kitten/components";
 import { Audio } from "expo-av";
 import AppContext from "../../../../context/AppContext";
 
-export default PlayerControls = ({
-  size,
-  margins,
-  setUpAudio,
-  handleStop,
-  playbackInstance,
-  demo,
-  src,
-}) => {
+export default PlayerControls = ({ size, margins, src }) => {
+  const { state, dispatch } = useContext(AppContext);
+  const [player, setPlayer] = useState({
+    demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+    playbackInstance: null,
+    isPlaying: false,
+    volume: 1.0,
+    playButton: false,
+    pauseButtonClicked: false,
+    nextTrackClicked: false,
+    prevTrackClicked: false,
+    playbackInstance: null,
+    isBuffering: null,
+  });
+
   useEffect(() => {
+    src && setUpAudio(src);
     // pauseButtonClicked ? null : setUpAudio(src);
     // playbackInstance ? null : setUpAudio(src);
   }, []);
 
+  const handleStop = async (src) => {
+    const { playbackInstance, demo } = player;
+
+    try {
+      await playbackInstance.unloadAsync();
+
+      setPlayer((prevState) => ({
+        ...prevState,
+        playButton: false,
+        isPlaying: false,
+        pauseButtonClicked: false,
+        playbackInstance: null,
+      }));
+    } catch (error) {
+      console.log("Audio Setup", error);
+    }
+  };
+
+  const handlePause = async () => {
+    const { playbackInstance, isPlaying, pauseButtonClicked } = player;
+    await playbackInstance.pauseAsync().then(
+      setPlayer((prevState) => ({
+        ...prevState,
+        pauseButtonClicked: !pauseButtonClicked,
+      }))
+    );
+  };
+
+  const handlePlay = async () => {
+    const { playbackInstance, isPlaying, pauseButtonClicked } = player;
+    await playbackInstance.playAsync().then(
+      setPlayer((prevState) => ({
+        ...prevState,
+        isPlaying: true,
+        pauseButtonClicked: !pauseButtonClicked,
+      }))
+      // console.log("playbackInstance @ playpause", playbackInstance),
+      // console.log("isPlaying @ playpause", isPlaying)
+    );
+  };
+
+  const onPlaybackStatusUpdate = (status) => {
+    setPlayer((prevState) => ({
+      ...prevState,
+      isBuffering: status.isBuffering,
+    }));
+  };
+
+  const setUpAudio = async (src) => {
+    const { isPlaying, volume } = player;
+
+    try {
+      const playbackInstance = new Audio.Sound();
+      const source = {
+        uri: src,
+      };
+
+      const status = {
+        shouldPlay: isPlaying,
+        volume: volume,
+      };
+      playbackInstance.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+      await playbackInstance.loadAsync(source, status, false);
+
+      setPlayer((prevState) => ({
+        ...prevState,
+        playbackInstance: playbackInstance,
+      }));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
-    // <AppContext.Consumer>
-    //   {(context) => {
-    //     const {
-    //       isPlaying,
-    //       playButton,
-    //       pauseButtonClicked,
-    //       playbackInstance,
-    //     } = context.state.player;
-    //     const { handlePlay, handlePause } = context;
-    //     console.log(
-    //       "playbackInstance from playercontrols",
-    //       Boolean(playbackInstance)
-    //     );
-    //     return (
-    // playbackInstance && (
     <Layout
       style={{
         flex: 1,
@@ -66,56 +131,56 @@ export default PlayerControls = ({
 
       {/* {DONT DELETE */}
 
-      {/* isPlaying ? (
-                <View>
-                  <Icon
-                    name="stop-circle"
-                    onPress={() => {
-                      handleStop(src);
-                    }}
-                    style={{ height: size, width: size }}
-                  />
-                </View>
-              ) : null} */}
+      {player.isPlaying ? (
+        <View>
+          <Icon
+            name="stop-circle"
+            onPress={() => {
+              handleStop(src);
+            }}
+            style={{ height: size, width: size }}
+          />
+        </View>
+      ) : null}
 
-      {/* <View>
-                {isPlaying ? (
-                  pauseButtonClicked ? (
-                    <Icon
-                      name="pause-circle"
-                      onPress={() => {
-                        handlePause();
-                      }}
-                      style={{
-                        height: size,
-                        width: size,
-                      }}
-                    />
-                  ) : (
-                    <Icon
-                      name="play-circle"
-                      onPress={() => {
-                        handlePlay();
-                      }}
-                      style={{
-                        height: size,
-                        width: size,
-                      }}
-                    />
-                  )
-                ) : ( */}
-      <Icon
-        name="play-circle-outline"
-        onPress={() => {
-          handlePlay();
-        }}
-        style={{
-          height: size,
-          width: size,
-        }}
-      />
-      {/* )}
-              </View> */}
+      <View>
+        {player.isPlaying ? (
+          player.pauseButtonClicked ? (
+            <Icon
+              name="pause-circle"
+              onPress={() => {
+                handlePause();
+              }}
+              style={{
+                height: size,
+                width: size,
+              }}
+            />
+          ) : (
+            <Icon
+              name="play-circle"
+              onPress={() => {
+                handlePlay();
+              }}
+              style={{
+                height: size,
+                width: size,
+              }}
+            />
+          )
+        ) : (
+          <Icon
+            name="play-circle-outline"
+            onPress={() => {
+              handlePlay();
+            }}
+            style={{
+              height: size,
+              width: size,
+            }}
+          />
+        )}
+      </View>
 
       {/* {DONT DELETE */}
 
@@ -139,9 +204,5 @@ export default PlayerControls = ({
           )}
         </View> */}
     </Layout>
-    //       )
-    //     );
-    //   }}
-    // </AppContext.Consumer>
   );
 };
