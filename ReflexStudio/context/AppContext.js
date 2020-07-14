@@ -5,6 +5,7 @@ const AppContext = createContext({
   infoSection: false,
   adSection: false,
   episodes: {},
+  latestEpisode: null,
   player: {
     demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
     playbackInstance: null,

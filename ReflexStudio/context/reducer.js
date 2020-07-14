@@ -12,6 +12,11 @@ export default function reducer(state, { type, payload }) {
         ...state,
         episodes: payload,
       };
+    case "GET_LATEST_EPISODE":
+      return {
+        ...state,
+        latestEpisode: payload,
+      };
 
     default:
       return state;

@@ -184,6 +184,7 @@ export const InfoButton = () => {
   // const [info, setInfo] = useState(false);
 
   return (
+    //TODO fix switchs
     // <AppContext.Consumer>
     //   {(context) => {
     //     return context.state.infoSection ? (

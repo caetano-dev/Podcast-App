@@ -32,9 +32,8 @@ import StackPile from "./StackPile";
 const App = () => {
   const initialState = useContext(AppContext);
   const [state, dispatch] = useReducer(reducer, initialState);
-  //TODO make async queries to db from api/catalogue.js in useEffect
-  //     then with the promise returned use .then() to execute dispatch
-  //     with the payload being cataloue data
+  const catalog = state.episodes.reflex;
+
   useEffect(() => {
     //get auth user info
     firebase.auth().onAuthStateChanged((user) => {
@@ -49,14 +48,27 @@ const App = () => {
     });
 
     //get episodes
-    getCatalogue().then((value) =>
-      dispatch({
+    getCatalogue().then((value) => {
+      const catalogue = value.reflex;
+      //get latest episode
+      let latestEpId = Math.max.apply(
+        Math,
+        catalogue.map((o) => {
+          return o.id;
+        })
+      );
+      let latestEpisode = catalogue.find((o) => {
+        return o.id == latestEpId;
+      });
+
+      return dispatch({
         type: "GET_CATALOGUE",
         payload: value,
-      })
-    );
+        type: "GET_LATEST_EPISODE",
+        payload: latestEpisode,
+      });
+    });
   }, []);
-
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       <IconRegistry icons={EvaIconsPack} />

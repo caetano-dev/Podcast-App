@@ -1,5 +1,3 @@
-// TODO get catalogue here
-
 import firebase from "../../firebase";
 import "@firebase/firestore";
 
