@@ -120,18 +120,16 @@ export const LatestItem = ({
                     marginLeft: 10,
                   }}
                 >
-                  {
-                    //engagementContext.state.adSection ? (
-                    //   <>
-                    //     <Text category="s1" style={{ color: "black" }}>
-                    //       Sponsored Track
-                    //     </Text>
-                    //     <Text style={{ color: "black" }}>{ad}</Text>
-                    //   </>
-                    // ) :
-
-                    null
-                  }
+                  {state.adSection ? (
+                    <>
+                      <Text category="s1" style={{ color: "black" }}>
+                        Sponsored Track
+                      </Text>
+                      <Text style={{ color: "black" }}>
+                        {state.latestEpisode.ads}
+                      </Text>
+                    </>
+                  ) : null}
                 </View>
               </View>
 

@@ -24,6 +24,11 @@ export default function reducer(state, { type, payload }) {
         ...state,
         infoSection: payload,
       };
+    case "FLIP_ADS":
+      return {
+        ...state,
+        adSection: payload,
+      };
 
     default:
       return state;

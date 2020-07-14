@@ -210,28 +210,32 @@ export const InfoButton = () => {
 };
 
 export const AdButton = () => {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
 
-  return (
-    // <AppContext.Consumer>
-    //   {(context) => {
-    //     return context.state.adSection ? (
-    //       <Icon
-    //         name="bell"
-    //         fill="#E1940F"
-    //         onPress={() => context.closeAd()}
-    //         style={{ marginLeft: 10, height: 30, width: 30 }}
-    //       />
-    //     ) : (
+  return state.adSection ? (
+    <Icon
+      name="bell"
+      fill="#E1940F"
+      onPress={() =>
+        dispatch({
+          type: "FLIP_ADS",
+          payload: !state.adSection,
+        })
+      }
+      style={{ marginLeft: 10, height: 30, width: 30 }}
+    />
+  ) : (
     <Icon
       name="bell-off"
       fill="gray"
-      onPress={() => context.openAd()}
+      onPress={() =>
+        dispatch({
+          type: "FLIP_ADS",
+          payload: !state.adSection,
+        })
+      }
       style={{ marginLeft: 10, height: 30, width: 30 }}
     />
-    //     );
-    //   }}
-    // </AppContext.Consumer>
   );
 };
 
