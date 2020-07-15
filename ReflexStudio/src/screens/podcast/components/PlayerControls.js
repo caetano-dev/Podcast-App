@@ -4,6 +4,15 @@ import { Button, Icon, Text, Spinner, Layout } from "@ui-kitten/components";
 import { Audio } from "expo-av";
 import AppContext from "../../../../context/AppContext";
 
+Audio.setAudioModeAsync({
+  allowsRecordingIOS: false,
+  interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+  playsInSilentModeIOS: true,
+  shouldDuckAndroid: true,
+  interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+  playThroughEarpieceAndroid: false,
+});
+
 export default PlayerControls = ({ size, margins, src }) => {
   const { state, dispatch } = useContext(AppContext);
   const [player, setPlayer] = useState({
@@ -21,23 +30,23 @@ export default PlayerControls = ({ size, margins, src }) => {
 
   useEffect(() => {
     src && setUpAudio(src);
+    console.log("here", src);
     // pauseButtonClicked ? null : setUpAudio(src);
     // playbackInstance ? null : setUpAudio(src);
   }, []);
 
   const handleStop = async (src) => {
     const { playbackInstance, demo } = player;
-
     try {
-      await playbackInstance.unloadAsync();
-
-      setPlayer((prevState) => ({
-        ...prevState,
-        playButton: false,
-        isPlaying: false,
-        pauseButtonClicked: false,
-        playbackInstance: null,
-      }));
+      playbackInstance &&
+        (await playbackInstance.unloadAsync()) &&
+        setPlayer((prevState) => ({
+          ...prevState,
+          playButton: false,
+          isPlaying: false,
+          pauseButtonClicked: false,
+          playbackInstance: null,
+        }));
     } catch (error) {
       console.log("Audio Setup", error);
     }
@@ -135,8 +144,8 @@ export default PlayerControls = ({ size, margins, src }) => {
         <View>
           <Icon
             name="stop-circle"
-            onPress={() => {
-              handleStop(src);
+            onPress={async () => {
+              await handleStop(src);
             }}
             style={{ height: size, width: size }}
           />

@@ -96,7 +96,7 @@ export const Fav = ({ layout, epTitle, desc, epNum }) => {
         flex={1}
         borderWidth={5}
         radius={20}
-        bgColor={"white"}
+        bgColor={"gray"}
         content={
           <Layout
             style={{
@@ -107,7 +107,7 @@ export const Fav = ({ layout, epTitle, desc, epNum }) => {
             }}
           >
             <ScrollView>
-              <Text style={styles.text} category="h6" status="basic">
+              <Text style={styles.text} category="h6" status="control">
                 Favourited content here
               </Text>
               {/* <FavItem epTitle={epTitle} desc={desc} epNum={epNum} /> */}
@@ -131,7 +131,7 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
         flex={1}
         borderWidth={5}
         radius={20}
-        bgColor={"white"}
+        bgColor={"gray"}
         content={
           <Layout
             style={{
@@ -142,7 +142,7 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
             }}
           >
             <ScrollView>
-              <Text style={styles.text} category="h6" status="basic">
+              <Text style={styles.text} category="h6" status="control">
                 Downloaded content here
               </Text>
               {/* <DownloadItem epTitle={epTitle} desc={desc} epNum={epNum} /> */}
@@ -160,6 +160,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    margin: 2,
+    margin: 10,
   },
 });
