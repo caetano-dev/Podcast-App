@@ -1,5 +1,5 @@
-import React, { useState, Component } from "react";
-import { View, ScrollView } from "react-native";
+import React, { useState, Component, useContext, useEffect } from "react";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { Layout, Text, Icon } from "@ui-kitten/components";
 
 import {
@@ -10,21 +10,19 @@ import {
 import PodCard from "../../../components/PodCard.js";
 import PlayerControls from "./PlayerControls";
 import { DownloadItem, ArchiveItem, FavItem, LatestItem } from "./ContentItem";
-import { AppContext } from "../../../context/AppContext";
-import { EngagementContext } from "../../../context/EngagementContext";
+import AppContext from "../../../../context/AppContext";
+//import { EngagementContext } from "../../../context/EngagementContext";
 
 export class Latest extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      audio: false,
-    };
   }
 
   render() {
     const { layout, epTitle, desc, epNum, ad } = this.props;
-    const { audio } = this.state;
 
+    //TODO remove LatestItem from ContextItem.js and put it directly
+    //     here
     return (
       <Layout
         style={{
@@ -32,42 +30,7 @@ export class Latest extends Component {
           backgroundColor: null,
         }}
       >
-        <AppContext.Consumer>
-          {(appContext) => (
-            <EngagementContext.Consumer>
-              {(engagementContext) => {
-                const catalog = appContext.state.episodes.reflex;
-
-                let latestEpId = Math.max.apply(
-                  Math,
-                  catalog &&
-                    catalog.map((o) => {
-                      return o.id;
-                    })
-                );
-                let latestEpisode =
-                  catalog &&
-                  catalog.find((o) => {
-                    return o.id == latestEpId;
-                  });
-                return (
-                  catalog && (
-                    <LatestItem
-                      audio={audio}
-                      epTitle={latestEpisode.title}
-                      desc={latestEpisode.description}
-                      epNum={`Ep. ${latestEpisode.id}`}
-                      ad={latestEpisode.ads}
-                      cid={latestEpisode.cid}
-                      engagementLoad={engagementContext.state.engagementLoad}
-                      infoSection={appContext.state.infoSection}
-                    />
-                  )
-                );
-              }}
-            </EngagementContext.Consumer>
-          )}
-        </AppContext.Consumer>
+        <LatestItem />
       </Layout>
     );
   }
@@ -75,7 +38,11 @@ export class Latest extends Component {
 
 export default Latest;
 
-export const Fav = ({ layout, epTitle, desc, epNum }) => {
+export const Archive = ({ layout }) => {
+  const { state } = useContext(AppContext);
+  const catalog = state.episodes;
+  const ordered = catalog.sort((a, b) => (a.id < b.id ? 1 : -1));
+
   return (
     <Layout
       style={{
@@ -98,7 +65,15 @@ export const Fav = ({ layout, epTitle, desc, epNum }) => {
             }}
           >
             <ScrollView>
-              <FavItem epTitle={epTitle} desc={desc} epNum={epNum} />
+              {ordered.map((v, i) => (
+                <ArchiveItem
+                  key={i}
+                  epTitle={v.title}
+                  desc={v.description}
+                  epNum={v.id}
+                  src={v.url}
+                />
+              ))}
             </ScrollView>
           </Layout>
         }
@@ -107,7 +82,9 @@ export const Fav = ({ layout, epTitle, desc, epNum }) => {
   );
 };
 
-export const Archive = ({ layout }) => {
+export const Fav = ({ layout, epTitle, desc, epNum }) => {
+  const { state } = useContext(AppContext);
+
   return (
     <Layout
       style={{
@@ -119,7 +96,7 @@ export const Archive = ({ layout }) => {
         flex={1}
         borderWidth={5}
         radius={20}
-        bgColor={"white"}
+        bgColor={"gray"}
         content={
           <Layout
             style={{
@@ -130,28 +107,10 @@ export const Archive = ({ layout }) => {
             }}
           >
             <ScrollView>
-              <AppContext.Consumer>
-                {(context) => {
-                  const catalog = context.state.episodes.reflex;
-                  const sortedCatalog = catalog.sort((a, b) =>
-                    a.id < b.id ? 1 : -1
-                  );
-
-                  return (
-                    catalog &&
-                    sortedCatalog.map((v, i) => {
-                      return (
-                        <ArchiveItem
-                          key={i}
-                          epTitle={v.title}
-                          desc={v.description}
-                          epNum={v.id}
-                        />
-                      );
-                    })
-                  );
-                }}
-              </AppContext.Consumer>
+              <Text style={styles.text} category="h6" status="control">
+                Favourited content here
+              </Text>
+              {/* <FavItem epTitle={epTitle} desc={desc} epNum={epNum} /> */}
             </ScrollView>
           </Layout>
         }
@@ -172,7 +131,7 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
         flex={1}
         borderWidth={5}
         radius={20}
-        bgColor={"white"}
+        bgColor={"gray"}
         content={
           <Layout
             style={{
@@ -183,7 +142,10 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
             }}
           >
             <ScrollView>
-              <DownloadItem epTitle={epTitle} desc={desc} epNum={epNum} />
+              <Text style={styles.text} category="h6" status="control">
+                Downloaded content here
+              </Text>
+              {/* <DownloadItem epTitle={epTitle} desc={desc} epNum={epNum} /> */}
             </ScrollView>
           </Layout>
         }
@@ -191,3 +153,13 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  text: {
+    margin: 10,
+  },
+});

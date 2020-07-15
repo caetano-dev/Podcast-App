@@ -1,9 +1,9 @@
-import React, { memo } from "react";
+import React from "react";
 import { ActivityIndicator } from "react-native";
 
 import firebase from "../../../firebase";
 import "firebase/auth";
-import Background from "../../components/Background";
+import { Background } from "../../components/onBoard";
 
 const AuthLoadingScreen = ({ navigation }) => {
   firebase.auth().onAuthStateChanged((user) => {
@@ -23,4 +23,4 @@ const AuthLoadingScreen = ({ navigation }) => {
   );
 };
 
-export default memo(AuthLoadingScreen);
+export default AuthLoadingScreen;
