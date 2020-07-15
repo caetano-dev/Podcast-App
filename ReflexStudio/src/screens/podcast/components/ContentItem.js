@@ -175,22 +175,34 @@ export const FavItem = ({ epTitle, desc, epNum }) => {
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "space-between",
             }}
           >
-            <Text category="h3" style={{ fontWeight: "bold", color: "black" }}>
-              {epTitle}
-            </Text>
             <View
               style={{
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: "flex-end",
+                alignItems: "baseline",
               }}
             >
-              <LikeButton liked />
-              <FavButton />
+              <Text
+                category="s1"
+                style={{ fontWeight: "bold", color: "black" }}
+              >
+                {epTitle}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                alignItems: "baseline",
+              }}
+            >
+              <LikeButton />
+              <FavButton favouited />
             </View>
           </View>
           <View
@@ -212,12 +224,20 @@ export const FavItem = ({ epTitle, desc, epNum }) => {
               <View>
                 <DownloadButton />
               </View>
-              <View>{/* <PlayerControls size={40} /> */}</View>
+              <View>
+                <PlayerControls size={45} src={src} />
+              </View>
             </View>
 
-            <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "flex-end",
+              }}
+            >
               <Text category="h4" style={{ color: "black" }}>
-                {epNum}
+                Ep.{epNum}
               </Text>
             </View>
           </View>
@@ -251,7 +271,14 @@ export const ArchiveItem = ({ epTitle, desc, epNum, src }) => {
               flexDirection: "row",
             }}
           >
-            <View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "baseline",
+              }}
+            >
               <Text
                 category="s1"
                 style={{ fontWeight: "bold", color: "black" }}
@@ -264,8 +291,8 @@ export const ArchiveItem = ({ epTitle, desc, epNum, src }) => {
               style={{
                 flex: 1,
                 flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "flex-end",
+                justifyContent: "flex-end",
+                alignItems: "baseline",
               }}
             >
               <LikeButton />
@@ -296,7 +323,13 @@ export const ArchiveItem = ({ epTitle, desc, epNum, src }) => {
               </View>
             </View>
 
-            <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "flex-end",
+              }}
+            >
               <Text category="h4" style={{ color: "black" }}>
                 Ep.{epNum}
               </Text>
@@ -330,18 +363,30 @@ export const DownloadItem = ({ epTitle, desc, epNum }) => {
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "space-between",
             }}
           >
-            <Text category="h3" style={{ fontWeight: "bold", color: "black" }}>
-              {epTitle}
-            </Text>
             <View
               style={{
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: "flex-end",
+                alignItems: "baseline",
+              }}
+            >
+              <Text
+                category="s1"
+                style={{ fontWeight: "bold", color: "black" }}
+              >
+                {epTitle}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                alignItems: "baseline",
               }}
             >
               <LikeButton liked />
@@ -367,12 +412,17 @@ export const DownloadItem = ({ epTitle, desc, epNum }) => {
               <View>
                 <DownloadButton downloaded />
               </View>
-              <View>{/* <PlayerControls size={40} /> */}</View>
             </View>
 
-            <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "flex-end",
+              }}
+            >
               <Text category="h4" style={{ color: "black" }}>
-                {epNum}
+                Ep.{epNum}
               </Text>
             </View>
           </View>

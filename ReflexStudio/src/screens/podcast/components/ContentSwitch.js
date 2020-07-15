@@ -1,5 +1,5 @@
 import React, { useState, Component, useContext, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { Layout, Text, Icon } from "@ui-kitten/components";
 
 import {
@@ -37,40 +37,6 @@ export class Latest extends Component {
 }
 
 export default Latest;
-
-export const Fav = ({ layout, epTitle, desc, epNum }) => {
-  const { state } = useContext(AppContext);
-
-  return (
-    <Layout
-      style={{
-        flex: layout,
-        backgroundColor: null,
-      }}
-    >
-      <PodCard
-        flex={1}
-        borderWidth={5}
-        radius={20}
-        bgColor={"white"}
-        content={
-          <Layout
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              backgroundColor: null,
-              justifyContent: "space-between",
-            }}
-          >
-            <ScrollView>
-              <FavItem epTitle={epTitle} desc={desc} epNum={epNum} />
-            </ScrollView>
-          </Layout>
-        }
-      />
-    </Layout>
-  );
-};
 
 export const Archive = ({ layout }) => {
   const { state } = useContext(AppContext);
@@ -116,6 +82,43 @@ export const Archive = ({ layout }) => {
   );
 };
 
+export const Fav = ({ layout, epTitle, desc, epNum }) => {
+  const { state } = useContext(AppContext);
+
+  return (
+    <Layout
+      style={{
+        flex: layout,
+        backgroundColor: null,
+      }}
+    >
+      <PodCard
+        flex={1}
+        borderWidth={5}
+        radius={20}
+        bgColor={"white"}
+        content={
+          <Layout
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              backgroundColor: null,
+              justifyContent: "space-between",
+            }}
+          >
+            <ScrollView>
+              <Text style={styles.text} category="h6" status="basic">
+                Favourited content here
+              </Text>
+              {/* <FavItem epTitle={epTitle} desc={desc} epNum={epNum} /> */}
+            </ScrollView>
+          </Layout>
+        }
+      />
+    </Layout>
+  );
+};
+
 export const Download = ({ layout, epTitle, desc, epNum }) => {
   return (
     <Layout
@@ -139,7 +142,10 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
             }}
           >
             <ScrollView>
-              <DownloadItem epTitle={epTitle} desc={desc} epNum={epNum} />
+              <Text style={styles.text} category="h6" status="basic">
+                Downloaded content here
+              </Text>
+              {/* <DownloadItem epTitle={epTitle} desc={desc} epNum={epNum} /> */}
             </ScrollView>
           </Layout>
         }
@@ -147,3 +153,13 @@ export const Download = ({ layout, epTitle, desc, epNum }) => {
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  text: {
+    margin: 2,
+  },
+});
