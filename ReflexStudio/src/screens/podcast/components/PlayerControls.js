@@ -29,27 +29,25 @@ export default PlayerControls = ({ size, margins, src }) => {
   });
 
   useEffect(() => {
-    src && setUpAudio(src);
-    console.log("here", src);
+    console.log("here", Boolean(player.isPlaying));
+
+    if (!player.playbackInstance) {
+      src && setUpAudio(src);
+    }
     // pauseButtonClicked ? null : setUpAudio(src);
     // playbackInstance ? null : setUpAudio(src);
-  }, []);
+  }, [player.isPlaying]);
 
   const handleStop = async (src) => {
     const { playbackInstance, demo } = player;
-    try {
-      playbackInstance &&
-        (await playbackInstance.unloadAsync()) &&
-        setPlayer((prevState) => ({
-          ...prevState,
-          playButton: false,
-          isPlaying: false,
-          pauseButtonClicked: false,
-          playbackInstance: null,
-        }));
-    } catch (error) {
-      console.log("Audio Setup", error);
-    }
+    playbackInstance.unloadAsync();
+    setPlayer((prevState) => ({
+      ...prevState,
+      playButton: false,
+      isPlaying: false,
+      pauseButtonClicked: false,
+      playbackInstance: null,
+    }));
   };
 
   const handlePause = async () => {
@@ -108,17 +106,18 @@ export default PlayerControls = ({ size, margins, src }) => {
   };
 
   return (
-    <Layout
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        backgroundColor: null,
-        margin: margins,
-        alignItems: "center",
-      }}
-    >
-      {/* <View>
+    player.playbackInstance && (
+      <Layout
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          backgroundColor: null,
+          margin: margins,
+          alignItems: "center",
+        }}
+      >
+        {/* <View>
           {prevTrackClicked ? (
             <Icon
               name="arrow-left"
@@ -138,36 +137,48 @@ export default PlayerControls = ({ size, margins, src }) => {
           )}
         </View> */}
 
-      {/* {DONT DELETE */}
+        {/* {DONT DELETE */}
 
-      {player.isPlaying ? (
-        <View>
-          <Icon
-            name="stop-circle"
-            onPress={async () => {
-              await handleStop(src);
-            }}
-            style={{ height: size, width: size }}
-          />
-        </View>
-      ) : null}
-
-      <View>
         {player.isPlaying ? (
-          player.pauseButtonClicked ? (
+          <View>
             <Icon
-              name="pause-circle"
-              onPress={() => {
-                handlePause();
+              name="stop-circle"
+              onPress={async () => {
+                await handleStop(src);
               }}
-              style={{
-                height: size,
-                width: size,
-              }}
+              style={{ height: size, width: size }}
             />
+          </View>
+        ) : null}
+
+        <View>
+          {player.isPlaying ? (
+            player.pauseButtonClicked ? (
+              <Icon
+                name="pause-circle"
+                onPress={() => {
+                  handlePause();
+                }}
+                style={{
+                  height: size,
+                  width: size,
+                }}
+              />
+            ) : (
+              <Icon
+                name="play-circle"
+                onPress={() => {
+                  handlePlay();
+                }}
+                style={{
+                  height: size,
+                  width: size,
+                }}
+              />
+            )
           ) : (
             <Icon
-              name="play-circle"
+              name="play-circle-outline"
               onPress={() => {
                 handlePlay();
               }}
@@ -176,24 +187,12 @@ export default PlayerControls = ({ size, margins, src }) => {
                 width: size,
               }}
             />
-          )
-        ) : (
-          <Icon
-            name="play-circle-outline"
-            onPress={() => {
-              handlePlay();
-            }}
-            style={{
-              height: size,
-              width: size,
-            }}
-          />
-        )}
-      </View>
+          )}
+        </View>
 
-      {/* {DONT DELETE */}
+        {/* {DONT DELETE */}
 
-      {/* <View>
+        {/* <View>
           {nextTrackClicked ? (
             <Icon
               name="arrow-right"
@@ -212,6 +211,7 @@ export default PlayerControls = ({ size, margins, src }) => {
             />
           )}
         </View> */}
-    </Layout>
+      </Layout>
+    )
   );
 };
