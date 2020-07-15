@@ -37,8 +37,8 @@ To run development version
 </p>
  `Version 1 (Android) `
   <p float="right">
-<img src="Design/github/1.Dashboard.png" height="560" width="330" />  
-<img src="Design/github/2.Previous.png" height="560" width="330" />  
+<img src="./github-design/1.Dashboard.png" height="560" width="330" />  
+<img src="./github-design/2.Previous.png" height="560" width="330" />  
 </p>
 
 ## Notable Technologies Used
