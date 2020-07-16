@@ -15,6 +15,7 @@ import {
 // import { BackHomeButton } from "../../components/Icons/Icons";
 import PlayerControls from "./components/PlayerControls";
 import { headerSwitch, podSwitch } from "./modules/PodSwitch";
+import { LogoutButton } from "../../components/Icons/Icons";
 
 export default Podcast = ({ navigation }) => {
   const { state, dispatch } = useContext(AppContext);
@@ -73,12 +74,13 @@ export default Podcast = ({ navigation }) => {
       setSelectHeader("Downloaded")
     );
   };
-
+  console.log("usr", state.user);
   return (
     <View style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}>
-      {/* <Layout style={styles.goback}>
-                <BackHomeButton navigation={navigation} />
-              </Layout> */}
+      <Layout style={styles.goback}>
+        {/* <BackHomeButton navigation={navigation} /> */}
+        <LogoutButton />
+      </Layout>
       <Layout style={styles.logo}>
         <Logo height={"100%"} />
       </Layout>
