@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Background, Logo, Button } from "../components/onBoard";
+import { Background, DemoLogo, Button } from "../components/onBoard";
 import { Text } from "@ui-kitten/components";
 
 const OnBoard = ({ navigation }) => (
   <>
     <Background>
-      <Logo />
+      <DemoLogo width={"105%"} />
 
       <Button
         mode="contained"

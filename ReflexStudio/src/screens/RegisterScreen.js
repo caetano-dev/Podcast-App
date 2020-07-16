@@ -9,7 +9,7 @@ import {
 import { signInUser } from "../api/auth";
 import {
   Background,
-  Logo,
+  DemoLogo,
   Header,
   Button,
   TextInput,
@@ -57,7 +57,7 @@ const RegisterScreen = ({ navigation }) => {
     <Background>
       <BackButton goBack={() => navigation.navigate("OnBoard")} />
 
-      <Logo />
+      <DemoLogo width={"100%"} style={{ marginBottom: -30 }} />
 
       <Header>Create Account</Header>
 

@@ -75,7 +75,6 @@ export default Podcast = ({ navigation }) => {
       setSelectHeader("Downloaded")
     );
   };
-  console.log("usr", state.user);
   return (
     <View style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}>
       <View

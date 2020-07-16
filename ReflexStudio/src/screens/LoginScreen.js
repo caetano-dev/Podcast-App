@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import {
   Background,
-  Logo,
+  DemoLogo,
   Header,
   Button,
   TextInput,
@@ -49,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
     <Background>
       <BackButton goBack={() => navigation.navigate("OnBoard")} />
 
-      <Logo />
+      <DemoLogo width={"100%"} />
 
       <Header>Welcome back.</Header>
 

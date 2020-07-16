@@ -20,20 +20,21 @@ connected to `Firestore` (database within Firebase), creating a smoother develop
 To run development version
 
 ```
-  cd ReflexStudio 
+  cd ReflexStudio
   yarn install
   expo start
 ```
-  `run the app either via simulated phone or via expo ios or android app by scanning QR code`
 
+`run the app either via simulated phone or via expo ios or android app by scanning QR code`
 
 # Screenshots
 
-`Updated version (IOS) `
+`Updated version (IOS)`
+
 <p float="left">
-<img src="./github-design/1.2 Dashboard.png" height="560" width="330" />  
-<img src="./github-design/2.2 Previous.png" height="560" width="330" />  
-<img src="./github-design/3.png" height="560" width="330" />  
+<img src="./github-design/3.1.png" height="560" width="330" />  
+<img src="./github-design/3.2.png" height="560" width="330" />  
+<img src="./github-design/3.3.png" height="560" width="330" />  
 </p>
  `Version 1 (Android) `
   <p float="right">

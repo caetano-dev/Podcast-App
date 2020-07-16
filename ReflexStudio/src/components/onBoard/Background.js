@@ -1,20 +1,12 @@
 import React, { memo } from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  KeyboardAvoidingView,
-} from "react-native";
+import { StyleSheet, KeyboardAvoidingView, View } from "react-native";
 
 const Background = ({ children }) => (
-  <ImageBackground
-    source={require("../../assets/background_dot.png")}
-    resizeMode="repeat"
-    style={styles.background}
-  >
+  <View style={styles.background}>
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       {children}
     </KeyboardAvoidingView>
-  </ImageBackground>
+  </View>
 );
 
 const styles = StyleSheet.create({
