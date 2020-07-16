@@ -4,6 +4,7 @@ import { Layout, Text, Button } from "@ui-kitten/components";
 import AppContext from "../../../context/AppContext";
 import PodCard from "../../components/PodCard.js";
 import {
+  DemoLogo,
   Background,
   Logo,
   Header,
@@ -77,13 +78,21 @@ export default Podcast = ({ navigation }) => {
   console.log("usr", state.user);
   return (
     <View style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}>
-      <Layout style={styles.goback}>
+      <View
+        style={{
+          flex: 1,
+          width: 500,
+          height: 500,
+          justifyContent: "space-between",
+        }}
+      >
         {/* <BackHomeButton navigation={navigation} /> */}
-        <LogoutButton />
-      </Layout>
-      <Layout style={styles.logo}>
-        <Logo height={"100%"} />
-      </Layout>
+        <View style={{ flex: 1 }}>
+          <LogoutButton />
+        </View>
+        <DemoLogo width={"80%"} height={"180%"} style={{ marginTop: 20 }} />
+      </View>
+      <Layout style={styles.logo}></Layout>
 
       <Layout style={{ flex: 1, backgroundColor: null }}>
         <PodCard
@@ -169,12 +178,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  goback: {
-    backgroundColor: null,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    marginTop: 10,
-  },
+
   logo: {
     flex: 1,
     backgroundColor: null,
