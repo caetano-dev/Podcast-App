@@ -4,13 +4,13 @@ import { Latest, Fav, Archive, Download } from "../components/ContentSwitch";
 export const headerSwitch = (selectHeader) => {
   switch (selectHeader) {
     default:
-      return <> /Podcast/Reflex/Latest </>;
+      return <> /Podcast/Latest </>;
     case "Favourites":
-      return <> /Podcast/Reflex/Fav </>;
+      return <> /Podcast/Favourites</>;
     case "Archive":
-      return <> /Podcast/Reflex/Archive </>;
+      return <> /Podcast/Archive </>;
     case "Downloaded":
-      return <> /Podcast/Reflex/Saved </>;
+      return <> /Podcast/Downloads </>;
   }
 };
 
