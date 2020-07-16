@@ -15,74 +15,71 @@ Audio.setAudioModeAsync({
 
 export default PlayerControls = ({ size, margins, src }) => {
   const { state, dispatch } = useContext(AppContext);
-  const [player, setPlayer] = useState({
-    demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
-    playbackInstance: null,
-    isPlaying: false,
-    volume: 1.0,
-    playButton: false,
-    pauseButtonClicked: false,
-    nextTrackClicked: false,
-    prevTrackClicked: false,
-    playbackInstance: null,
-    isBuffering: null,
-  });
+  const {
+    playbackInstance,
+    volume,
+    isPlaying,
+    pauseButtonClicked,
+    demo,
+  } = state;
+
+  // const [player, setPlayer] = useState({
+  //   demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+  //   playbackInstance: null,
+  //   isPlaying: false,
+  //   volume: 1.0,
+  //   playButton: false,
+  //   pauseButtonClicked: false,
+  //   isBuffering: null,
+  // });
 
   useEffect(() => {
-    console.log("here", Boolean(player.isPlaying));
-
-    if (!player.playbackInstance) {
-      src && setUpAudio(src);
+    if (!playbackInstance) {
+      setUpAudio(demo);
     }
-    // pauseButtonClicked ? null : setUpAudio(src);
-    // playbackInstance ? null : setUpAudio(src);
-  }, [player.isPlaying]);
+    // if using database
+    //if (!player.playbackInstance) {
+    //   src && setUpAudio(src);
+    // }
+  }, [isPlaying]);
 
   const handleStop = async (src) => {
-    const { playbackInstance, demo } = player;
     playbackInstance.unloadAsync();
-    setPlayer((prevState) => ({
-      ...prevState,
-      playButton: false,
-      isPlaying: false,
-      pauseButtonClicked: false,
-      playbackInstance: null,
-    }));
+    dispatch({
+      type: "PLAYBACK_CLEAR",
+    });
   };
 
   const handlePause = async () => {
-    const { playbackInstance, isPlaying, pauseButtonClicked } = player;
     await playbackInstance.pauseAsync().then(
-      setPlayer((prevState) => ({
-        ...prevState,
-        pauseButtonClicked: !pauseButtonClicked,
-      }))
+      dispatch({
+        type: "PLAYBACK_PAUSE",
+        payload: !pauseButtonClicked,
+      })
     );
   };
 
   const handlePlay = async () => {
-    const { playbackInstance, isPlaying, pauseButtonClicked } = player;
     await playbackInstance.playAsync().then(
-      setPlayer((prevState) => ({
-        ...prevState,
-        isPlaying: true,
-        pauseButtonClicked: !pauseButtonClicked,
-      }))
+      dispatch({
+        type: "PLAYBACK_PLAYING",
+        payload: !pauseButtonClicked,
+      })
+
       // console.log("playbackInstance @ playpause", playbackInstance),
       // console.log("isPlaying @ playpause", isPlaying)
     );
   };
 
   const onPlaybackStatusUpdate = (status) => {
-    setPlayer((prevState) => ({
-      ...prevState,
-      isBuffering: status.isBuffering,
-    }));
+    dispatch({
+      type: "UPDATE_PLAYBACK_BUFFERING",
+      payload: status.isBuffering,
+    });
   };
 
   const setUpAudio = async (src) => {
-    const { isPlaying, volume } = player;
-
+    //    const { isPlaying, volume } = player;
     try {
       const playbackInstance = new Audio.Sound();
       const source = {
@@ -94,19 +91,19 @@ export default PlayerControls = ({ size, margins, src }) => {
         volume: volume,
       };
       playbackInstance.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-      await playbackInstance.loadAsync(source, status, false);
-
-      setPlayer((prevState) => ({
-        ...prevState,
-        playbackInstance: playbackInstance,
-      }));
+      await playbackInstance.loadAsync(source, status, false).then(() =>
+        dispatch({
+          type: "UPDATE_PLAYBACK",
+          payload: playbackInstance,
+        })
+      );
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
   return (
-    player.playbackInstance && (
+    playbackInstance && (
       <Layout
         style={{
           flex: 1,
@@ -139,12 +136,12 @@ export default PlayerControls = ({ size, margins, src }) => {
 
         {/* {DONT DELETE */}
 
-        {player.isPlaying ? (
+        {isPlaying ? (
           <View>
             <Icon
               name="stop-circle"
               onPress={async () => {
-                await handleStop(src);
+                await handleStop(demo);
               }}
               style={{ height: size, width: size }}
             />
@@ -152,8 +149,8 @@ export default PlayerControls = ({ size, margins, src }) => {
         ) : null}
 
         <View>
-          {player.isPlaying ? (
-            player.pauseButtonClicked ? (
+          {isPlaying ? (
+            pauseButtonClicked ? (
               <Icon
                 name="pause-circle"
                 onPress={() => {

@@ -18,6 +18,37 @@ export default function reducer(state, { type, payload }) {
         latestEpisode: payload,
       };
 
+    //player
+    case "UPDATE_PLAYBACK":
+      return {
+        ...state,
+        playbackInstance: payload,
+      };
+    case "UPDATE_PLAYBACK_BUFFERING":
+      return {
+        ...state,
+        isBuffering: payload,
+      };
+    case "PLAYBACK_PLAYING":
+      return {
+        ...state,
+        isPlaying: true,
+        pauseButtonClicked: payload,
+      };
+    case "PLAYBACK_PAUSE":
+      return {
+        ...state,
+        pauseButtonClicked: payload,
+      };
+    case "PLAYBACK_CLEAR":
+      return {
+        ...state,
+        playButton: false,
+        isPlaying: false,
+        pauseButtonClicked: false,
+        playbackInstance: null,
+      };
+
     //buttons
     case "FLIP_INFO":
       return {
