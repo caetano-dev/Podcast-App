@@ -16,16 +16,7 @@ import AppContext from "../../../../context/AppContext";
 
 //import { EngagementContext } from "../../../context/EngagementContext";
 
-export const LatestItem = ({
-  audio,
-  epTitle,
-  desc,
-  epNum,
-  ad,
-  cid,
-  engagementLoad,
-  infoSection,
-}) => {
+export const LatestItem = () => {
   const { state, dispatch } = useContext(AppContext);
 
   const [descState, setDescState] = useState(false);
@@ -56,7 +47,7 @@ export const LatestItem = ({
               style={{
                 flex: 1,
                 flexDirection: "row",
-                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
               <AdButton />
@@ -68,6 +59,11 @@ export const LatestItem = ({
                   justifyContent: "flex-end",
                 }}
               >
+                {state.infoSection ? (
+                  <Text category="c1" status="basic">
+                    Scroll down for more info
+                  </Text>
+                ) : null}
                 <InfoButton />
                 {/*
                          taken out for demo
@@ -315,9 +311,9 @@ export const ArchiveItem = ({ epTitle, desc, epNum, src }) => {
                 alignItems: "center",
               }}
             >
-              <View>
+              {/* <View>
                 <DownloadButton />
-              </View>
+              </View> */}
               <View>
                 <PlayerControls size={45} src={src} />
               </View>

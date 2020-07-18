@@ -20,7 +20,7 @@ export default class PlayerControls extends Component {
         shouldPlay: true,
         isLooping: false,
       },
-      this.handleScreenForSoundStatus
+      this.handleStatusUpdate
     );
 
     this.sound = sound;
@@ -29,16 +29,14 @@ export default class PlayerControls extends Component {
   async _pauseAndPlayRecording() {
     if (this.sound != null) {
       if (this.state.playingStatus == "playing") {
-        //console.log("pausing...");
+        //pause here
         await this.sound.pauseAsync();
-        //console.log("Paused!");
         this.setState({
           playingStatus: "donepause",
         });
       } else {
-        //console.log("playing...");
+        //play here
         await this.sound.playAsync();
-        //console.log("Playing!");
         this.setState({
           playingStatus: "playing",
         });
@@ -55,7 +53,7 @@ export default class PlayerControls extends Component {
     }
   }
 
-  handleScreenForSoundStatus = (status) => {
+  handleStatusUpdate = (status) => {
     if (status.isPlaying && this.state.playingStatus !== "playing") {
       this.setState({ playingStatus: "playing", loading: false });
     } else if (!status.isPlaying && this.state.playingStatus === "playing") {
@@ -78,7 +76,7 @@ export default class PlayerControls extends Component {
   };
 
   render() {
-    const { size, margins, src } = this.props;
+    const { size, margins, src, primarySpinner } = this.props;
     const { playingStatus, loading } = this.state;
     return !loading ? (
       <Layout
@@ -154,7 +152,10 @@ export default class PlayerControls extends Component {
         }}
       >
         <View>
-          <Spinner size="large" status="control" />
+          <Spinner
+            size="giant"
+            status={primarySpinner ? "control" : "primary"}
+          />
         </View>
       </Layout>
     );
