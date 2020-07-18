@@ -16,7 +16,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping, light as theme } from "@eva-design/eva";
 
 //queries
-import { getCatalogue, getUserInfo } from "./src/api/catalogue";
+import { getCatalogue } from "./src/api/catalogue";
 
 //bug fix
 if (!global.btoa) {

@@ -42,7 +42,6 @@ export const Archive = ({ layout }) => {
   const { state } = useContext(AppContext);
   const catalog = state.episodes;
   const ordered = catalog.sort((a, b) => (a.id < b.id ? 1 : -1));
-
   return (
     <Layout
       style={{
@@ -68,6 +67,7 @@ export const Archive = ({ layout }) => {
               {ordered.map((v, i) => (
                 <ArchiveItem
                   key={i}
+                  cid={v.cid}
                   epTitle={v.title}
                   desc={v.description}
                   epNum={v.id}

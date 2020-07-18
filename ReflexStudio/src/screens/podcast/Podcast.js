@@ -160,6 +160,7 @@ export default Podcast = ({ navigation }) => {
         >
           {state.latestEpisode && (
             <PlayerControls
+              cid={state.latestEpisode.cid}
               src={state.latestEpisode.url}
               size={85}
               margins={20}

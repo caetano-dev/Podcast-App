@@ -9,12 +9,14 @@ const AppContext = createContext({
   episodePlaying: false,
   //player
   demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+  isPlaying: null,
   playbackInstance: null,
-  isPlaying: false,
+  pauseButtonClicked: null,
   volume: 1.0,
-  playButton: false,
-  pauseButtonClicked: false,
   isBuffering: null,
+  //player controller
+  //used to dictate the currently playing ep (cid is the measure)
+  currPlayingMedia: null,
 });
 
 export default AppContext;
