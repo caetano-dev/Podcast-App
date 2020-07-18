@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { Component, useEffect, useContext, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Icon, Text, Spinner, Layout } from "@ui-kitten/components";
 import { Audio } from "expo-av";
@@ -13,97 +13,80 @@ Audio.setAudioModeAsync({
   playThroughEarpieceAndroid: false,
 });
 
-export default PlayerControls = ({ size, margins, src }) => {
-  const { state, dispatch } = useContext(AppContext);
-  const {
-    playbackInstance,
-    volume,
-    isPlaying,
-    pauseButtonClicked,
-    demo,
-  } = state;
+export default class PlayerControls extends Component {
+  state = {
+    playingStatus: "noaudio",
+  };
 
-  // const [player, setPlayer] = useState({
-  //   demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
-  //   playbackInstance: null,
-  //   isPlaying: false,
-  //   volume: 1.0,
-  //   playButton: false,
-  //   pauseButtonClicked: false,
-  //   isBuffering: null,
-  // });
+  async startAudioProcess(src) {
+    const { sound } = await Audio.Sound.createAsync(
+      { uri: src },
+      {
+        shouldPlay: true,
+        isLooping: false,
+      },
+      this.handleScreenForSoundStatus
+    );
 
-  useEffect(() => {
-    if (!playbackInstance) {
-      setUpAudio(demo);
+    this.sound = sound;
+  }
+
+  async _pauseAndPlayRecording() {
+    if (this.sound != null) {
+      if (this.state.playingStatus == "playing") {
+        console.log("pausing...");
+        await this.sound.pauseAsync();
+        console.log("Paused!");
+        this.setState({
+          playingStatus: "donepause",
+        });
+      } else {
+        console.log("playing...");
+        await this.sound.playAsync();
+        console.log("Playing!");
+        this.setState({
+          playingStatus: "playing",
+        });
+      }
     }
-    // if using database
-    //if (!player.playbackInstance) {
-    //   src && setUpAudio(src);
-    // }
-  }, [isPlaying]);
+  }
 
-  const handleStop = async (src) => {
-    playbackInstance.unloadAsync();
-    dispatch({
-      type: "PLAYBACK_CLEAR",
-    });
-  };
+  async handleStop() {
+    if (this.sound != null) {
+      console.log("stopping...");
+      await this.sound.stopAsync();
+      console.log("Stopped!");
+      this.setState({
+        playingStatus: "stopped",
+      });
+    }
+  }
 
-  const handlePause = async () => {
-    await playbackInstance.pauseAsync().then(
-      dispatch({
-        type: "PLAYBACK_PAUSE",
-        payload: !pauseButtonClicked,
-      })
-    );
-  };
-
-  const handlePlay = async () => {
-    await playbackInstance.playAsync().then(
-      dispatch({
-        type: "PLAYBACK_PLAYING",
-        payload: !pauseButtonClicked,
-      })
-
-      // console.log("playbackInstance @ playpause", playbackInstance),
-      // console.log("isPlaying @ playpause", isPlaying)
-    );
-  };
-
-  const onPlaybackStatusUpdate = (status) => {
-    dispatch({
-      type: "UPDATE_PLAYBACK_BUFFERING",
-      payload: status.isBuffering,
-    });
-  };
-
-  const setUpAudio = async (src) => {
-    //    const { isPlaying, volume } = player;
-    try {
-      const playbackInstance = new Audio.Sound();
-      const source = {
-        uri: src,
-      };
-
-      const status = {
-        shouldPlay: isPlaying,
-        volume: volume,
-      };
-      playbackInstance.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-      await playbackInstance.loadAsync(source, status, false).then(() =>
-        dispatch({
-          type: "UPDATE_PLAYBACK",
-          payload: playbackInstance,
-        })
-      );
-    } catch (e) {
-      console.error(e);
+  handleScreenForSoundStatus = (status) => {
+    if (status.isPlaying && this.state.playingStatus !== "playing") {
+      this.setState({ playingStatus: "playing" });
+    } else if (!status.isPlaying && this.state.playingStatus === "playing") {
+      this.setState({ playingStatus: "donepause" });
     }
   };
 
-  return (
-    playbackInstance && (
+  handlePlayPause = (src) => {
+    switch (this.state.playingStatus) {
+      case "noaudio":
+      case "stopped":
+        this.startAudioProcess(src);
+        break;
+      case "donepause":
+      case "playing":
+        this._pauseAndPlayRecording();
+        break;
+    }
+  };
+
+  render() {
+    const { size, margins, src } = this.props;
+    const { playingStatus } = this.state;
+    return (
       <Layout
         style={{
           flex: 1,
@@ -136,12 +119,12 @@ export default PlayerControls = ({ size, margins, src }) => {
 
         {/* {DONT DELETE */}
 
-        {isPlaying ? (
+        {playingStatus == "playing" || playingStatus == "donepause" ? (
           <View>
             <Icon
               name="stop-circle"
-              onPress={async () => {
-                await handleStop(demo);
+              onPress={() => {
+                this.handleStop();
               }}
               style={{ height: size, width: size }}
             />
@@ -149,12 +132,12 @@ export default PlayerControls = ({ size, margins, src }) => {
         ) : null}
 
         <View>
-          {isPlaying ? (
-            pauseButtonClicked ? (
+          {playingStatus !== "noaudio" ? (
+            playingStatus == "playing" && playingStatus !== "stopped" ? (
               <Icon
                 name="pause-circle"
                 onPress={() => {
-                  handlePause();
+                  this.handlePlayPause();
                 }}
                 style={{
                   height: size,
@@ -165,7 +148,7 @@ export default PlayerControls = ({ size, margins, src }) => {
               <Icon
                 name="play-circle"
                 onPress={() => {
-                  handlePlay();
+                  this.handlePlayPause(src);
                 }}
                 style={{
                   height: size,
@@ -177,7 +160,7 @@ export default PlayerControls = ({ size, margins, src }) => {
             <Icon
               name="play-circle-outline"
               onPress={() => {
-                handlePlay();
+                this.handlePlayPause(src);
               }}
               style={{
                 height: size,
@@ -209,6 +192,16 @@ export default PlayerControls = ({ size, margins, src }) => {
           )}
         </View> */}
       </Layout>
-    )
-  );
-};
+    );
+  }
+}
+
+// const [player, setPlayer] = useState({
+//   demo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+//   playbackInstance: null,
+//   isPlaying: false,
+//   volume: 1.0,
+//   playButton: false,
+//   pauseButtonClicked: false,
+//   isBuffering: null,
+// });
