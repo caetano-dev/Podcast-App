@@ -14,10 +14,18 @@ Audio.setAudioModeAsync({
 });
 
 export default class PlayerControls extends Component {
-  state = {
-    playingStatus: "noaudio",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      playingStatus: "noaudio",
+      loading: false,
+    };
+  }
 
+  componentDidMount() {
+    const { loading } = this.state;
+    console.log("loader", loading);
+  }
   async startAudioProcess(src) {
     const { sound } = await Audio.Sound.createAsync(
       { uri: src },
@@ -34,16 +42,16 @@ export default class PlayerControls extends Component {
   async _pauseAndPlayRecording() {
     if (this.sound != null) {
       if (this.state.playingStatus == "playing") {
-        console.log("pausing...");
+        //console.log("pausing...");
         await this.sound.pauseAsync();
-        console.log("Paused!");
+        //console.log("Paused!");
         this.setState({
           playingStatus: "donepause",
         });
       } else {
-        console.log("playing...");
+        //console.log("playing...");
         await this.sound.playAsync();
-        console.log("Playing!");
+        //console.log("Playing!");
         this.setState({
           playingStatus: "playing",
         });
@@ -53,9 +61,9 @@ export default class PlayerControls extends Component {
 
   async handleStop() {
     if (this.sound != null) {
-      console.log("stopping...");
+      //console.log("stopping...");
       await this.sound.stopAsync();
-      console.log("Stopped!");
+      //console.log("Stopped!");
       this.setState({
         playingStatus: "stopped",
       });
@@ -64,7 +72,7 @@ export default class PlayerControls extends Component {
 
   handleScreenForSoundStatus = (status) => {
     if (status.isPlaying && this.state.playingStatus !== "playing") {
-      this.setState({ playingStatus: "playing" });
+      this.setState({ playingStatus: "playing", loading: false });
     } else if (!status.isPlaying && this.state.playingStatus === "playing") {
       this.setState({ playingStatus: "donepause" });
     }
@@ -74,6 +82,7 @@ export default class PlayerControls extends Component {
     switch (this.state.playingStatus) {
       case "noaudio":
       case "stopped":
+        this.setState({ loading: true });
         this.startAudioProcess(src);
         break;
       case "donepause":
@@ -85,8 +94,8 @@ export default class PlayerControls extends Component {
 
   render() {
     const { size, margins, src } = this.props;
-    const { playingStatus } = this.state;
-    return (
+    const { playingStatus, loading } = this.state;
+    return !loading ? (
       <Layout
         style={{
           flex: 1,
@@ -191,6 +200,21 @@ export default class PlayerControls extends Component {
             />
           )}
         </View> */}
+      </Layout>
+    ) : (
+      <Layout
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          backgroundColor: null,
+          margin: margins,
+          alignItems: "center",
+        }}
+      >
+        <View>
+          <Spinner size="large" />
+        </View>
       </Layout>
     );
   }
