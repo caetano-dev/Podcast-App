@@ -2,6 +2,7 @@ import React, { useContext, useReducer, useEffect } from "react";
 import firebase from "./firebase";
 import { decode, encode } from "base-64";
 import "./fixtimerbug.js";
+import { Audio } from "expo-av";
 
 //context
 import AppContext from "./context/AppContext";
@@ -34,6 +35,15 @@ const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: false,
+    });
+
     //get auth user info
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
