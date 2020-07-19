@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { View, StyleSheet } from "react-native";
-import { Layout, Text, Button } from "@ui-kitten/components";
+import { Layout, Text, Button, Spinner } from "@ui-kitten/components";
 import AppContext from "../../../context/AppContext";
 import PodCard from "../../components/PodCard.js";
 import {
@@ -165,40 +165,41 @@ export default Podcast = ({ navigation }) => {
             borderWidth={3}
             radius={20}
             content={
-              <Layout
-                style={{
-                  flex: 1,
-                  flexWrap: "wrap",
-                  flexDirection: "column",
-                  backgroundColor: null,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  margin: 5,
-                }}
-              >
-                <View
+              state.archivePlayerObj ? (
+                <Layout
                   style={{
                     flex: 1,
-                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    flexDirection: "column",
+                    backgroundColor: null,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: 5,
                   }}
                 >
                   <View
                     style={{
                       flex: 1,
                       flexDirection: "row",
-                      justifyContent: "left",
-                      marginLeft: 10,
                     }}
                   >
-                    <Text
-                      category="s1"
-                      style={{ fontWeight: "bold", color: "black" }}
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "left",
+                        marginLeft: 10,
+                      }}
                     >
-                      Title
-                    </Text>
-                  </View>
+                      <Text
+                        category="h6"
+                        style={{ fontWeight: "bold", color: "black" }}
+                      >
+                        {state.archivePlayerObj.title}
+                      </Text>
+                    </View>
 
-                  <View
+                    {/* <View
                     style={{
                       flex: 1,
                       flexDirection: "row",
@@ -206,44 +207,61 @@ export default Podcast = ({ navigation }) => {
                       alignItems: "baseline",
                     }}
                   >
-                    {/* <LikeButton />
-                    <FavButton /> */}
+                    <LikeButton />
+                    <FavButton /> 
+                  </View> */}
                   </View>
-                </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: "flex-start",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {state.playingStatus !== "noaudio" ? (
+                        <PlayerControls size={50} />
+                      ) : (
+                        <Spinner />
+                      )}
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <Text category="h4" style={{ color: "black" }}>
+                        Ep.{state.archivePlayerObj.id}
+                      </Text>
+                    </View>
+                  </View>
+                </Layout>
+              ) : (
                 <View
                   style={{
                     flex: 1,
                     flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
+                    justifyContent: "left",
+                    marginLeft: 10,
                   }}
                 >
-                  <View
-                    style={{
-                      flex: 1,
-                      alignItems: "flex-start",
-                      justifyContent: "center",
-                      marginBottom: 20,
-                    }}
+                  <Text
+                    category="h4"
+                    style={{ fontWeight: "bold", color: "black" }}
                   >
-                    <PlayerControls
-                      size={80}
-                      // src={src} cid={cid}
-                    />
-                  </View>
-
-                  <View
-                    style={{
-                      flex: 1,
-                      alignItems: "flex-end",
-                    }}
-                  >
-                    <Text category="h4" style={{ color: "black" }}>
-                      Ep.0
-                    </Text>
-                  </View>
+                    No Episode Loaded
+                  </Text>
                 </View>
-              </Layout>
+              )
             }
           />
         ) : null}

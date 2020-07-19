@@ -27,10 +27,7 @@ export default class PlayerControls extends Component {
       this.handleStatusUpdate
     );
     dispatch({ type: "PLAYER_ACTIVE", payload: sound });
-    dispatch({
-      type: "UPDATE_MEDIA_CONTROL",
-      payload: this.props.cid,
-    });
+
     this.sound = sound;
   }
 
@@ -84,6 +81,11 @@ export default class PlayerControls extends Component {
       this.setState({
         loading: false,
       });
+      this.props.cid &&
+        dispatch({
+          type: "UPDATE_MEDIA_CONTROL",
+          payload: this.props.cid,
+        });
     } else if (!status.isPlaying && state.playingStatus === "playing") {
       dispatch({
         type: "UPDATE_PLAYER_STATUS",
@@ -92,7 +94,7 @@ export default class PlayerControls extends Component {
     }
   };
 
-  handlePlayPause = (src) => {
+  onPlayPause = (src) => {
     const { state, dispatch } = this.context;
 
     switch (state.playingStatus) {
@@ -143,7 +145,7 @@ export default class PlayerControls extends Component {
               <Icon
                 name="pause-circle"
                 onPress={() => {
-                  this.handlePlayPause();
+                  this.onPlayPause();
                 }}
                 style={{
                   height: size,
@@ -154,7 +156,7 @@ export default class PlayerControls extends Component {
               <Icon
                 name="play-circle"
                 onPress={() => {
-                  this.handlePlayPause(state.demo);
+                  this.onPlayPause(src);
                 }}
                 style={{
                   height: size,
@@ -166,7 +168,7 @@ export default class PlayerControls extends Component {
             <Icon
               name="play-circle-outline"
               onPress={() => {
-                this.handlePlayPause(state.demo);
+                this.onPlayPause(src);
               }}
               style={{
                 height: size,

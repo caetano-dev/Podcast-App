@@ -36,6 +36,28 @@ export default function reducer(state, { type, payload }) {
         ...state,
         playingStatus: payload,
       };
+
+    case "UPDATE_ARCHIVE_PLAYER_DATA":
+      return {
+        ...state,
+        archivePlayerObj: payload,
+      };
+
+    case "ARCHIVE_PLAYER_STATUS":
+      return {
+        ...state,
+        archivePlayerLoading: payload,
+      };
+
+    case "ARCHIVE_PLAYER_CLEAR":
+      return {
+        ...state,
+        playingStatus: "noaudio",
+        archivePlayerLoading: false,
+        archivePlayerObj: null,
+        currentMediaLoaded: null,
+      };
+
     //buttons
     case "FLIP_INFO":
       return {
