@@ -19,7 +19,7 @@ export const podSwitch = (select) => {
     default:
       return <Latest layout={2} />;
     case "C":
-      return <Archive layout={4} />;
+      return <Archive layout={2} />;
     case "B":
       return (
         <Fav

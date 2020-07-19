@@ -19,36 +19,23 @@ export default function reducer(state, { type, payload }) {
       };
 
     //player
-    case "UPDATE_PLAYBACK":
+    case "PLAYER_ACTIVE":
       return {
         ...state,
         playbackInstance: payload,
       };
-    case "UPDATE_PLAYBACK_BUFFERING":
+
+    case "UPDATE_MEDIA_CONTROL":
       return {
         ...state,
-        isBuffering: payload,
-      };
-    case "PLAYBACK_PLAYING":
-      return {
-        ...state,
-        isPlaying: true,
-        pauseButtonClicked: payload,
-      };
-    case "PLAYBACK_PAUSE":
-      return {
-        ...state,
-        pauseButtonClicked: payload,
-      };
-    case "PLAYBACK_CLEAR":
-      return {
-        ...state,
-        playButton: false,
-        isPlaying: false,
-        pauseButtonClicked: false,
-        playbackInstance: null,
+        currentMediaLoaded: payload,
       };
 
+    case "UPDATE_PLAYER_STATUS":
+      return {
+        ...state,
+        playingStatus: payload,
+      };
     //buttons
     case "FLIP_INFO":
       return {

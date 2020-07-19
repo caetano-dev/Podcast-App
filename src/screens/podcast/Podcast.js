@@ -77,23 +77,34 @@ export default Podcast = ({ navigation }) => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}>
-      <View
+      {archive ? null : (
+        <>
+          <View
+            style={{
+              flex: 1,
+              width: 500,
+              height: 500,
+              justifyContent: "space-between",
+            }}
+          >
+            {/* <BackHomeButton navigation={navigation} /> */}
+            <View style={{ flex: 1 }}>
+              <LogoutButton />
+            </View>
+
+            <DemoLogo width={"80%"} height={"180%"} style={{ marginTop: 20 }} />
+          </View>
+          <Layout style={styles.logo} />
+        </>
+      )}
+
+      <Layout
         style={{
           flex: 1,
-          width: 500,
-          height: 500,
-          justifyContent: "space-between",
+          backgroundColor: null,
+          marginTop: archive ? 15 : null,
         }}
       >
-        {/* <BackHomeButton navigation={navigation} /> */}
-        <View style={{ flex: 1 }}>
-          <LogoutButton />
-        </View>
-        <DemoLogo width={"80%"} height={"180%"} style={{ marginTop: 20 }} />
-      </View>
-      <Layout style={styles.logo}></Layout>
-
-      <Layout style={{ flex: 1, backgroundColor: null }}>
         <PodCard
           borderWidth={3}
           radius={10}
@@ -147,6 +158,95 @@ export default Podcast = ({ navigation }) => {
             </>
           }
         />
+        {archive ? (
+          //TODO: create state player for archive
+          <PodCard
+            flex={1}
+            borderWidth={3}
+            radius={20}
+            content={
+              <Layout
+                style={{
+                  flex: 1,
+                  flexWrap: "wrap",
+                  flexDirection: "column",
+                  backgroundColor: null,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 5,
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                  }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "left",
+                      marginLeft: 10,
+                    }}
+                  >
+                    <Text
+                      category="s1"
+                      style={{ fontWeight: "bold", color: "black" }}
+                    >
+                      Title
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    {/* <LikeButton />
+                    <FavButton /> */}
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "flex-start",
+                      justifyContent: "center",
+                      marginBottom: 20,
+                    }}
+                  >
+                    <PlayerControls
+                      size={80}
+                      // src={src} cid={cid}
+                    />
+                  </View>
+
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    <Text category="h4" style={{ color: "black" }}>
+                      Ep.0
+                    </Text>
+                  </View>
+                </View>
+              </Layout>
+            }
+          />
+        ) : null}
       </Layout>
 
       {podSwitch(select)}
@@ -162,6 +262,7 @@ export default Podcast = ({ navigation }) => {
             <PlayerControls
               primarySpinner
               src={state.latestEpisode.url}
+              cid={state.latestEpisode.cid}
               size={85}
               margins={20}
             />
@@ -182,7 +283,6 @@ const styles = StyleSheet.create({
   logo: {
     flex: 1,
     backgroundColor: null,
-    marginVertical: 15,
     alignSelf: "center",
   },
   date: {
