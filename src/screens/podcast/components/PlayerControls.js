@@ -117,6 +117,7 @@ export default class PlayerControls extends Component {
     const { playingStatus } = state;
 
     return playingStatus && !loading ? (
+      // console.log(`player status : ${playingStatus}`),
       <Layout
         style={{
           flex: 1,

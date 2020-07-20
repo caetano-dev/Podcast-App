@@ -41,7 +41,6 @@ export default Latest;
 
 export const Archive = ({ layout }) => {
   const { state, dispatch } = useContext(AppContext);
-  const [loading, setLoading] = useState(false);
   const catalog = state.episodes;
   const ordered = catalog.sort((a, b) => (a.id < b.id ? 1 : -1));
 
@@ -65,7 +64,6 @@ export const Archive = ({ layout }) => {
     switch (state.playingStatus) {
       case "noaudio":
       case "stopped":
-        setLoading(true);
         startAudioProcess(src);
         dispatch({
           type: "ARCHIVE_PLAYER_STATUS",
@@ -84,12 +82,16 @@ export const Archive = ({ layout }) => {
           payload: !archivePlayerLoading,
         });
         break;
-      case "donepause":
       case "playing":
+      case "donepause":
         if (state.currentMediaLoaded !== cid) {
-          console.log("issue");
+          console.log("change player");
+          //to clear state and start a new audio           console.log("issue");
           //to clear state and start a new audio process
-          setLoading(false);
+          state.playbackInstance.stopAsync();
+          dispatch({
+            type: "ARCHIVE_PLAYER_CLEAR",
+          });
           handleClearRestore(src, title, id, cid, archivePlayerLoading);
         } else {
           handlePlayPause();
@@ -105,10 +107,8 @@ export const Archive = ({ layout }) => {
     cid,
     archivePlayerLoading
   ) => {
-    await state.playbackInstance.stopAsync();
-
-    setLoading(true);
     startAudioProcess(src);
+
     dispatch({
       type: "ARCHIVE_PLAYER_STATUS",
       payload: archivePlayerLoading,
@@ -171,7 +171,6 @@ export const Archive = ({ layout }) => {
         type: "UPDATE_PLAYER_STATUS",
         payload: "playing",
       });
-      setLoading(false);
     } else if (!status.isPlaying && state.playingStatus === "playing") {
       dispatch({
         type: "UPDATE_PLAYER_STATUS",
@@ -206,12 +205,12 @@ export const Archive = ({ layout }) => {
                 status="primary"
                 style={{ alignSelf: "center" }}
               >
-                Click an episode to play
+                Tap an episode to play, tap again to stop it
               </Text>
               {ordered.map((v, i) => {
                 return (
                   <ArchiveItem
-                    podBGColor={"lightblue"}
+                    podBGColor={"#D7E9F4"}
                     onPress={(src, title, id, cid, archivePlayerLoading) =>
                       //state.demo,
                       onPlayPause(v.url, v.title, v.id, v.cid, true)

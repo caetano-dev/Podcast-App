@@ -68,7 +68,7 @@ export const ArchiveItem = ({
                 </Text>
               </View>
 
-              <View
+              {/* <View
                 style={{
                   flex: 1,
                   flexDirection: "row",
@@ -78,6 +78,17 @@ export const ArchiveItem = ({
               >
                 <LikeButton />
                 <FavButton />
+              </View> */}
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                }}
+              >
+                <Text category="h4" style={{ color: "black" }}>
+                  Ep.{epNum}
+                </Text>
               </View>
             </View>
             <View
@@ -99,17 +110,6 @@ export const ArchiveItem = ({
                   <Spinner />
                 </View>
               ) : null}
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                }}
-              >
-                <Text category="h4" style={{ color: "black" }}>
-                  Ep.{epNum}
-                </Text>
-              </View>
             </View>
           </Layout>
         }

@@ -52,10 +52,11 @@ export default function reducer(state, { type, payload }) {
     case "ARCHIVE_PLAYER_CLEAR":
       return {
         ...state,
-        playingStatus: "noaudio",
-        archivePlayerLoading: false,
+        //playingStatus: "changed",
+        // archivePlayerLoading: false,
+        playbackInstance: null,
         archivePlayerObj: null,
-        currentMediaLoaded: null,
+        // currentMediaLoaded: null,
       };
 
     //buttons
