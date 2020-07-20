@@ -19,34 +19,44 @@ export default function reducer(state, { type, payload }) {
       };
 
     //player
-    case "UPDATE_PLAYBACK":
+    case "PLAYER_ACTIVE":
       return {
         ...state,
         playbackInstance: payload,
       };
-    case "UPDATE_PLAYBACK_BUFFERING":
+
+    case "UPDATE_MEDIA_CONTROL":
       return {
         ...state,
-        isBuffering: payload,
+        currentMediaLoaded: payload,
       };
-    case "PLAYBACK_PLAYING":
+
+    case "UPDATE_PLAYER_STATUS":
       return {
         ...state,
-        isPlaying: true,
-        pauseButtonClicked: payload,
+        playingStatus: payload,
       };
-    case "PLAYBACK_PAUSE":
+
+    case "UPDATE_ARCHIVE_PLAYER_DATA":
       return {
         ...state,
-        pauseButtonClicked: payload,
+        archivePlayerObj: payload,
       };
-    case "PLAYBACK_CLEAR":
+
+    case "ARCHIVE_PLAYER_STATUS":
       return {
         ...state,
-        playButton: false,
-        isPlaying: false,
-        pauseButtonClicked: false,
+        archivePlayerLoading: payload,
+      };
+
+    case "ARCHIVE_PLAYER_CLEAR":
+      return {
+        ...state,
+        //playingStatus: "changed",
+        // archivePlayerLoading: false,
         playbackInstance: null,
+        archivePlayerObj: null,
+        // currentMediaLoaded: null,
       };
 
     //buttons

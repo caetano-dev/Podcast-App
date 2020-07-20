@@ -1,4 +1,6 @@
 reflexStudiosRoot.code-workspace
-nextPhase
+nextPhase/AdminDash
+nextPhase/Design
+nextPhase/website
 node_modules
 packager-info.json

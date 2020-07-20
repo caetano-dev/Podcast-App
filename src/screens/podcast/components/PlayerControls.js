@@ -5,15 +5,19 @@ import { Audio } from "expo-av";
 import AppContext from "../../../../context/AppContext";
 
 export default class PlayerControls extends Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = {
-      playingStatus: "noaudio",
       loading: false,
     };
   }
-
+  componentDidMount() {
+    const { state, dispatch } = this.context;
+  }
   async startAudioProcess(src) {
+    const { state, dispatch } = this.context;
+
     const { sound } = await Audio.Sound.createAsync(
       { uri: src },
       {
@@ -22,47 +26,78 @@ export default class PlayerControls extends Component {
       },
       this.handleStatusUpdate
     );
+    dispatch({ type: "PLAYER_ACTIVE", payload: sound });
 
     this.sound = sound;
   }
 
-  async _pauseAndPlayRecording() {
-    if (this.sound != null) {
-      if (this.state.playingStatus == "playing") {
+  async handlePlayPause() {
+    const { state, dispatch } = this.context;
+
+    if (state.playbackInstance != null) {
+      if (state.playingStatus == "playing") {
         //pause here
-        await this.sound.pauseAsync();
-        this.setState({
-          playingStatus: "donepause",
+        dispatch({
+          type: "UPDATE_PLAYER_STATUS",
+          payload: "donepause",
         });
+        await state.playbackInstance.pauseAsync();
       } else {
         //play here
-        await this.sound.playAsync();
-        this.setState({
-          playingStatus: "playing",
+        await state.playbackInstance.playAsync();
+
+        dispatch({
+          type: "UPDATE_PLAYER_STATUS",
+          payload: "playing",
         });
       }
     }
   }
 
   async handleStop() {
-    if (this.sound != null) {
-      await this.sound.stopAsync();
-      this.setState({
-        playingStatus: "stopped",
+    const { state, dispatch } = this.context;
+
+    if (state.playbackInstance != null) {
+      await state.playbackInstance.stopAsync();
+      dispatch({
+        type: "UPDATE_PLAYER_STATUS",
+        payload: "stopped",
+      });
+      dispatch({
+        type: "UPDATE_MEDIA_CONTROL",
+        payload: null,
       });
     }
   }
 
   handleStatusUpdate = (status) => {
-    if (status.isPlaying && this.state.playingStatus !== "playing") {
-      this.setState({ playingStatus: "playing", loading: false });
-    } else if (!status.isPlaying && this.state.playingStatus === "playing") {
-      this.setState({ playingStatus: "donepause" });
+    const { state, dispatch } = this.context;
+
+    if (status.isPlaying && state.playingStatus !== "playing") {
+      dispatch({
+        type: "UPDATE_PLAYER_STATUS",
+        payload: "playing",
+      });
+      this.setState({
+        loading: false,
+      });
+      this.props.cid &&
+        dispatch({
+          type: "UPDATE_MEDIA_CONTROL",
+          payload: this.props.cid,
+        });
+    } else if (!status.isPlaying && state.playingStatus === "playing") {
+      dispatch({
+        type: "UPDATE_PLAYER_STATUS",
+        payload: "donepause",
+      });
     }
   };
 
-  handlePlayPause = (src) => {
-    switch (this.state.playingStatus) {
+  onPlayPause = (src) => {
+    const { state, dispatch } = this.context;
+
+    switch (state.playingStatus) {
       case "noaudio":
       case "stopped":
         this.setState({ loading: true });
@@ -70,15 +105,19 @@ export default class PlayerControls extends Component {
         break;
       case "donepause":
       case "playing":
-        this._pauseAndPlayRecording();
+        this.handlePlayPause();
         break;
     }
   };
 
   render() {
-    const { size, margins, src, primarySpinner } = this.props;
-    const { playingStatus, loading } = this.state;
-    return !loading ? (
+    const { state, dispatch } = this.context;
+    const { size, margins, src, primarySpinner, cid } = this.props;
+    const { loading } = this.state;
+    const { playingStatus } = state;
+
+    return playingStatus && !loading ? (
+      // console.log(`player status : ${playingStatus}`),
       <Layout
         style={{
           flex: 1,
@@ -102,12 +141,12 @@ export default class PlayerControls extends Component {
         ) : null}
 
         <View>
-          {playingStatus !== "noaudio" ? (
+          {playingStatus !== "noaudio" && playingStatus !== "stopped" ? (
             playingStatus == "playing" && playingStatus !== "stopped" ? (
               <Icon
                 name="pause-circle"
                 onPress={() => {
-                  this.handlePlayPause();
+                  this.onPlayPause();
                 }}
                 style={{
                   height: size,
@@ -118,7 +157,7 @@ export default class PlayerControls extends Component {
               <Icon
                 name="play-circle"
                 onPress={() => {
-                  this.handlePlayPause(src);
+                  this.onPlayPause(src);
                 }}
                 style={{
                   height: size,
@@ -130,7 +169,7 @@ export default class PlayerControls extends Component {
             <Icon
               name="play-circle-outline"
               onPress={() => {
-                this.handlePlayPause(src);
+                this.onPlayPause(src);
               }}
               style={{
                 height: size,

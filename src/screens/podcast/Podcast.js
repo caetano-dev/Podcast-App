@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { View, StyleSheet } from "react-native";
-import { Layout, Text, Button } from "@ui-kitten/components";
+import { Layout, Text, Button, Spinner, Icon } from "@ui-kitten/components";
 import AppContext from "../../../context/AppContext";
 import PodCard from "../../components/PodCard.js";
 import {
@@ -75,100 +75,253 @@ export default Podcast = ({ navigation }) => {
       setSelectHeader("Downloaded")
     );
   };
+  const handleStop = async () => {
+    if (state.playbackInstance != null) {
+      return (
+        await state.playbackInstance.stopAsync(),
+        dispatch({
+          type: "UPDATE_PLAYER_STATUS",
+          payload: "noaudio",
+        }),
+        dispatch({
+          type: "UPDATE_MEDIA_CONTROL",
+          payload: null,
+        }),
+        dispatch({
+          type: "ARCHIVE_PLAYER_CLEAR",
+        })
+      );
+    }
+  };
   return (
-    <View style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}>
-      <View
-        style={{
-          flex: 1,
-          width: 500,
-          height: 500,
-          justifyContent: "space-between",
-        }}
-      >
-        {/* <BackHomeButton navigation={navigation} /> */}
-        <View style={{ flex: 1 }}>
-          <LogoutButton />
-        </View>
-        <DemoLogo width={"80%"} height={"180%"} style={{ marginTop: 20 }} />
-      </View>
-      <Layout style={styles.logo}></Layout>
-
-      <Layout style={{ flex: 1, backgroundColor: null }}>
-        <PodCard
-          borderWidth={3}
-          radius={10}
-          bgColor={"white"}
-          content={
-            <>
-              <Text
-                category="h3"
-                style={{
-                  fontWeight: "700",
-                  color: "black",
-                }}
-              >
-                {headerSwitch(selectHeader)}
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Button
-                  status={latest ? null : "basic"}
-                  appearance="ghost"
-                  onPress={() => onLatest()}
-                >
-                  Latest
-                </Button>
-                <Button
-                  status={archive ? null : "basic"}
-                  appearance="ghost"
-                  onPress={() => onArchive()}
-                >
-                  Archive
-                </Button>
-                <Button
-                  status={fav ? null : "basic"}
-                  appearance="ghost"
-                  onPress={() => onFav()}
-                >
-                  Favourites
-                </Button>
-                <Button
-                  status={download ? null : "basic"}
-                  appearance="ghost"
-                  onPress={() => onDownload()}
-                >
-                  Downloaded
-                </Button>
+    console.log("player status", Boolean(state.playbackInstance)),
+    (
+      <View style={{ flex: 1, backgroundColor: "#A0A1B5", paddingTop: 10 }}>
+        {archive ? null : (
+          <>
+            <View
+              style={{
+                flex: 1,
+                width: 500,
+                height: 500,
+                justifyContent: "space-between",
+              }}
+            >
+              {/* <BackHomeButton navigation={navigation} /> */}
+              <View style={{ flex: 1 }}>
+                <LogoutButton />
               </View>
-            </>
-          }
-        />
-      </Layout>
 
-      {podSwitch(select)}
+              <DemoLogo
+                width={"80%"}
+                height={"180%"}
+                style={{ marginTop: 20 }}
+              />
+            </View>
+            <Layout style={styles.logo} />
+          </>
+        )}
 
-      {controls ? (
         <Layout
           style={{
             flex: 1,
             backgroundColor: null,
+            marginTop: archive ? 15 : null,
           }}
         >
-          {state.latestEpisode && (
-            <PlayerControls
-              primarySpinner
-              src={state.latestEpisode.url}
-              size={85}
-              margins={20}
+          <PodCard
+            borderWidth={3}
+            radius={10}
+            bgColor={"white"}
+            content={
+              <>
+                <Text
+                  category="h3"
+                  style={{
+                    fontWeight: "700",
+                    color: "black",
+                  }}
+                >
+                  {headerSwitch(selectHeader)}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <Button
+                    status={latest ? null : "basic"}
+                    appearance="ghost"
+                    onPress={() => onLatest()}
+                  >
+                    Latest
+                  </Button>
+                  <Button
+                    status={archive ? null : "basic"}
+                    appearance="ghost"
+                    onPress={() => onArchive()}
+                  >
+                    Archive
+                  </Button>
+                  <Button
+                    status={fav ? null : "basic"}
+                    appearance="ghost"
+                    onPress={() => onFav()}
+                  >
+                    Favourites
+                  </Button>
+                  <Button
+                    status={download ? null : "basic"}
+                    appearance="ghost"
+                    onPress={() => onDownload()}
+                  >
+                    Downloaded
+                  </Button>
+                </View>
+              </>
+            }
+          />
+          {archive ? (
+            //TODO: create state player for archive
+            <PodCard
+              flex={1}
+              borderWidth={3}
+              radius={20}
+              content={
+                state.archivePlayerObj ? (
+                  <Layout
+                    style={{
+                      flex: 1,
+                      flexWrap: "wrap",
+                      flexDirection: "column",
+                      backgroundColor: null,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      margin: 5,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                      }}
+                    >
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          justifyContent: "left",
+                          marginLeft: 10,
+                        }}
+                      >
+                        <Text
+                          category="h6"
+                          style={{ fontWeight: "bold", color: "white" }}
+                        >
+                          {state.archivePlayerObj.title}
+                        </Text>
+                      </View>
+
+                      {/* <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <LikeButton />
+                    <FavButton /> 
+                  </View> */}
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: "flex-start",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {state.playbackInstance ? (
+                          <Button
+                            size="medium"
+                            appearance="ghost"
+                            status="primary"
+                            onPress={() => {
+                              handleStop();
+                            }}
+                          >
+                            STOP!
+                          </Button>
+                        ) : (
+                          <Spinner />
+                        )}
+                      </View>
+
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <Text category="h4" style={{ color: "white" }}>
+                          Ep.{state.archivePlayerObj.id}
+                        </Text>
+                      </View>
+                    </View>
+                  </Layout>
+                ) : (
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "left",
+                      marginLeft: 10,
+                    }}
+                  >
+                    <Text
+                      category="h4"
+                      style={{ fontWeight: "bold", color: "black" }}
+                    >
+                      No Episode Loaded
+                    </Text>
+                  </View>
+                )
+              }
             />
-          )}
+          ) : null}
         </Layout>
-      ) : null}
-    </View>
+
+        {podSwitch(select)}
+
+        {controls ? (
+          <Layout
+            style={{
+              flex: 1,
+              backgroundColor: null,
+            }}
+          >
+            {state.latestEpisode && (
+              <PlayerControls
+                primarySpinner
+                src={state.latestEpisode.url}
+                cid={state.latestEpisode.cid}
+                size={85}
+                margins={20}
+              />
+            )}
+          </Layout>
+        ) : null}
+      </View>
+    )
   );
 };
 
@@ -182,7 +335,6 @@ const styles = StyleSheet.create({
   logo: {
     flex: 1,
     backgroundColor: null,
-    marginVertical: 15,
     alignSelf: "center",
   },
   date: {
