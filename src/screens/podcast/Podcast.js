@@ -186,7 +186,7 @@ export default Podcast = ({ navigation }) => {
             //TODO: create state player for archive
             <PodCard
               flex={1}
-              borderWidth={3}
+              borderWidth={12}
               radius={20}
               content={
                 state.archivePlayerObj ? (
@@ -217,7 +217,7 @@ export default Podcast = ({ navigation }) => {
                       >
                         <Text
                           category="h6"
-                          style={{ fontWeight: "bold", color: "white" }}
+                          style={{ fontWeight: "bold", color: "black" }}
                         >
                           {state.archivePlayerObj.title}
                         </Text>
@@ -252,9 +252,9 @@ export default Podcast = ({ navigation }) => {
                       >
                         {state.playbackInstance ? (
                           <Button
-                            size="medium"
+                            size="giant"
                             appearance="ghost"
-                            status="primary"
+                            status="danger"
                             onPress={() => {
                               handleStop();
                             }}
@@ -272,7 +272,7 @@ export default Podcast = ({ navigation }) => {
                           alignItems: "flex-end",
                         }}
                       >
-                        <Text category="h4" style={{ color: "white" }}>
+                        <Text category="h4" style={{ color: "black" }}>
                           Ep.{state.archivePlayerObj.id}
                         </Text>
                       </View>

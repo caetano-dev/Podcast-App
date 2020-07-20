@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Latest, Fav, Archive, Download } from "../components/ContentSwitch";
+import AppContext from "../../../../context/AppContext";
 
 export const headerSwitch = (selectHeader) => {
   switch (selectHeader) {
@@ -15,11 +16,13 @@ export const headerSwitch = (selectHeader) => {
 };
 
 export const podSwitch = (select) => {
+  const { state, dispatch } = useContext(AppContext);
+
   switch (select) {
     default:
       return <Latest layout={2} />;
     case "C":
-      return <Archive layout={2} />;
+      return <Archive layout={state.archivePlayerObj ? 2 : 3} />;
     case "B":
       return (
         <Fav

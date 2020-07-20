@@ -205,7 +205,7 @@ export const Archive = ({ layout }) => {
                 status="primary"
                 style={{ alignSelf: "center" }}
               >
-                Tap an episode to play, tap again to stop it
+                Tap an episode to play it, tap again to pause it
               </Text>
               {ordered.map((v, i) => {
                 return (
