@@ -27,6 +27,13 @@ To run development version
 
 `run the app either via simulated phone or via expo ios or android app by scanning QR code`
 
+
+# Auth Demo
+Here's a quick demo of the authentication api at work.   
+`*The screen recorder blurred the password section`   
+
+<img src="/github-design/PodcastAppScreenRecording.gif" height="560" width="330"  />
+
 # Screenshots
 
 `Updated version (IOS)`
